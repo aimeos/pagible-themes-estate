@@ -196,6 +196,11 @@ header nav details.dropdown > summary:not([role]) {
     box-shadow: none;
 }
 
+header nav > .menu > li > a,
+header nav > .menu > li > details.dropdown > summary:not([role]) {
+    text-transform: uppercase;
+}
+
 header nav a:not([role]):hover,
 header nav a:not([role]):focus,
 header nav a:not([role]):active {

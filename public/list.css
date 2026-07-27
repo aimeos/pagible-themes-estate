@@ -71,7 +71,7 @@
 }
 
 .cms-content .list .first .content,
-.cms-content .list .list-cards .content {
+.cms-content .list:not(.property-list) .list-cards .content {
     display: flex;
     align-items: baseline;
     padding: 1rem 1.25rem;

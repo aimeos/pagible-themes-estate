@@ -62,13 +62,28 @@ class EstateDemo extends AbstractDemo
             'id' => $propertiesId,
             'lang' => 'en',
             'name' => 'Properties',
-            'title' => 'Property Portfolio',
+            'title' => 'Properties',
             'path' => 'properties',
             'type' => 'page',
-            'tag' => 'property',
-            'status' => 2,
-            'to' => '/#home-properties',
-        ], [], $home );
+            'tag' => 'properties',
+            'status' => 1,
+        ], [
+            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
+                'title' => 'Properties',
+                'subtitle' => 'Estate portfolio',
+                'text' => 'Compare current residential, rental, and commercial properties by location, availability, and practical fit.',
+                'background' => ['id' => $this->img( 'city' ), 'type' => 'file'],
+                'background-animation' => 'zoom',
+            ]],
+            ['id' => Utils::uid(), 'type' => 'estate::properties', 'group' => 'main', 'data' => [
+                'title' => 'Current properties',
+                'layout' => 'cards',
+                'filters' => true,
+                'limit' => 24,
+                'order' => '_lft',
+                'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
+            ]],
+        ], $home );
 
         $this->page( [
             'lang' => 'en',
@@ -324,7 +339,7 @@ class EstateDemo extends AbstractDemo
                 'text' => 'Map income, lease events, location exposure, and planned capital work before comparing the next opportunity.',
                 'url' => '/#home-contact',
                 'button' => 'Request a portfolio review',
-                'url-alternative' => '/#home-properties',
+                'url-alternative' => '/properties',
                 'button-alternative' => 'Compare current properties',
             ]],
         ], $news );
@@ -401,7 +416,7 @@ class EstateDemo extends AbstractDemo
                 'text' => 'Set the market objective, essential work, budget range, and decision points before design and procurement begin.',
                 'url' => '/#home-contact',
                 'button' => 'Discuss a renovation strategy',
-                'url-alternative' => '/#home-properties',
+                'url-alternative' => '/properties',
                 'button-alternative' => 'View current properties',
             ]],
         ], $news );
@@ -458,8 +473,8 @@ class EstateDemo extends AbstractDemo
         if( !isset( $this->element ) )
         {
             $cards = [
-                ['title' => 'Explore', 'text' => "- [Home](/)\n- [Current properties](/#home-properties)\n- [Property news](/news)"],
-                ['title' => 'Property search', 'text' => "- [Properties for sale](/?offer=sale#home-properties)\n- [Properties for rent](/?offer=rent#home-properties)\n- [Commercial properties](/?type=office#home-properties)"],
+                ['title' => 'Explore', 'text' => "- [Home](/)\n- [Current properties](/properties)\n- [Property news](/news)"],
+                ['title' => 'Property search', 'text' => "- [Properties for sale](/properties?offer=sale)\n- [Properties for rent](/properties?offer=rent)\n- [Commercial properties](/properties?type=office)"],
                 ['title' => 'Advisory services', 'text' => "- [Request a sales valuation](/#home-contact)\n- [Discuss a commercial property](/#home-contact)\n- [Plan a relocation](/#home-contact)"],
                 ['title' => 'Contact', 'text' => "- [hello@estate.example](mailto:hello@estate.example)\n- [Request a private consultation](/#home-contact)\n- Berlin · Hamburg"],
             ];
@@ -522,7 +537,7 @@ class EstateDemo extends AbstractDemo
                 'title' => 'Find the property behind your next move',
                 'subtitle' => 'Estate',
                 'text' => 'Compare residential, rental, and commercial properties with clear pricing, availability, location details, and practical market context.',
-                'url' => '/#home-properties',
+                'url' => '/properties',
                 'button' => 'View properties',
                 'url-alternative' => '/news',
                 'button-alternative' => 'Read property news',
@@ -550,7 +565,7 @@ class EstateDemo extends AbstractDemo
                     [
                         'title' => 'Buy with perspective',
                         'file' => ['id' => $this->img( 'penthouse-living' ), 'type' => 'file'],
-                        'text' => "Compare location, condition, and long-term fit with an advisor who understands the market behind the asking price.\n\n[Explore current properties](/#home-properties)",
+                        'text' => "Compare location, condition, and long-term fit with an advisor who understands the market behind the asking price.\n\n[Explore current properties](/properties)",
                     ],
                     [
                         'title' => 'Sell with a clear strategy',
