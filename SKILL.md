@@ -24,8 +24,8 @@ Estate is a premium property-marketing theme built around large photography, edi
 
 - Background: white `#FFFFFF` with quiet neutral sections.
 - Primary text and structural color: charcoal `#242424`.
-- Accent and interactive color: deep red `#B5122B`.
-- Display typography: precise sans-serif using the configured `--pico-font-family-display`.
+- Accent and interactive color: signal red `#D00000`.
+- Display typography: editorial serif using the configured `--pico-font-family-display`.
 - Body typography: clean sans-serif using the configured `--pico-font-family-sans-serif`.
 - Use square edges, fine neutral rules, and minimal shadow.
 - Use gradients only for legibility over photography or intentional image placeholders.

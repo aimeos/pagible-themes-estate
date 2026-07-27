@@ -14,8 +14,8 @@ php artisan vendor:publish --tag=cms-theme
 ## Design
 
 - **Style**: Editorial property marketing with generous whitespace and image-first storytelling
-- **Palette**: White pages (`#FFFFFF`), charcoal ink (`#242424`), and a restrained deep-red accent (`#B5122B`)
-- **Typography**: Crisp sans-serif display and body type
+- **Palette**: White pages (`#FFFFFF`), charcoal ink (`#242424`), and a focused signal-red accent (`#D00000`)
+- **Typography**: Editorial serif display type with a crisp sans-serif body
 - **Navigation**: Persistent top navigation, searchable content, and direct contact paths
 - **Interaction**: Fine rules, square controls, clear property facts, and minimal shadow
 - **CSS framework**: Pico CSS with `--pico-*` custom property overrides

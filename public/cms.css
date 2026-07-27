@@ -27,6 +27,48 @@ body.theme-estate > header nav .menu a.active::after {
     position: absolute;
 }
 
+@media (min-width: 992px) {
+    body.theme-estate > header > nav {
+        display: block;
+        padding-inline: min(4vw, 3rem);
+    }
+
+    body.theme-estate > header > nav > ul:first-child {
+        min-height: 4.5rem;
+    }
+
+    body.theme-estate > header > nav > .menu {
+        border-top: 1px solid var(--pico-muted-border-color);
+        justify-content: flex-start;
+        min-height: 3.5rem;
+    }
+
+    body.theme-estate > header > nav > .menu > li {
+        margin-inline: 0 1.5rem;
+        padding: 0;
+    }
+
+    body.theme-estate > header > nav > .menu > li:first-child {
+        margin-inline: auto 0;
+        order: 99;
+    }
+
+    body.theme-estate > header > nav > .menu a,
+    body.theme-estate > header > nav > .menu summary {
+        min-height: 3.5rem;
+        padding-inline: 0;
+    }
+
+    body.theme-estate > header > nav > .menu a.active::after {
+        inset-inline: 0;
+    }
+
+    body.theme-estate > header nav .brand a,
+    body.theme-estate > header nav .brand img {
+        height: 2.75rem;
+    }
+}
+
 body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button) {
     align-items: center;
     border-radius: var(--pico-border-radius);
@@ -125,7 +167,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
 
 :root[data-theme=light] {
     --pico-font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --pico-font-family-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --pico-font-family-display: Georgia, 'Times New Roman', serif;
     --pico-font-family-monospace: ui-monospace, monospace;
     --pico-nav-breadcrumb-divider: '—';
     --pico-block-spacing-vertical: 0;
@@ -135,7 +177,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-nav-link-spacing-horizontal: 0.625rem;
     --pico-color: #242424;
     --pico-background-color: #FFFFFF;
-    --pico-text-selection-color: #B5122B22;
+    --pico-text-selection-color: #D0000022;
     --pico-muted-color: #606060;
     --pico-muted-border-color: #24242424;
     --pico-muted-background-color: #F5F5F3;
@@ -149,12 +191,12 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-contrast-hover-underline: var(--pico-contrast-hover);
     --pico-contrast-focus: var(--pico-text-selection-color);
     --pico-contrast-inverse: #FFFFFF;
-    --pico-primary: #B5122B;
-    --pico-primary-background: #B5122B0F;
+    --pico-primary: #D00000;
+    --pico-primary-background: #D000000F;
     --pico-primary-border: var(--pico-primary);
     --pico-primary-underline: var(--pico-primary);
-    --pico-primary-hover: #8F0D22;
-    --pico-primary-hover-background: #8F0D220F;
+    --pico-primary-hover: #A90000;
+    --pico-primary-hover-background: #A900000F;
     --pico-primary-hover-border: var(--pico-primary-hover);
     --pico-primary-hover-underline: var(--pico-primary-hover);
     --pico-primary-focus: var(--pico-text-selection-color);
@@ -203,7 +245,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-text-selection-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     body.theme-estate > header nav > .menu {
         background-color: var(--pico-background-color);
         border-top: 1px solid var(--pico-muted-border-color);
@@ -249,7 +291,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
 
 @media (min-width: 1024px) {
     :host, :root {
-        --pico-font-size: 1.1875rem !important;
+        --pico-font-size: 1rem !important;
     }
 }
 

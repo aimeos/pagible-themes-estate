@@ -39,6 +39,29 @@ class PropertyRenderingTest extends ThemeTestAbstract
     }
 
 
+    public function testPropertyDetailUsesEditorialOverviewAndDetailsSections(): void
+    {
+        $html = $this->renderProperty( [
+            'country' => 'Germany',
+            'city' => 'Berlin',
+            'district' => 'Mitte',
+            'living_area' => 110,
+            'features' => "## Property features\n- Balcony\n- Lift",
+        ] );
+
+        $this->assertStringContainsString( '<section class="property-gallery">', $html );
+        $this->assertStringContainsString( '<div class="property-layout">', $html );
+        $this->assertStringContainsString( '<div class="property-overview">', $html );
+        $this->assertStringContainsString( '<dl class="property-highlights">', $html );
+        $this->assertStringContainsString( '<aside class="property-enquiry">', $html );
+        $this->assertStringContainsString( '<section class="property-description">', $html );
+        $this->assertStringContainsString( '<section class="property-details">', $html );
+        $this->assertStringContainsString( '<section id="property-contact-', $html );
+        $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-description' ) );
+        $this->assertLessThan( strpos( $html, '<section id="property-contact-' ), strpos( $html, 'property-details' ) );
+    }
+
+
     public function testFallbackAndExplicitMetadataRenderOnceInLayout(): void
     {
         view()->addNamespace( 'estate-test', __DIR__ . '/views' );
@@ -183,6 +206,50 @@ class PropertyRenderingTest extends ThemeTestAbstract
             cmsurl( 'images/second.jpg' ),
         ], $schema['image'] );
         $this->assertCount( 2, $gallery['image'] );
+    }
+
+
+    public function testGalleryKeepsImagesBeyondMosaicAvailable(): void
+    {
+        $files = collect( [
+            'image-1' => ( new File() )->forceFill( [
+                'id' => 'image-1',
+                'name' => 'First image',
+                'path' => 'images/first.jpg',
+                'previews' => (object) [],
+                'description' => (object) ['en' => 'First image'],
+            ] ),
+            'image-2' => ( new File() )->forceFill( [
+                'id' => 'image-2',
+                'name' => 'Second image',
+                'path' => 'images/second.jpg',
+                'previews' => (object) [],
+                'description' => (object) ['en' => 'Second image'],
+            ] ),
+            'image-3' => ( new File() )->forceFill( [
+                'id' => 'image-3',
+                'name' => 'Third image',
+                'path' => 'images/third.jpg',
+                'previews' => (object) [],
+                'description' => (object) ['en' => 'Third image'],
+            ] ),
+            'image-4' => ( new File() )->forceFill( [
+                'id' => 'image-4',
+                'name' => 'Fourth image',
+                'path' => 'images/fourth.jpg',
+                'previews' => (object) [],
+                'description' => (object) ['en' => 'Fourth image'],
+            ] ),
+        ] );
+        $html = $this->renderProperty( [
+            'files' => collect( $files->keys() )
+                ->map( fn( $id ) => ['id' => $id, 'type' => 'file'] )
+                ->all(),
+        ], $files );
+
+        $this->assertStringContainsString( '<details class="property-gallery-more">', $html );
+        $this->assertStringContainsString( '<summary>View all images</summary>', $html );
+        $this->assertStringContainsString( cmsurl( 'images/fourth.jpg' ), $html );
     }
 
 

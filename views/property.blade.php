@@ -33,34 +33,53 @@
     @endpush
 @endunless
 
-@if($slideshowFiles = collect((array) ( $data->files ?? [] ))
-    ->map( fn( $fileId ) => is_scalar( $fileId ) ? (object) ['id' => (string) $fileId] : (object) [
-        'id' => ( is_array( $fileId ) || is_object( $fileId ) ) ? data_get( $fileId, 'id' ) : null,
-    ] )
-    ->filter( fn( $file ) => !empty( $file->id ) && cms($files, $file->id) )
-    ->all())
-    @include('cms::slideshow', [
-        'data' => (object) [
-            'title' => null,
-            'files' => $slideshowFiles,
-            'main' => true,
-            'autoplay' => false,
-            'captions' => true,
-        ],
-        'page' => $page,
-        'files' => $files,
-    ])
-@elseif($file = cms($files, $data->file?->id ?? null))
-    @include('cms::pic', ['file' => $file, 'main' => true, 'class' => 'cover', 'sizes' => '(max-width: 960px) 100vw, 960px'])
-@else
-    <div class="property-gallery-empty">
-        <span class="property-gallery-empty-brand" aria-hidden="true">Estate</span>
-        <span>{{ __('No image available') }}</span>
-    </div>
-@endif
+<section class="property-gallery">
+    @if($slideshowFiles = collect((array) ( $data->files ?? [] ))
+        ->map( fn( $fileId ) => is_scalar( $fileId ) ? (object) ['id' => (string) $fileId] : (object) [
+            'id' => ( is_array( $fileId ) || is_object( $fileId ) ) ? data_get( $fileId, 'id' ) : null,
+        ] )
+        ->filter( fn( $file ) => !empty( $file->id ) && cms($files, $file->id) )
+        ->all())
+        @include('cms::slideshow', [
+            'data' => (object) [
+                'title' => null,
+                'files' => $slideshowFiles,
+                'main' => true,
+                'autoplay' => false,
+                'captions' => true,
+            ],
+            'page' => $page,
+            'files' => $files,
+        ])
+    @elseif($file = cms($files, $data->file?->id ?? null))
+        @include('cms::pic', ['file' => $file, 'main' => true, 'class' => 'cover', 'sizes' => '(max-width: 1280px) 100vw, 1280px'])
+    @else
+        <div class="property-gallery-empty">
+            <span class="property-gallery-empty-brand" aria-hidden="true">Estate</span>
+            <span>{{ __('No image available') }}</span>
+        </div>
+    @endif
+
+    @if(count($slideshowFiles) > 3)
+        <details class="property-gallery-more">
+            <summary>{{ __('View all images') }}</summary>
+            <div class="property-gallery-grid">
+                @foreach($slideshowFiles as $item)
+                    @if($galleryFile = cms($files, $item->id))
+                        <figure>
+                            @include('cms::pic', ['file' => $galleryFile, 'sizes' => '(max-width: 767px) 100vw, 50vw'])
+                            @if($caption = cms($galleryFile, 'description')?->{cms($page, 'lang')})
+                                <figcaption>{{ $caption }}</figcaption>
+                            @endif
+                        </figure>
+                    @endif
+                @endforeach
+            </div>
+        </details>
+    @endif
+</section>
 
 <article class="property" aria-labelledby="property-title-{{ cms($page, 'id') }}">
-    <h1 id="property-title-{{ cms($page, 'id') }}" class="title">{{ cms($page, 'title') }}</h1>
     <p class="property-print-meta">
         @if($data->reference ?? null)
             <span>{{ __('Ref.') }} {{ $data->reference }}</span>
@@ -68,20 +87,109 @@
         <span>{{ __('Source page') }}: {{ cmsroute($page) }}</span>
     </p>
 
-    <div class="property-summary">
-        <div class="property-price-group">
-            <p class="property-price">
-                {{ __(':currency :value', ['currency' => $data->currency, 'value' => \Illuminate\Support\Number::format($data->price, maxPrecision: 2, locale: app()->getLocale())]) }}
-            </p>
-            @if($data->offer_type === 'rent' && $data->price_period)
-                <p class="property-price_period">{{ __('per :period', ['period' => __(ucfirst((string) $data->price_period))]) }}</p>
+    <div class="property-layout">
+        <div class="property-overview">
+            @if(($location = collect([
+                $data->country ?? null,
+                $data->city ?? null,
+                $data->district ?? null,
+            ])->filter())->isNotEmpty())
+                <p class="property-location">
+                    @foreach($location as $value)
+                        @if(!$loop->first)
+                            <span aria-hidden="true">›</span>
+                        @endif
+                        <span>{{ $value }}</span>
+                    @endforeach
+                </p>
             @endif
-            <p class="property-price_unit">
-                {{ __(':value :currency / :unit', ['currency' => $data->currency, 'value' => \Illuminate\Support\Number::format(round($data->price / $data->area), locale: app()->getLocale()), 'unit' => $data->area_unit]) }}
-            </p>
+
+            <h1 id="property-title-{{ cms($page, 'id') }}" class="title">{{ cms($page, 'title') }}</h1>
+
+            <div class="property-summary">
+                <div class="property-price-group">
+                    <p class="property-price">
+                        {{ __(':currency :value', ['currency' => $data->currency, 'value' => \Illuminate\Support\Number::format($data->price, maxPrecision: 2, locale: app()->getLocale())]) }}
+                    </p>
+                    @if($data->offer_type === 'rent' && $data->price_period)
+                        <p class="property-price_period">{{ __('per :period', ['period' => __(ucfirst((string) $data->price_period))]) }}</p>
+                    @endif
+                    <p class="property-price_unit">
+                        {{ __(':value :currency / :unit', ['currency' => $data->currency, 'value' => \Illuminate\Support\Number::format(round($data->price / $data->area), locale: app()->getLocale()), 'unit' => $data->area_unit]) }}
+                    </p>
+                </div>
+            </div>
+
+            @if(($highlights = collect([
+                'rooms' => [
+                    'label' => __('Rooms'),
+                    'value' => $data->rooms !== null ? \Illuminate\Support\Number::format($data->rooms, maxPrecision: 1, locale: app()->getLocale()) : null,
+                ],
+                'bedrooms' => [
+                    'label' => __('Bedrooms'),
+                    'value' => $data->bedrooms !== null ? \Illuminate\Support\Number::format($data->bedrooms, locale: app()->getLocale()) : null,
+                ],
+                'bathrooms' => [
+                    'label' => __('Bathrooms'),
+                    'value' => $data->bathrooms !== null ? \Illuminate\Support\Number::format($data->bathrooms, locale: app()->getLocale()) : null,
+                ],
+                'living_area' => [
+                    'label' => __('Living area'),
+                    'value' => __(':value :unit', [
+                        'value' => \Illuminate\Support\Number::format($data->living_area ?? $data->area, maxPrecision: 2, locale: app()->getLocale()),
+                        'unit' => $data->area_unit,
+                    ]),
+                ],
+            ])->filter( fn( $highlight ) => $highlight['value'] !== null && $highlight['value'] !== '' ))->isNotEmpty())
+                <dl class="property-highlights">
+                    @foreach($highlights as $prop => $highlight)
+                        <div class="property-highlight property-{{ $prop }}">
+                            <span class="property-highlight-icon" aria-hidden="true">
+                                @if($prop === 'rooms')
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 3.5h12v17H5zM17 6h2v14.5M8 12h1"/>
+                                    </svg>
+                                @elseif($prop === 'bedrooms')
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M3 19v-9m18 9v-6H3m3 0V8h5a3 3 0 0 1 3 3v2M3 17h18"/>
+                                    </svg>
+                                @elseif($prop === 'bathrooms')
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zm3 0V6a3 3 0 0 1 5.5-1.7M7 19l-1 2m11-2 1 2"/>
+                                    </svg>
+                                @else
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5M9 9l6 6m0-6-6 6"/>
+                                    </svg>
+                                @endif
+                            </span>
+                            <dt>{{ $highlight['label'] }}</dt>
+                            <dd>{{ $highlight['value'] }}</dd>
+                        </div>
+                    @endforeach
+                </dl>
+            @endif
+
+            <section class="property-description">
+                <h2>{{ __('Description') }}</h2>
+                <div class="cms-text">@markdown($data->text ?? '')</div>
+            </section>
+
+            @if($data->features ?? null)
+                <section class="property-features">
+                    <h2>{{ __('Key details') }}</h2>
+                    <div class="property-feature-text">@markdown($data->features)</div>
+                </section>
+            @endif
         </div>
-        <div class="property-headline">
+
+        <aside class="property-enquiry">
             <p class="property-status property-status-{{ $data->status }}">{{ __(ucfirst(str_replace('_', ' ', (string) $data->status))) }}</p>
+            <h2>
+                {{ in_array($data->status, ['sold', 'rented'], true)
+                    ? __('Ask about similar properties')
+                    : __('Request a viewing') }}
+            </h2>
             @if($data->reference ?? null)
                 <p class="property-reference">{{ __('Ref.') }} {{ $data->reference }}</p>
             @endif
@@ -94,7 +202,7 @@
                     ? __('Ask about similar properties')
                     : __('Request a viewing') }}
             </a>
-        </div>
+        </aside>
     </div>
 
     @if(($facts = collect([
@@ -118,46 +226,43 @@
         'zip_code' => ['label' => __('Post code'), 'value' => $data->zip_code ?? null],
         'country' => ['label' => __('Country'), 'value' => $data->country ?? null],
     ])->filter( fn( $fact ) => $fact['value'] !== null && $fact['value'] !== '' ))->isNotEmpty())
-        <dl class="property-facts">
-            @foreach($facts as $prop => $fact)
-                <div class="property-fact property-{{ $prop }}">
-                    <dt>{{ $fact['label'] }}</dt>
-                    <dd>
-                        @if($fact['datetime'] ?? null)
-                            <time datetime="{{ $fact['datetime'] }}">{{ $fact['value'] }}</time>
-                        @else
-                            {{ $fact['value'] }}
-                        @endif
-                    </dd>
-                </div>
-            @endforeach
-        </dl>
-    @endif
+        <section class="property-details">
+            <div class="property-details-inner">
+                <h2>{{ __('Additional details') }}</h2>
+                <dl class="property-facts">
+                    @foreach($facts as $prop => $fact)
+                        <div class="property-fact property-{{ $prop }}">
+                            <dt>{{ $fact['label'] }}</dt>
+                            <dd>
+                                @if($fact['datetime'] ?? null)
+                                    <time datetime="{{ $fact['datetime'] }}">{{ $fact['value'] }}</time>
+                                @else
+                                    {{ $fact['value'] }}
+                                @endif
+                            </dd>
+                        </div>
+                    @endforeach
+                </dl>
 
-    @if(($values = collect($data->values ?? [])->filter(
-        fn( $row ) => trim((string) ($row[0] ?? '')) !== '' && trim((string) ($row[1] ?? '')) !== ''
-    ))->isNotEmpty())
-        <section class="property-values">
-            <h2>{{ __('Additional details') }}</h2>
-            <div class="property-value-table">
-                <table>
-                    <tbody>
-                        @foreach($values as $row)
-                            <tr>
-                                <th scope="row">@text((string) $row[0])</th>
-                                <td>@text((string) $row[1])</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if(($values = collect($data->values ?? [])->filter(
+                    fn( $row ) => trim((string) ($row[0] ?? '')) !== '' && trim((string) ($row[1] ?? '')) !== ''
+                ))->isNotEmpty())
+                    <div class="property-values">
+                        <div class="property-value-table">
+                            <table>
+                                <tbody>
+                                    @foreach($values as $row)
+                                        <tr>
+                                            <th scope="row">@text((string) $row[0])</th>
+                                            <td>@text((string) $row[1])</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
             </div>
-        </section>
-    @endif
-
-    @if($data->features ?? null)
-        <section class="property-features">
-            <h2>{{ __('Key details') }}</h2>
-            <div class="property-feature-text">@markdown($data->features)</div>
         </section>
     @endif
 
@@ -184,8 +289,6 @@
             </ul>
         </section>
     @endif
-
-    <div class="cms-text">@markdown($data->text ?? '')</div>
 
     <section id="property-contact-{{ cms($page, 'id') }}" class="property-contact contact">
         @include('cms::contact', [
