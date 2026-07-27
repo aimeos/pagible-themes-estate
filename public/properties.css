@@ -53,34 +53,35 @@
     align-items: stretch;
     flex-direction: column;
     gap: 0;
-    padding: 1rem;
+    padding: 0.875rem;
 }
 
-.cms-content .list .list-cards h3 {
+.cms-content .property-list .list-cards h3 {
     flex-grow: 0;
-    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
     font-weight: 500;
-    line-height: 1.35;
-    margin: 0 0 0.65rem;
+    line-height: 1.25;
+    margin: 0 0 0.5rem;
 }
 
 .cms-content .list .property-location {
     color: var(--pico-muted-color);
     font-size: max(0.875rem, calc(var(--pico-font-size) * 0.66));
-    letter-spacing: 0.03em;
-    margin: 0 0 0.4rem;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.3rem;
 }
 
 .cms-content .list .property-price {
     color: var(--pico-color);
-    font-size: calc(var(--pico-font-size) * 0.95);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.9));
     font-variant-numeric: tabular-nums;
     font-weight: 600;
-    margin: 0 0 0.5rem;
+    line-height: 1.25;
+    margin: 0 0 0.35rem;
 }
 
 .cms-content .list .property-line {
-    line-height: 1.45;
+    line-height: 1.35;
 }
 
 .cms-content .list .property-line-main {
@@ -98,13 +99,13 @@
 }
 
 .cms-content .list .property-line-status {
-    margin: 0.65rem 0 0;
+    margin: 0.5rem 0 0;
 }
 
 .cms-content .list .property-line-availability {
     display: flex;
     gap: 0.35rem;
-    margin-top: 0.45rem;
+    margin-top: 0.35rem;
 }
 
 .cms-content .list .property-available_from {
@@ -126,7 +127,7 @@
     letter-spacing: 0.04em;
     max-width: 100%;
     overflow-wrap: anywhere;
-    padding: 0.15rem 0.45rem;
+    padding: 0.1rem 0.4rem;
     text-align: center;
     text-transform: uppercase;
     white-space: normal;
@@ -152,8 +153,8 @@
 .cms-content .list .list-list .intro {
     color: var(--pico-muted-color);
     display: -webkit-box;
-    line-height: 1.55;
-    margin-top: 0.65rem;
+    line-height: 1.45;
+    margin-top: 0.5rem;
     overflow: hidden;
     -webkit-box-orient: vertical;
 }

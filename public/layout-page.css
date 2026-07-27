@@ -21,7 +21,7 @@
     padding: clamp(5rem, 10vw, 8rem) min(5%, 2rem) clamp(8rem, 14vw, 11rem);
 }
 
-.type-page main .cms-content > :nth-child(even) {
+.type-page main .cms-content > :nth-child(3n) {
     background-color: var(--pico-muted-background-color);
 }
 
