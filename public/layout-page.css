@@ -8,10 +8,6 @@
 }
 
 .type-page main .cms-content > * {
-    margin-block: 0.75rem;
-}
-
-.type-page main .cms-content > .hero:first-child {
     margin-block: 0;
 }
 
@@ -26,7 +22,7 @@
 }
 
 .cms-content .container {
-    padding: clamp(3.5rem, 8vw, 8rem) min(5%, 2rem);
+    padding: clamp(3.5rem, 8vw, 6rem) min(5%, 2rem);
 }
 
 #home-properties .list-item picture {
