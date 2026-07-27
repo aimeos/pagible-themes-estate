@@ -3,181 +3,6 @@
  * @license MIT, https://opensource.org/license/MIT
  */
 
-body.theme-estate > header {
-    background-color: #FFFFFFF2;
-    border-bottom: 1px solid var(--pico-muted-border-color);
-}
-
-body.theme-estate > header > nav {
-    margin-inline: auto;
-    max-width: 80rem;
-    padding-inline: min(5%, 2rem);
-}
-
-body.theme-estate > header nav .menu a.active {
-    position: relative;
-}
-
-body.theme-estate > header nav .menu a.active::after {
-    background-color: var(--pico-primary);
-    block-size: 2px;
-    content: "";
-    inset-block-end: 0.25rem;
-    inset-inline: var(--pico-nav-link-spacing-horizontal);
-    position: absolute;
-}
-
-@media (min-width: 992px) {
-    body.theme-estate > header > nav {
-        align-items: center;
-        display: flex;
-        padding-inline: min(4vw, 3rem);
-    }
-
-    body.theme-estate > header > nav > ul:first-child {
-        flex: 1 1 auto;
-        min-height: 4.5rem;
-        min-width: 0;
-    }
-
-    body.theme-estate > header > nav > .menu {
-        align-items: center;
-        flex: 0 0 auto;
-        justify-content: flex-end;
-        min-height: 4.5rem;
-    }
-
-    body.theme-estate > header > nav > .menu > li {
-        margin-inline: 0 1.25rem;
-        padding: 0;
-    }
-
-    body.theme-estate > header > nav > .menu > li:first-child {
-        margin-inline: 0;
-        order: 99;
-    }
-
-    body.theme-estate > header > nav > .menu a,
-    body.theme-estate > header > nav > .menu summary {
-        hyphens: none;
-        min-height: 4.5rem;
-        overflow-wrap: normal;
-        padding-inline: 0;
-        white-space: nowrap;
-    }
-
-    body.theme-estate > header > nav > .menu a.active::after {
-        inset-inline: 0;
-    }
-
-    body.theme-estate > header nav .brand a,
-    body.theme-estate > header nav .brand img {
-        height: 2.5rem;
-    }
-
-    body.theme-estate > header nav .brand img {
-        max-width: min(11rem, 30vw);
-        object-fit: contain;
-        width: auto;
-    }
-}
-
-body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button) {
-    align-items: center;
-    border-radius: var(--pico-border-radius);
-    display: inline-flex;
-    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.72));
-    font-weight: 700;
-    justify-content: center;
-    letter-spacing: 0.02em;
-    max-width: 100%;
-    min-height: 3rem;
-    padding: 0.75rem 1.25rem;
-    text-decoration: none;
-    white-space: normal;
-}
-
-body.theme-estate :is(.btn, .contact button, .property-contact-link, .property-filter-actions button) {
-    background-color: var(--pico-primary);
-    border: 1px solid var(--pico-primary);
-    color: var(--pico-primary-inverse);
-}
-
-body.theme-estate :is(.btn, .contact button, .property-contact-link, .property-filter-actions button):hover {
-    background-color: var(--pico-primary-hover);
-    border-color: var(--pico-primary-hover);
-    color: var(--pico-primary-inverse);
-}
-
-body.theme-estate :is(.button, .btn).outline {
-    background-color: transparent;
-    border: 1px solid var(--pico-muted-border-color);
-    color: var(--pico-color);
-}
-
-body.theme-estate :is(.button, .btn).outline:hover {
-    background-color: var(--pico-muted-background-color);
-    border-color: var(--pico-muted-border-color);
-    color: var(--pico-color);
-}
-
-body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button, input, select, textarea):focus-visible {
-    border-color: var(--pico-primary);
-    box-shadow: 0 0 0 3px var(--pico-primary-focus);
-    outline: 2px solid transparent;
-}
-
-body.theme-estate :is(input, select) {
-    border-radius: var(--pico-border-radius);
-    min-height: 3rem;
-}
-
-body.theme-estate textarea {
-    border-radius: var(--pico-border-radius);
-}
-
-body.theme-estate > footer.bottom {
-    background-color: var(--pico-muted-background-color);
-    border-top: 1px solid var(--pico-muted-border-color);
-    padding-block: 2.5rem;
-}
-
-body.theme-estate > footer.bottom .container {
-    margin-inline: auto;
-    max-width: 80rem;
-    padding-inline: min(5%, 2rem);
-}
-
-body.theme-estate > footer.bottom .copyright {
-    color: var(--pico-muted-color);
-    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.68));
-    letter-spacing: 0.04em;
-}
-
-body.theme-estate :is(h1, h2, h3, .btn, .button, .property-contact-link),
-body.theme-estate > header nav :is(a, summary) {
-    hyphens: auto;
-    overflow-wrap: anywhere;
-}
-
-body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h1 {
-    font-size: clamp(2.25rem, 5vw, 4.25rem);
-    line-height: 1.08;
-    text-wrap: balance;
-}
-
-body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h2 {
-    font-size: clamp(1.75rem, 3.5vw, 3rem);
-    line-height: 1.15;
-    text-wrap: balance;
-}
-
-body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h3 {
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    line-height: 1.25;
-    text-wrap: balance;
-}
-
 :root[data-theme=light] {
     --pico-font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --pico-font-family-display: Georgia, 'Times New Roman', serif;
@@ -190,7 +15,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-nav-link-spacing-horizontal: 0.625rem;
     --pico-color: #242424;
     --pico-background-color: #FFFFFF;
-    --pico-text-selection-color: #D0000022;
+    --pico-text-selection-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
     --pico-muted-color: #606060;
     --pico-muted-border-color: #24242424;
     --pico-muted-background-color: #F5F5F3;
@@ -205,24 +30,24 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-contrast-focus: var(--pico-text-selection-color);
     --pico-contrast-inverse: #FFFFFF;
     --pico-primary: #D00000;
-    --pico-primary-background: #D000000F;
+    --pico-primary-background: color-mix(in srgb, var(--pico-primary) 10%, transparent);
     --pico-primary-border: var(--pico-primary);
     --pico-primary-underline: var(--pico-primary);
-    --pico-primary-hover: #A90000;
-    --pico-primary-hover-background: #A900000F;
-    --pico-primary-hover-border: var(--pico-primary-hover);
+    --pico-primary-hover: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
+    --pico-primary-hover-background: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
+    --pico-primary-hover-border: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
     --pico-primary-hover-underline: var(--pico-primary-hover);
-    --pico-primary-focus: var(--pico-text-selection-color);
+    --pico-primary-focus: color-mix(in srgb, var(--pico-primary) 25%, transparent);
     --pico-primary-inverse: #FFFFFF;
     --pico-secondary: #242424;
-    --pico-secondary-background: #2424240F;
+    --pico-secondary-background: color-mix(in srgb, var(--pico-secondary) 12%, transparent);
     --pico-secondary-border: var(--pico-secondary);
     --pico-secondary-underline: var(--pico-secondary);
-    --pico-secondary-hover: #000000;
-    --pico-secondary-hover-background: #0000000F;
-    --pico-secondary-hover-border: var(--pico-secondary-hover);
+    --pico-secondary-hover: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
+    --pico-secondary-hover-background: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
+    --pico-secondary-hover-border: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
     --pico-secondary-hover-underline: var(--pico-secondary-hover);
-    --pico-secondary-focus: var(--pico-text-selection-color);
+    --pico-secondary-focus: color-mix(in srgb, var(--pico-secondary) 25%, transparent);
     --pico-secondary-inverse: #FFFFFF;
     --pico-h1-color: #242424;
     --pico-h2-color: #242424;
@@ -240,55 +65,8 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-code-background-color: var(--pico-contrast);
     --pico-code-color: var(--pico-contrast-inverse);
     --pico-border-radius: 0;
-}
-
-:root[data-theme=light] {
     --pico-form-element-active-border-color: var(--pico-primary);
     --pico-form-element-focus-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
-    --pico-primary-background: color-mix(in srgb, var(--pico-primary) 10%, transparent);
-    --pico-primary-focus: color-mix(in srgb, var(--pico-primary) 25%, transparent);
-    --pico-primary-hover: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
-    --pico-primary-hover-background: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
-    --pico-primary-hover-border: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
-    --pico-secondary-background: color-mix(in srgb, var(--pico-secondary) 12%, transparent);
-    --pico-secondary-focus: color-mix(in srgb, var(--pico-secondary) 25%, transparent);
-    --pico-secondary-hover: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
-    --pico-secondary-hover-background: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
-    --pico-secondary-hover-border: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
-    --pico-text-selection-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
-}
-
-@media (max-width: 991px) {
-    body.theme-estate > header nav > .menu {
-        background-color: var(--pico-background-color);
-        border-top: 1px solid var(--pico-muted-border-color);
-        box-shadow: var(--pico-box-shadow);
-        max-height: calc(100dvh - 3rem);
-        overscroll-behavior: contain;
-        overflow-y: auto;
-        padding: 0.75rem min(5%, 2rem) 1.25rem;
-    }
-
-    body.theme-estate > header nav > .menu > li {
-        border-bottom: 1px solid var(--pico-muted-border-color);
-        width: 100%;
-    }
-
-    body.theme-estate > header nav > .menu > li:first-child {
-        border-bottom-color: var(--pico-secondary);
-    }
-
-    body.theme-estate > header nav > .menu a,
-    body.theme-estate > header nav > .menu summary {
-        align-items: center;
-        display: flex;
-        min-height: 3rem;
-        width: 100%;
-    }
-
-    body.theme-estate > header nav > .menu details ul {
-        padding-inline-start: 1rem;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -302,10 +80,8 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     }
 }
 
-@media (min-width: 1024px) {
-    :host, :root {
-        --pico-font-size: 1rem !important;
-    }
+:host, :root {
+    --pico-font-size: clamp(1rem, calc(0.925rem + 0.3vw), 1.125rem) !important;
 }
 
 * {
@@ -353,27 +129,28 @@ nav li :where(a,[role=link]) {
 }
 
 body > header {
-    border-bottom: 1px solid var(--pico-muted-border-color);
-    background-color: color-mix(in srgb, #FFFFFF 94%, transparent);
+    background-color: #FFFFFFF2;
     backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     position: sticky;
-    z-index: 100;
     top: 0;
+    z-index: 100;
 }
 
 body > header > nav {
-    max-width: 1280px;
-    margin: auto;
+    margin-inline: auto;
+    max-width: 80rem;
+    padding-inline: min(5%, 2rem);
 }
 
-header nav ol,
-header nav ul,
-header nav li {
-    margin: 0 var(--pico-nav-element-spacing-horizontal);
+header nav > ul {
+    margin-block: 0;
+    margin-inline: var(--pico-nav-element-spacing-horizontal);
 }
 
 header nav > ul > li {
     list-style: none;
+    margin: 0 var(--pico-nav-element-spacing-horizontal);
     padding: 0 0.25rem;
 }
 
@@ -443,6 +220,19 @@ header nav ul.menu > li:has(+ li.login) > a:active {
     color: var(--pico-primary-inverse);
 }
 
+header nav > .menu > li > a.active {
+    position: relative;
+}
+
+header nav > .menu > li > a.active::after {
+    background-color: var(--pico-primary);
+    block-size: 2px;
+    content: "";
+    inset-block-end: 0.25rem;
+    inset-inline: var(--pico-nav-link-spacing-horizontal);
+    position: absolute;
+}
+
 header nav details summary::marker,
 header nav details summary::-webkit-details-marker {
     display: none;
@@ -452,10 +242,31 @@ header nav details[open] summary::after {
     transform: rotate(0.5turn) translateX(-0.2rem);
 }
 
-header nav details > summary + ul.align {
-    width: auto;
-    left: auto;
-    right: auto;
+header nav .menu details.dropdown > ul.align {
+    inset-inline-end: auto;
+    inset-inline-start: 0;
+    max-width: min(22rem, calc(100vw - 2rem));
+    min-width: 14rem;
+    padding-block: 0.5rem;
+    width: max-content;
+}
+
+header nav .menu details.dropdown > ul.align > li {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+header nav .menu details.dropdown > ul.align > li > a {
+    min-height: 0;
+    padding: 0.7rem 1rem;
+    white-space: normal;
+    width: 100%;
+}
+
+header nav .menu details.dropdown > ul.align > li > a:is(:hover, :focus, .active) {
+    background-color: var(--pico-dropdown-hover-background-color);
+    color: var(--pico-primary-hover);
 }
 
 header nav .brand {
@@ -498,6 +309,61 @@ header nav .sidebar-close button {
     border: none;
 }
 
+@media (min-width: 992px) {
+    body > header > nav {
+        align-items: center;
+        display: flex;
+        padding-inline: min(4vw, 3rem);
+    }
+
+    body > header > nav > ul:first-child {
+        flex: 1 1 auto;
+        min-height: 4.5rem;
+        min-width: 0;
+    }
+
+    body > header > nav > .menu {
+        align-items: center;
+        flex: 0 0 auto;
+        justify-content: flex-end;
+        min-height: 4.5rem;
+    }
+
+    body > header > nav > .menu > li {
+        margin-inline: 0 1.25rem;
+        padding: 0;
+    }
+
+    body > header > nav > .menu > li:first-child {
+        margin-inline: 0;
+        order: 99;
+    }
+
+    body > header > nav > .menu > li > a,
+    body > header > nav > .menu > li > details > summary {
+        hyphens: none;
+        min-height: 4.5rem;
+        overflow-wrap: normal;
+        padding-inline: 0;
+        white-space: nowrap;
+    }
+
+    body > header > nav > .menu > li > a.active::after {
+        inset-inline: 0;
+    }
+
+    header nav .brand a,
+    header nav .brand img {
+        height: 2.5rem;
+    }
+
+    header nav .brand img {
+        max-width: min(11rem, 30vw);
+        object-fit: contain;
+        width: auto;
+    }
+}
+
 @media (max-width: 991px) {
     header nav .menu-open.show,
     header nav .menu-close.show {
@@ -505,17 +371,16 @@ header nav .sidebar-close button {
     }
 
     header nav.small {
-        display: block;
-        overflow-y: auto;
-        position: fixed;
-        padding: 0.5rem 1.5rem;
         background-color: var(--pico-background-color);
-        min-height: 100vh;
-        z-index: 100;
-        width: 100%;
+        display: block;
         height: 100%;
-        left: 0;
-        top: 0;
+        inset: 0;
+        min-height: 100vh;
+        overflow-y: auto;
+        padding: 0.5rem min(5%, 2rem);
+        position: fixed;
+        width: 100%;
+        z-index: 100;
     }
 
     header nav .menu {
@@ -523,26 +388,57 @@ header nav .sidebar-close button {
     }
 
     header nav.small .menu {
-        flex-direction: column;
+        background-color: var(--pico-background-color);
+        border-top: 1px solid var(--pico-muted-border-color);
+        box-shadow: var(--pico-box-shadow);
         display: flex;
+        flex-direction: column;
+        max-height: calc(100dvh - 3rem);
+        overscroll-behavior: contain;
+        overflow-y: auto;
+        padding: 0.75rem 0 1.25rem;
     }
 
     header nav .menu ul {
         display: block;
     }
 
-    header nav .menu li {
-        padding: 0 2rem;
+    header nav.small .menu > li {
+        border-bottom: 1px solid var(--pico-muted-border-color);
+        margin: 0;
+        padding: 0;
         width: 100%;
     }
 
-    header nav.small .menu details > summary + ul.align {
-        position: relative;
+    header nav.small .menu > li:first-child {
+        border-bottom-color: var(--pico-secondary);
+    }
+
+    header nav.small .menu > li > a,
+    header nav.small .menu > li > details > summary {
+        align-items: center;
+        display: flex;
+        min-height: 3rem;
+        padding: 0.75rem 0;
+        width: 100%;
+    }
+
+    header nav.small .menu details.dropdown > ul.align {
         backdrop-filter: none;
         background: none;
-        box-shadow: none;
         border: none;
-        padding: 0;
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+        min-width: 0;
+        padding: 0 0 0.5rem 1rem;
+        position: relative;
+        width: 100%;
+    }
+
+    header nav.small .menu details.dropdown > ul.align > li > a {
+        min-height: 2.75rem;
+        padding: 0.625rem 0.75rem;
     }
 
     header nav.small .menu details > summary::after {
@@ -557,6 +453,10 @@ header nav .sidebar-close button {
         background-size: 1rem auto;
         background-repeat: no-repeat;
         width: 1rem;
+    }
+
+    header nav.small .menu details[open] > summary::after {
+        transform: rotate(0.5turn) translateX(-0.2rem);
     }
 }
 
@@ -602,7 +502,7 @@ nav.breadcrumb ul li a:hover {
 
 
 .container {
-    max-width: 1200px !important;
+    max-width: 80rem !important;
 }
 
 .cms-text {
@@ -612,24 +512,11 @@ nav.breadcrumb ul li a:hover {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--pico-font-family-display);
     font-feature-settings: "liga", "dlig", "kern";
+    font-weight: 500;
+    hyphens: auto;
     letter-spacing: 0.005em;
+    overflow-wrap: anywhere;
     white-space: pre-line;
-}
-
-h1, h2 {
-    margin-bottom: 2.5rem;
-}
-
-h1, h2 {
-    font-weight: 500;
-}
-
-h3 {
-    font-weight: 500;
-}
-
-h4, h5, h6 {
-    font-weight: 500;
 }
 
 h1 {
@@ -668,48 +555,90 @@ h4 {
     }
 }
 
+body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h1 {
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
+    line-height: 1.08;
+    text-wrap: balance;
+}
+
+body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h2 {
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimonial, .image-text) h3 {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
 img {
     border-radius: var(--pico-border-radius);
 }
 
-.btn {
-    display: inline-block;
-    text-decoration: none;
-    vertical-align: sub;
-    padding: 1rem 2.25rem;
-    margin: 0.5rem 0;
-    line-height: inherit;
+body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button) {
+    align-items: center;
+    border-radius: var(--pico-border-radius);
+    display: inline-flex;
     font-family: var(--pico-font-family-sans-serif);
     font-size: max(0.875rem, calc(var(--pico-font-size) * 0.72));
-    font-weight: 600;
+    font-weight: 700;
+    hyphens: auto;
+    justify-content: center;
     letter-spacing: 0.02em;
-    text-transform: none;
-    border: 1px solid var(--pico-contrast);
-    border-radius: var(--pico-border-radius);
-    color: var(--pico-contrast);
-    background-color: transparent;
+    line-height: inherit;
+    max-width: 100%;
+    min-height: 3rem;
+    overflow-wrap: anywhere;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    white-space: normal;
 }
 
-.btn:hover {
-    background-color: var(--pico-contrast);
-    color: var(--pico-contrast-inverse);
-    border-color: var(--pico-contrast);
-    opacity: 1;
-}
-
-.btn-primary,
-.btn:first-child {
+body.theme-estate :is(.btn, .contact button, .property-contact-link, .property-filter-actions button) {
     background-color: var(--pico-primary);
+    border: 1px solid var(--pico-primary);
     color: var(--pico-primary-inverse);
-    border-color: var(--pico-primary);
 }
 
-.btn-primary:hover,
-.btn:first-child:hover {
+body.theme-estate :is(.btn, .contact button, .property-contact-link, .property-filter-actions button):hover {
     background-color: var(--pico-primary-hover);
-    color: var(--pico-primary-inverse);
     border-color: var(--pico-primary-hover);
+    color: var(--pico-primary-inverse);
+}
+
+body.theme-estate :is(.button, .btn).outline {
+    background-color: transparent;
+    border: 1px solid var(--pico-muted-border-color);
+    color: var(--pico-color);
+}
+
+body.theme-estate :is(.button, .btn).outline:hover {
+    background-color: var(--pico-muted-background-color);
+    border-color: var(--pico-muted-border-color);
+    color: var(--pico-color);
+}
+
+body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button, input, select, textarea):focus-visible {
+    border-color: var(--pico-primary);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
+    outline: 2px solid transparent;
+}
+
+body.theme-estate :is(input, select) {
+    border-radius: var(--pico-border-radius);
+    min-height: 3rem;
+}
+
+body.theme-estate textarea {
+    border-radius: var(--pico-border-radius);
+}
+
+.btn {
+    margin: 0.5rem 0;
+    vertical-align: sub;
 }
 
 .hidden {

@@ -236,9 +236,7 @@
 
 .cms-content .list .property-filter input,
 .cms-content .list .property-filter select {
-    border-radius: var(--pico-border-radius);
     margin-bottom: 0;
-    min-height: 3rem;
     width: 100%;
 }
 
@@ -253,8 +251,6 @@
 .cms-content .list .property-filter-actions button,
 .cms-content .list .property-filter-actions .button {
     margin: 0;
-    max-width: 100%;
-    white-space: normal;
     width: auto;
 }
 

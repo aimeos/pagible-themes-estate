@@ -19,19 +19,7 @@
     display: block;
     padding: 0.75rem 1.25rem;
     width: 100%;
-    border-radius: var(--pico-border-radius);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.contact textarea {
-    border-radius: var(--pico-border-radius);
-}
-
-.contact input:focus,
-.contact textarea:focus {
-    border-color: var(--pico-primary);
-    box-shadow: 0 0 0 3px var(--pico-primary-focus);
-    outline: none;
 }
 
 .contact input::-webkit-input-placeholder,

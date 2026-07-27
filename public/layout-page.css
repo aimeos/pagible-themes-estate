@@ -11,6 +11,43 @@
     margin-block: 0.75rem;
 }
 
+.type-page main .cms-content > :nth-child(3n) {
+    --pico-color: var(--pico-contrast-inverse);
+    --pico-form-element-background-color: #303030;
+    --pico-h1-color: var(--pico-contrast-inverse);
+    --pico-h2-color: var(--pico-contrast-inverse);
+    --pico-h3-color: var(--pico-contrast-inverse);
+    --pico-h4-color: var(--pico-contrast-inverse);
+    --pico-h5-color: var(--pico-contrast-hover-background);
+    --pico-h6-color: var(--pico-contrast-hover-background);
+    --pico-muted-background-color: #FFFFFF18;
+    --pico-muted-border-color: #FFFFFF38;
+    --pico-muted-color: #D8D8D4;
+    --pico-primary: var(--pico-contrast-inverse);
+    --pico-primary-border: var(--pico-contrast-inverse);
+    --pico-primary-focus: #FFFFFF55;
+    --pico-primary-hover: var(--pico-contrast-hover-background);
+    --pico-primary-hover-border: var(--pico-contrast-hover-background);
+    --pico-primary-inverse: var(--pico-contrast);
+    --pico-secondary: var(--pico-contrast-inverse);
+    --pico-secondary-background: #FFFFFF18;
+    --pico-contrast-background: #303030;
+    background-color: var(--pico-contrast);
+    color: var(--pico-color);
+}
+
+.type-page main .cms-content > :nth-child(3n) :is(.contact label, .table-responsive .th, .testimonial .name) {
+    color: var(--pico-color);
+}
+
+.type-page main .cms-content > :nth-child(3n) .list .second {
+    background-color: var(--pico-contrast-background);
+}
+
+.type-page main .cms-content > :nth-child(3n) :focus-visible {
+    outline-color: var(--pico-contrast-inverse);
+}
+
 .cms-content .container {
     padding: clamp(3.5rem, 8vw, 8rem) min(5%, 2rem);
 }

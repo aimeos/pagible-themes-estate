@@ -443,26 +443,10 @@ body.type-property .property-gallery .cover img {
 }
 
 .property .property-contact-link {
-    background-color: var(--pico-primary);
-    border: 1px solid var(--pico-primary);
-    border-radius: 0;
-    color: var(--pico-primary-inverse);
     display: flex;
     margin-top: 1.5rem;
-    max-width: 100%;
-    min-height: 3rem;
     overflow-wrap: anywhere;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    white-space: normal;
     width: 100%;
-}
-
-.property .property-contact-link:hover,
-.property .property-contact-link:focus {
-    background-color: var(--pico-primary-hover);
-    border-color: var(--pico-primary-hover);
-    color: var(--pico-primary-inverse);
 }
 
 .property .property-status {
@@ -620,6 +604,7 @@ body.type-property .property-gallery .cover img {
 
 @media (min-width: 900px) {
     body.type-property .property-gallery .slider-container {
+        align-items: stretch;
         display: grid;
         gap: 0.75rem;
         grid-auto-columns: auto;
@@ -633,6 +618,8 @@ body.type-property .property-gallery .cover img {
 
     body.type-property .property-gallery .slider-container > * {
         aspect-ratio: auto;
+        height: 100%;
+        min-height: 0;
         min-width: 0;
     }
 

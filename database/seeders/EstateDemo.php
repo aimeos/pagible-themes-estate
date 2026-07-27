@@ -269,7 +269,7 @@ class EstateDemo extends AbstractDemo
                 'file' => ['id' => $this->img( 'city' ), 'type' => 'file'],
                 'position' => 'end',
                 'ratio' => '1-2',
-                'text' => '## Practical signal\n\nBefore expanding allocation, compare rental carry, demand resilience, and tenant retention by zip code rather than headline yield alone.',
+                'text' => "## Practical signal\n\nBefore expanding allocation, compare rental carry, demand resilience, and tenant retention by zip code rather than headline yield alone.",
             ]],
         ], $news );
 
