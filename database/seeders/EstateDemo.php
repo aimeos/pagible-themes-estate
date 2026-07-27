@@ -23,10 +23,11 @@ class EstateDemo extends AbstractDemo
     /** @var array<string, string> Meta descriptions keyed by page path */
     private const DESCRIPTIONS = [
         'properties' => 'Current residential, rental, and commercial properties, presented together for direct comparison.',
+        'exposes' => 'Detailed presentations for every current residential and commercial property.',
+        'exposes/urban-penthouse-berlin' => 'Luxury penthouse with rooftop access and premium interior context in central Berlin.',
+        'exposes/riverfront-office-suite' => 'Converted office floorplan for mixed retail and hospitality-adjacent use.',
+        'exposes/harbor-retail-loft' => 'Harbor-side commercial property with flexible frontage and modern infrastructure.',
         'news' => 'Weekly market updates and property strategy notes for clients evaluating high-end transactions.',
-        'properties/urban-penthouse-berlin' => 'Luxury penthouse with rooftop access and premium interior context in central Berlin.',
-        'properties/riverfront-office-suite' => 'Converted office floorplan for mixed retail and hospitality-adjacent use.',
-        'properties/harbor-retail-loft' => 'Harbor-side commercial property with flexible frontage and modern infrastructure.',
         'news/why-portfolio-diversification-matters' => 'How location, tenant mix, and lease duration affect long-term property performance.',
         'news/renovation-as-a-leverage-point' => 'Practical ways to preserve value through targeted upgrades and tenant-ready delivery.',
     ];
@@ -56,7 +57,7 @@ class EstateDemo extends AbstractDemo
     private string $logoFile;
 
 
-    protected function addProperties( Page $home, string $propertiesId ) : static
+    protected function addProperties( Page $home, string $exposesId, string $propertiesId ) : static
     {
         $properties = $this->page( [
             'id' => $propertiesId,
@@ -81,7 +82,28 @@ class EstateDemo extends AbstractDemo
                 'filters' => true,
                 'limit' => 24,
                 'order' => '_lft',
-                'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
+                'parent-page' => ['value' => $exposesId, 'label' => 'Exposes'],
+            ]],
+        ], $home );
+
+        $exposes = $this->page( [
+            'id' => $exposesId,
+            'lang' => 'en',
+            'name' => 'Exposes',
+            'title' => 'Property exposes',
+            'path' => 'exposes',
+            'tag' => 'exposes',
+            'type' => 'page',
+            'status' => 2,
+        ], [
+            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
+                'title' => 'Property exposes',
+                'subtitle' => 'Detailed presentations',
+                'text' => 'Open the full presentation for each current property, or return to the complete overview to compare location, price, availability, and fit.',
+                'background' => ['id' => $this->img( 'market' ), 'type' => 'file'],
+                'background-animation' => 'zoom',
+                'url' => '/properties',
+                'button' => 'View all properties',
             ]],
         ], $home );
 
@@ -89,7 +111,7 @@ class EstateDemo extends AbstractDemo
             'lang' => 'en',
             'name' => 'Urban Penthouse Berlin',
             'title' => 'Urban Penthouse, Berlin',
-            'path' => 'properties/urban-penthouse-berlin',
+            'path' => 'exposes/urban-penthouse-berlin',
             'tag' => 'property',
             'type' => 'property',
             'status' => 1,
@@ -133,13 +155,13 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- 3 bedrooms / 3 bathrooms\n- Private terrace and panoramic views\n- Smart home controls\n- Private parking garage",
                 ],
             ),
-        ], $properties );
+        ], $exposes );
 
         $this->page( [
             'lang' => 'en',
             'name' => 'Riverfront Office Suite',
             'title' => 'Riverfront Office Suite',
-            'path' => 'properties/riverfront-office-suite',
+            'path' => 'exposes/riverfront-office-suite',
             'tag' => 'property',
             'type' => 'property',
             'status' => 1,
@@ -184,13 +206,13 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- Open floor plan with co-working layout\n- Reception and loading access\n- 24/7 elevator and security\n- Built-in audio-visual systems",
                 ],
             ),
-        ], $properties );
+        ], $exposes );
 
         $this->page( [
             'lang' => 'en',
             'name' => 'Harbor Retail Loft',
             'title' => 'Harbor Retail Loft',
-            'path' => 'properties/harbor-retail-loft',
+            'path' => 'exposes/harbor-retail-loft',
             'tag' => 'property',
             'type' => 'property',
             'status' => 1,
@@ -233,7 +255,7 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- Street frontage and high visibility\n- Flexible tenant circulation\n- Storage annex and rear access\n- Elevator connection to mezzanine",
                 ],
             ),
-        ], $properties );
+        ], $exposes );
 
         return $this;
     }
@@ -513,7 +535,7 @@ class EstateDemo extends AbstractDemo
     }
 
 
-    protected function home( string $newsId, string $propertiesId ) : Page
+    protected function home( string $exposesId, string $newsId, string $propertiesId ) : Page
     {
         $elementId = $this->element();
         $fileId = $this->file();
@@ -550,7 +572,7 @@ class EstateDemo extends AbstractDemo
                 'filters' => true,
                 'limit' => 6,
                 'order' => '_lft',
-                'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
+                'parent-page' => ['value' => $exposesId, 'label' => 'Exposes'],
             ]],
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
                 'file' => ['id' => $this->img( 'advisory' ), 'type' => 'file'],
@@ -781,11 +803,12 @@ SVG;
 
     protected function pages() : void
     {
+        $exposesId = (string) Str::uuid7();
         $newsId = (string) Str::uuid7();
         $propertiesId = (string) Str::uuid7();
-        $home = $this->home( $newsId, $propertiesId );
+        $home = $this->home( $exposesId, $newsId, $propertiesId );
 
-        $this->addProperties( $home, $propertiesId )
+        $this->addProperties( $home, $exposesId, $propertiesId )
             ->addNews( $home, $newsId );
     }
 }

@@ -151,6 +151,11 @@
                                 <details class="dropdown is-menu">
                                     <summary>{{ cms($item, 'name') }}</summary>
                                     <ul class="align">
+                                        <li>
+                                            <a href="{{ cmsroute($item) }}" class="{{ $page->is($item) ? 'active' : '' }}">
+                                                {{ cms($item, 'name') }}
+                                            </a>
+                                        </li>
                                         @foreach($item->children as $subItem)
                                             <li>
                                                 <a href="{{ cmsroute($subItem) }}" class="{{ $page->isSelfOrDescendantOf($subItem) ? 'active' : '' }}">

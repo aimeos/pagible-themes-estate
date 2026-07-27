@@ -53,7 +53,9 @@ class Properties
         $type = $enabled ? strtolower( trim( (string) $request->query( 'type', '' ) ) ) : '';
         $offer = $enabled ? strtolower( trim( (string) $request->query( 'offer', '' ) ) ) : '';
         $roomsMin = $enabled && is_numeric( $request->query( 'rooms_min' ) )
-            && (float) $request->query( 'rooms_min' ) >= 0 ? (float) $request->query( 'rooms_min' ) : null;
+            ? (float) $request->query( 'rooms_min' )
+            : null;
+        $roomsMin = $roomsMin !== null && $roomsMin >= 1 && $roomsMin <= 999 ? $roomsMin : null;
         $availableBy = $enabled ? trim( (string) $request->query( 'available_by', '' ) ) : '';
 
         $city = mb_strlen( $city ) <= 255 ? $city : '';

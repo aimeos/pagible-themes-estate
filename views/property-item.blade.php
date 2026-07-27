@@ -29,9 +29,6 @@
             ])->filter())->isNotEmpty())
                 <p class="property-location">
                     @foreach($location as $value)
-                        @if(!$loop->first)
-                            <span class="property-meta-separator" aria-hidden="true">,</span>
-                        @endif
                         <span>{{ $value }}</span>
                     @endforeach
                 </p>

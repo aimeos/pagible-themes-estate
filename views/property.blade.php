@@ -96,9 +96,6 @@
             ])->filter())->isNotEmpty())
                 <p class="property-location">
                     @foreach($location as $value)
-                        @if(!$loop->first)
-                            <span aria-hidden="true">›</span>
-                        @endif
                         <span>{{ $value }}</span>
                     @endforeach
                 </p>

@@ -65,7 +65,6 @@
     font-size: clamp(1rem, 1.8vw, 1.2rem);
     font-weight: 500;
     line-height: 1.25;
-    margin: 0 0 0.1rem;
 }
 
 .cms-content .list .property-location {
@@ -73,6 +72,11 @@
     font-size: max(0.875rem, calc(var(--pico-font-size) * 0.66));
     letter-spacing: 0.02em;
     margin: 0 0 0.3rem;
+}
+
+.cms-content .list .property-location > span + span::before {
+    content: "·";
+    margin-inline: 0.35rem;
 }
 
 .cms-content .list .property-price {
@@ -99,7 +103,6 @@
 .cms-content .list .property-line-availability {
     color: var(--pico-muted-color);
     font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
-    margin: 0;
 }
 
 .cms-content .list .property-line-status {
@@ -222,14 +225,25 @@
 
 .cms-content .list .property-filter input,
 .cms-content .list .property-filter select {
+    border: 1px solid var(--pico-contrast-border);
     margin-bottom: 0;
     padding: 0.75rem 1.25rem;
     width: 100%;
 }
 
-.cms-content .list .property-filter input[type="date"],
 .cms-content .list .property-filter select {
-    padding-inline-end: 2.75rem;
+    appearance: none;
+    background-image: var(--pico-icon-chevron);
+    background-position: center right 0.875rem;
+    background-repeat: no-repeat;
+    background-size: 1rem auto;
+    padding-right: 2.75rem;
+}
+
+.cms-content .list .property-filter select:dir(rtl) {
+    background-position: center left 0.875rem;
+    padding-left: 2.75rem;
+    padding-right: 1.25rem;
 }
 
 .cms-content .list .property-filter select,

@@ -9,7 +9,10 @@ namespace Tests;
 
 use Aimeos\Cms\Actions\Properties;
 use Aimeos\Cms\Models\Page;
+use Aimeos\Cms\Navigation;
+use Aimeos\Cms\Tenancy;
 use Carbon\CarbonImmutable;
+use Database\Seeders\EstateDemo;
 use Database\Seeders\TestSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -21,6 +24,49 @@ class PropertiesActionTest extends ThemeTestAbstract
     use RefreshDatabase;
 
     protected $seeder = TestSeeder::class;
+
+
+    public function testDemoGroupsPropertyItemsBelowExposes(): void
+    {
+        require_once dirname( __DIR__ ) . '/database/seeders/EstateDemo.php';
+
+        ( new EstateDemo( 'estate', 'estate' ) )->seed();
+        Tenancy::$callback = fn() => 'estate';
+        app()->forgetInstance( Tenancy::class );
+
+        $home = Page::where( 'tag', 'root' )->firstOrFail();
+        $properties = Page::where( 'path', 'properties' )->firstOrFail();
+        $exposes = Page::where( 'path', 'exposes' )->firstOrFail();
+        $items = Page::where( 'type', 'property' )->defaultOrder()->get();
+
+        $this->assertTrue( $properties->parent()->firstOrFail()->is( $home ) );
+        $this->assertTrue( $exposes->parent()->firstOrFail()->is( $home ) );
+        $this->assertSame( 2, $exposes->status );
+        $this->assertCount( 0, $properties->children()->get() );
+        $this->assertCount( 3, $items );
+        $this->assertNotContains( $exposes->id, ( new Navigation( $home, null ) )->items()->pluck( 'id' ) );
+
+        foreach( $items as $item ) {
+            $this->assertTrue( $item->parent()->firstOrFail()->is( $exposes ) );
+            $this->assertStringStartsWith( 'exposes/', $item->path );
+        }
+
+        $lists = collect( [$home, $properties] )->map(
+            fn( $page ) => collect( (array) $page->content )
+                ->first( fn( $item ) => ( $item->type ?? null ) === 'estate::properties' )
+        );
+        $this->assertSame(
+            [$exposes->id, $exposes->id],
+            $lists->map( fn( $item ) => $item->data->{'parent-page'}->value )->all()
+        );
+
+        $list = $lists->last();
+        $request = Request::create( '/properties', 'GET' );
+        $request->setUserResolver( fn() => null );
+        $result = ( new Properties() )( $request, $properties, $list );
+
+        $this->assertSame( 3, $result->items->total() );
+    }
 
 
     public function testFiltersByRequestedTypeAndCity()
@@ -90,6 +136,29 @@ class PropertiesActionTest extends ThemeTestAbstract
 
         $this->assertSame( 1, $result->items->total() );
         $this->assertSame( 'Three Room Property', $result->items->first()->title );
+    }
+
+
+    public function testIgnoresOutOfRangeMinimumRooms()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $item = (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) [ 'value' => $list->id ],
+            ],
+        ];
+
+        foreach( [0, 1000] as $value ) {
+            $request = Request::create( '/properties', 'GET', ['rooms_min' => $value] );
+            $request->setUserResolver( fn() => null );
+
+            $result = ( new Properties() )( $request, $list, $item );
+
+            $this->assertNull( $result->filters->rooms_min );
+        }
     }
 
 

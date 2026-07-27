@@ -45,7 +45,7 @@
 
                 <div class="property-filter">
                     <label for="property-list-rooms-min-{{ $data->id ?? 'list' }}">{{ __('Minimum rooms') }}</label>
-                    <input id="property-list-rooms-min-{{ $data->id ?? 'list' }}" type="number" name="rooms_min" value="{{ $filters->rooms_min ?? '' }}" min="0" step="0.5">
+                    <input id="property-list-rooms-min-{{ $data->id ?? 'list' }}" type="number" name="rooms_min" value="{{ $filters->rooms_min ?? '' }}" min="1" max="999" step="0.5">
                 </div>
 
                 <div class="property-filter">
