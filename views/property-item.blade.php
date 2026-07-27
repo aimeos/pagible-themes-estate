@@ -1,7 +1,10 @@
 <a href="{{ route('cms.page', ['path' => $item->path]) }}" class="list-item" role="listitem"
     aria-labelledby="property-title-{{ cms($item, 'id') ?: md5((string) $item->path) }}"
     aria-describedby="property-meta-{{ cms($item, 'id') ?: md5((string) $item->path) }}">
-@if($property = $property ?? collect(cms($item, 'content'))->first(fn($element) => ($element->type ?? null) === 'property'))
+@if($property = $property ?? collect(cms($item, 'content'))
+    ->filter(fn($element) => ($element->type ?? null) === 'estate::property')
+    ->map(fn($element) => (object) data_get($element, 'data', []))
+    ->first())
     @if($file = cms(cms($item, 'files'), data_get(collect((array) ($property->files ?? []))
         ->map( fn( $fileId ) => (object) ['id' => is_scalar( $fileId ) ? (string) $fileId : data_get( $fileId, 'id' )] )
         ->first(), 'id', $property->file?->id ?? null)))

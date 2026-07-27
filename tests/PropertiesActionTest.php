@@ -267,7 +267,8 @@ class PropertiesActionTest extends ThemeTestAbstract
             'content' => [
                 [
                     'id' => (string) mt_rand( 100000, 999999 ),
-                    'type' => 'property',
+                    'type' => 'estate::property',
+                    'group' => 'main',
                     'data' => array_diff_key( $data, ['path' => true, 'title' => true] ),
                 ],
             ],
@@ -282,8 +283,10 @@ class PropertiesActionTest extends ThemeTestAbstract
     }
 
 
-    protected function propertyData( Page $page ) : object
+    protected function getPackageProviders( $app )
     {
-        return collect( (array) $page->content )->first( fn( $el ) => ( $el->type ?? null ) === 'property' );
+        return array_merge( parent::getPackageProviders( $app ), [
+            'Aimeos\Cms\EstateServiceProvider',
+        ] );
     }
 }

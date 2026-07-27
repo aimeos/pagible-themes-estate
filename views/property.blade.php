@@ -98,8 +98,8 @@
     </div>
 
     @if(($facts = collect([
-        'property_type' => ['label' => __('Type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->property_type))],
-        'offer_type' => ['label' => __('Offer type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->offer_type))],
+        'property_type' => ['label' => __('Type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->property_type)))],
+        'offer_type' => ['label' => __('Offer type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->offer_type)))],
         'area' => ['label' => __('Area'), 'value' => __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit])],
         'living_area' => ['label' => __('Living area'), 'value' => $data->living_area !== null ? __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->living_area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit]) : null],
         'plot_area' => ['label' => __('Plot area'), 'value' => $data->plot_area !== null ? __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->plot_area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit]) : null],

@@ -716,8 +716,9 @@ class EstateDemo extends AbstractDemo
 
     protected function property( string $text, array $fileIds, string $offerType, string $status, int|float $price, string $district, int|float $area, int $bedrooms, int $bathrooms, array $extra = [] ) : array
     {
-        return ['id' => Utils::uid(), 'type' => 'property', 'group' => 'main', 'files' => array_map( fn( $id ) => ['id' => $id, 'type' => 'file'], $fileIds ), 'data' => [
+        return ['id' => Utils::uid(), 'type' => 'estate::property', 'group' => 'main', 'files' => $fileIds, 'data' => [
             'text' => $text,
+            'files' => array_map( fn( $id ) => ['id' => $id, 'type' => 'file'], $fileIds ),
             'offer_type' => $offerType,
             'status' => $status,
             'price' => $price,

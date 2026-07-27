@@ -43,7 +43,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             }
         };
         $page = $this->page();
-        $page->setRelation( 'ancestorsAndSelf', collect() );
+        $page->setRelation( 'ancestors', collect() );
         $data = $this->property( ['text' => 'Fallback property description'] );
         $files = collect();
 
@@ -58,16 +58,17 @@ class PropertyRenderingTest extends ThemeTestAbstract
 
         $page = $this->page();
         $page->forceFill( ['meta' => [
-            Validation::entry( 'meta-tags', [
+            'meta-tags' => Validation::entry( 'meta-tags', [
                 'description' => 'Explicit property description',
                 'keywords' => 'explicit',
             ], 'meta' ),
-            Validation::entry( 'social-media', [
+            'social-media' => Validation::entry( 'social-media', [
                 'title' => 'Explicit social title',
                 'description' => 'Explicit social description',
             ], 'meta' ),
         ]] );
-        $page->setRelation( 'ancestorsAndSelf', collect() );
+        $page->setRelation( 'ancestors', collect() );
+        $page->setRelation( 'files', collect() );
 
         $explicit = view( 'estate-test::property-layout', compact( 'data', 'files', 'nav', 'page' ) )->render();
         preg_match( '#<head>(.*?)</head>#s', $explicit, $matches );
@@ -85,13 +86,13 @@ class PropertyRenderingTest extends ThemeTestAbstract
     public function testAvailableFromUsesExplicitPropertyDate(): void
     {
         $html = $this->renderProperty( ['available_from' => '2026-09-01'] );
-        $available = $this->json( $html, 'RealEstateListing' );
-        $unscheduled = $this->json( $this->renderProperty(), 'RealEstateListing' );
+        $available = $this->schema( $html, 'RealEstateListing' );
+        $unscheduled = $this->schema( $this->renderProperty(), 'RealEstateListing' );
         $item = $this->item( 'Available property', ['available_from' => '2026-09-01'] );
         $card = view( 'estate::property-item', [
             'item' => $item,
             'layout' => 'cards',
-            'property' => $item->content[0],
+            'property' => $item->content[0]->data,
         ] )->render();
 
         $this->assertSame( '2026-09-01', $available['availabilityStarts'] );
@@ -122,7 +123,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $schema = JsonSchema::build( 'content', 'property' );
         $variants = $schema['properties']['contents']['items']['anyOf'];
         $variant = collect( $variants )->first(
-            fn( $item ) => ( $item['properties']['type']['enum'][0] ?? null ) === 'property'
+            fn( $item ) => ( $item['properties']['type']['enum'][0] ?? null ) === 'estate::property'
         );
         $currency = $variant['properties']['data']['properties']['currency'];
         $raw = json_decode( (string) file_get_contents( dirname( __DIR__ ) . '/schema.json' ), true, flags: JSON_THROW_ON_ERROR );
@@ -163,8 +164,8 @@ class PropertyRenderingTest extends ThemeTestAbstract
                 ['id' => 'missing-image', 'type' => 'file'],
             ],
         ], $files );
-        $schema = $this->json( $html, 'RealEstateListing' );
-        $gallery = $this->json( $html, 'ImageGallery' );
+        $schema = $this->schema( $html, 'RealEstateListing' );
+        $gallery = $this->schema( $html, 'ImageGallery' );
 
         $this->assertSame( [
             cmsurl( 'images/first.jpg' ),
@@ -180,7 +181,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $card = view( 'estate::property-item', [
             'item' => $item,
             'layout' => 'cards',
-            'property' => $item->content[0],
+            'property' => $item->content[0]->data,
         ] )->render();
 
         $this->assertStringContainsString( 'property-gallery-empty', $this->renderProperty() );
@@ -225,9 +226,9 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $card = view( 'estate::property-item', [
             'item' => $item,
             'layout' => 'cards',
-            'property' => $item->content[0],
+            'property' => $item->content[0]->data,
         ] )->render();
-        $schema = $this->json( $this->renderProperty( ['text' => $text] ), 'RealEstateListing' );
+        $schema = $this->schema( $this->renderProperty( ['text' => $text] ), 'RealEstateListing' );
 
         $this->assertStringContainsString( 'Bright home in Berlin', $card );
         $this->assertStringNotContainsString( '**home**', $card );
@@ -287,7 +288,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'data' => $data,
             'page' => $this->page( 'Properties', 'properties' ),
         ] )->render();
-        $schema = $this->json( $html, 'ItemList' );
+        $schema = $this->schema( $html, 'ItemList' );
 
         $this->assertCount( 2, $schema['itemListElement'] );
         $this->assertSame( [3, 4], array_column( $schema['itemListElement'], 'position' ) );
@@ -375,13 +376,13 @@ class PropertyRenderingTest extends ThemeTestAbstract
     public function testSellerMetadataRequiresConfiguredSiteName(): void
     {
         config( ['app.name' => 'Estate Agency'] );
-        $configured = $this->json( $this->renderProperty(), 'RealEstateListing' );
+        $configured = $this->schema( $this->renderProperty(), 'RealEstateListing' );
 
         $this->assertSame( 'Estate Agency', $configured['offers']['seller']['name'] );
         $this->assertSame( url( '/' ), $configured['offers']['seller']['url'] );
 
         config( ['app.name' => 'Laravel'] );
-        $default = $this->json( $this->renderProperty(), 'RealEstateListing' );
+        $default = $this->schema( $this->renderProperty(), 'RealEstateListing' );
 
         $this->assertArrayNotHasKey( 'seller', $default['offers'] );
     }
@@ -438,7 +439,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'reference' => 'EST-123',
             'property_type' => 'house',
         ] );
-        $schema = $this->json( $html, 'RealEstateListing' );
+        $schema = $this->schema( $html, 'RealEstateListing' );
 
         $this->assertSame( 'RealEstateListing', $schema['@type'] );
         $this->assertSame( 'EST-123', $schema['identifier'] );
@@ -452,8 +453,8 @@ class PropertyRenderingTest extends ThemeTestAbstract
     public function testSaleAndRentUseDifferentOfferMetadata(): void
     {
         $saleHtml = $this->renderProperty( ['price_period' => 'month'] );
-        $sale = $this->json( $saleHtml, 'RealEstateListing' );
-        $rent = $this->json( $this->renderProperty( [
+        $sale = $this->schema( $saleHtml, 'RealEstateListing' );
+        $rent = $this->schema( $this->renderProperty( [
             'offer_type' => 'rent',
             'price_period' => 'month',
         ] ), 'RealEstateListing' );
@@ -468,9 +469,9 @@ class PropertyRenderingTest extends ThemeTestAbstract
 
     public function testStatusesUseMatchingAvailability(): void
     {
-        $available = $this->json( $this->renderProperty(), 'RealEstateListing' );
-        $underOffer = $this->json( $this->renderProperty( ['status' => 'under_offer'] ), 'RealEstateListing' );
-        $sold = $this->json( $this->renderProperty( ['status' => 'sold'] ), 'RealEstateListing' );
+        $available = $this->schema( $this->renderProperty(), 'RealEstateListing' );
+        $underOffer = $this->schema( $this->renderProperty( ['status' => 'under_offer'] ), 'RealEstateListing' );
+        $sold = $this->schema( $this->renderProperty( ['status' => 'sold'] ), 'RealEstateListing' );
 
         $this->assertSame( 'https://schema.org/InStock', $available['availability'] );
         $this->assertSame( 'https://schema.org/LimitedAvailability', $underOffer['availability'] );
@@ -489,23 +490,19 @@ class PropertyRenderingTest extends ThemeTestAbstract
 
     protected function item( string $title, array $data = [] ): object
     {
+        $property = $this->property( $data );
+
         return (object) [
             'title' => $title,
             'path' => str( $title )->slug()->toString(),
-            'content' => [$this->property( $data )],
+            'content' => [(object) [
+                'type' => 'estate::property',
+                'files' => $property->files,
+                'data' => $property,
+            ]],
             'files' => collect(),
             'created_at' => CarbonImmutable::parse( '2026-01-01 12:00:00' ),
         ];
-    }
-
-
-    protected function json( string $html, string $type ): array
-    {
-        preg_match_all( '#<script type="application/ld\\+json">(.*?)</script>#s', $html, $matches );
-
-        return collect( $matches[1] ?? [] )
-            ->map( fn( $json ) => json_decode( trim( $json ), true, flags: JSON_THROW_ON_ERROR ) )
-            ->first( fn( $schema ) => ( $schema['@type'] ?? null ) === $type ) ?? [];
     }
 
 
@@ -527,7 +524,6 @@ class PropertyRenderingTest extends ThemeTestAbstract
     protected function property( array $data = [] ): object
     {
         return (object) array_replace( [
-            'type' => 'property',
             'text' => 'Property description',
             'status' => 'available',
             'reference' => null,
@@ -566,5 +562,15 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'files' => $files ?? collect(),
             'page' => $this->page(),
         ] )->render();
+    }
+
+
+    protected function schema( string $html, string $type ): array
+    {
+        preg_match_all( '#<script type="application/ld\\+json">(.*?)</script>#s', $html, $matches );
+
+        return collect( $matches[1] ?? [] )
+            ->map( fn( $json ) => json_decode( trim( $json ), true, flags: JSON_THROW_ON_ERROR ) )
+            ->first( fn( $schema ) => ( $schema['@type'] ?? null ) === $type ) ?? [];
     }
 }

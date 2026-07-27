@@ -112,7 +112,10 @@
                         'item' => $item,
                         'layout' => $data->layout ?? 'cards',
                         'featured' => false,
-                        'property' => collect(cms($item, 'content'))->first(fn($element) => ($element->type ?? null) === 'property'),
+                        'property' => collect(cms($item, 'content'))
+                            ->filter(fn($element) => ($element->type ?? null) === 'estate::property')
+                            ->map(fn($element) => (object) data_get($element, 'data', []))
+                            ->first(),
                     ])
                 @endforeach
             </div>

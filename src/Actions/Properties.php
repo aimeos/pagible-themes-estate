@@ -30,7 +30,7 @@ class Properties
         $requestedSort = $enabled ? trim( (string) $request->query( 'sort', '' ) ) : '';
         $perPage = min( 100, max( 1, (int) ( $item->data->limit ?? 10 ) ) );
         $pageNo = max( 1, $request->integer( 'p' ) );
-        $schema = Schema::schemas( section: 'content' )['property']['fields'] ?? [];
+        $schema = Schema::schemas( section: 'content' )['estate::property']['fields'] ?? [];
         $options = (object) [
             'property_types' => $schema['property_type']['options'] ?? [],
             'offer_types' => $schema['offer_type']['options'] ?? [],
@@ -204,8 +204,10 @@ class Properties
             ? ( $item->latest?->aux?->content ?? $item->latest?->data?->content ?? $item->content )
             : $item->content;
 
-        return $this->propertyCache[$cache] = collect( (array) $content )
-            ->first( fn( $element ) => ( $element->type ?? null ) === 'property' );
+        $element = collect( (array) $content )
+            ->first( fn( $element ) => ( $element->type ?? null ) === 'estate::property' );
+
+        return $this->propertyCache[$cache] = $element ? (object) data_get( $element, 'data', [] ) : null;
     }
 
 
