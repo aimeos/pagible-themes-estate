@@ -1,0 +1,392 @@
+/**
+ * @license MIT, https://opensource.org/license/MIT
+ */
+
+.cms-content .list .list-cards .list-item {
+    background-color: var(--pico-contrast-inverse);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: calc(var(--pico-border-radius) * 2);
+    box-shadow: var(--pico-box-shadow);
+    overflow: clip;
+    padding: 0;
+}
+
+.cms-content .list .list-item picture {
+    aspect-ratio: 4 / 3;
+    display: block;
+    overflow: hidden;
+}
+
+.cms-content .list .list-item picture img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.cms-content .list .property-image-empty {
+    align-items: center;
+    aspect-ratio: 4 / 3;
+    background:
+        linear-gradient(135deg, var(--pico-secondary-background), transparent 65%),
+        repeating-linear-gradient(45deg, transparent, transparent 1.25rem, var(--pico-primary-background) 1.25rem, var(--pico-primary-background) 1.3rem);
+    color: var(--pico-muted-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.cms-content .list .property-image-empty-brand {
+    color: var(--pico-color);
+    font-family: var(--pico-font-family-display);
+    font-size: clamp(1.5rem, 4vw, 2.75rem);
+    line-height: 1;
+}
+
+.cms-content .list .list-list .property-image-empty {
+    flex: 0 0 min(38%, 22rem);
+}
+
+.cms-content .list .list-cards .content {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.cms-content .list .list-cards h3 {
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    flex-grow: 0;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+}
+
+.cms-content .list .list-cards .property-line-main {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cms-content .list .list-cards .property-line .property-price {
+    flex-basis: 100%;
+    font-family: var(--pico-font-family-display);
+    font-size: calc(var(--pico-font-size) * 1.15);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.25rem;
+    order: -1;
+}
+
+.cms-content .list .list-cards .intro,
+.cms-content .list .list-list .intro {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+
+.cms-content .list .list-cards .intro {
+    -webkit-line-clamp: 2;
+}
+
+.cms-content .list .list-list .intro {
+    -webkit-line-clamp: 3;
+}
+
+.cms-content .list .list-cards .intro,
+.cms-content .list .list-list .intro {
+    color: var(--pico-muted-color);
+    line-height: 1.55;
+    margin-top: 0.35rem;
+}
+
+.cms-content .list .list-list .list-item,
+.cms-content .list .list-list .list-item:nth-child(even) {
+    flex-direction: row;
+}
+
+.cms-content .list .list-list picture,
+.cms-content .list .list-list .list-item:nth-child(even) picture {
+    flex: 0 0 min(38%, 22rem);
+    padding-inline: 0 1rem;
+}
+
+.cms-content .list .list-list .content {
+    padding-block: 1rem;
+}
+
+.cms-content .list .property-line {
+    line-height: 1.45;
+}
+
+.cms-content .list .property-line-main,
+.cms-content .list .property-line-availability {
+    color: var(--pico-muted-color);
+    font-size: calc(var(--pico-font-size) * 0.75);
+    margin: 0.25rem 0 0;
+}
+
+.cms-content .list .property-line-availability {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.cms-content .list .property-available_from {
+    font-weight: 600;
+}
+
+.cms-content .list .property-line-main {
+    color: inherit;
+}
+
+.cms-content .list .property-line span[class^='property-'],
+.cms-content .list .property-line span[class*=' property-'] {
+    display: inline;
+}
+
+.cms-content .list .property-line .property-price {
+    color: var(--pico-color);
+    font-family: var(--pico-font-family-display);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.cms-content .list .property-line span.property-status {
+    background-color: var(--pico-secondary-background);
+    border-radius: 999px;
+    color: var(--pico-secondary);
+    display: inline-block;
+    font-size: calc(var(--pico-font-size) * 0.65);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    padding: 0.15rem 0.45rem;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: normal;
+}
+
+.cms-content .list .property-line span.property-status-available {
+    background-color: color-mix(in srgb, var(--pico-form-element-valid-border-color) 14%, transparent);
+    color: var(--pico-form-element-valid-border-color);
+}
+
+.cms-content .list .property-line span.property-status-under_offer {
+    background-color: var(--pico-secondary-background);
+    color: var(--pico-secondary);
+}
+
+.cms-content .list .property-line span.property-status-sold,
+.cms-content .list .property-line span.property-status-rented {
+    background-color: var(--pico-muted-background-color);
+    color: var(--pico-muted-color);
+}
+
+.cms-content .list .property-list-tools {
+    background:
+        linear-gradient(135deg, var(--pico-secondary-background), transparent 70%),
+        var(--pico-contrast-inverse);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: calc(var(--pico-border-radius) * 2);
+    margin-bottom: 1.5rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.cms-content .list .property-filter-disclosure > summary {
+    align-items: center;
+    color: var(--pico-color);
+    display: flex;
+    font-weight: 700;
+    justify-content: space-between;
+    list-style-position: inside;
+}
+
+.cms-content .list .property-filter-count {
+    align-items: center;
+    background-color: var(--pico-primary);
+    border-radius: 999px;
+    color: var(--pico-primary-inverse);
+    display: inline-flex;
+    font-size: calc(var(--pico-font-size) * 0.65);
+    justify-content: center;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    padding-inline: 0.4rem;
+}
+
+.cms-content .list .property-list-toolbar {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+}
+
+
+.cms-content .list .property-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.cms-content .list .property-filter label {
+    color: var(--pico-muted-color);
+    font-size: calc(var(--pico-font-size) * 0.7);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.cms-content .list .property-filter input,
+.cms-content .list .property-filter select {
+    border-radius: var(--pico-border-radius);
+    margin-bottom: 0;
+    min-height: 3rem;
+    width: 100%;
+}
+
+.cms-content .list .property-filter-actions {
+    align-items: center;
+    align-self: flex-end;
+    flex-direction: row;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+}
+
+.cms-content .list .property-filter-actions button,
+.cms-content .list .property-filter-actions .button {
+    margin: 0;
+    max-width: 100%;
+    white-space: normal;
+    width: auto;
+}
+
+
+.cms-content .list .property-meta-separator {
+    color: var(--pico-muted-color);
+    margin: 0 0.35rem;
+}
+
+.cms-content .list .property-list-summary,
+.cms-content .list .list-empty {
+    color: var(--pico-muted-color);
+}
+
+
+.cms-content .list .list-empty {
+    align-items: center;
+    background:
+        linear-gradient(135deg, var(--pico-secondary-background), transparent 70%),
+        var(--pico-contrast-inverse);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: calc(var(--pico-border-radius) * 2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1rem 0 0;
+    min-height: 8rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.cms-content .list .list-empty p {
+    margin: 0;
+}
+
+.cms-content .list .list-empty .button {
+    margin-inline-start: auto;
+}
+
+.cms-content .list .list-item:focus-visible {
+    box-shadow: 0 0 0 3px var(--pico-secondary-focus), 0 0.75rem 2rem #1C1A160F;
+    outline: 2px solid var(--pico-secondary);
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .cms-content .list .property-filter-disclosure > summary {
+        display: none;
+    }
+
+    .cms-content .list .property-filter-disclosure > .property-list-toolbar {
+        display: grid;
+    }
+}
+
+@media (max-width: 767px) {
+    .cms-content .list .property-filter-disclosure:not([open]) > .property-list-toolbar {
+        display: none;
+    }
+
+    .cms-content .list .property-filter-disclosure[open] > summary {
+        margin-bottom: 1rem;
+    }
+
+    .cms-content .list .list-list .property-image-empty {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    .cms-content .list .list-list .list-item,
+    .cms-content .list .list-list .list-item:nth-child(even) {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cms-content .list .list-list picture,
+    .cms-content .list .list-list .list-item:nth-child(even) picture {
+        padding: 0;
+        width: 100%;
+    }
+
+    .cms-content .list .list-list .content {
+        padding: 1rem 0.5rem;
+    }
+
+    .cms-content .list .property-list-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+
+    .cms-content .list .property-filter-actions {
+        align-self: stretch;
+        width: 100%;
+    }
+
+    .cms-content .list .property-filter-actions button,
+    .cms-content .list .property-filter-actions .button {
+        flex: 1;
+    }
+
+    .cms-content .list .list-empty {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cms-content .list .list-empty .button {
+        margin-inline-start: 0;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .cms-content .list .list-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cms-content .list .list-item {
+        transition: none;
+    }
+
+    .cms-content .list .list-item:hover,
+    .cms-content .list .list-item:focus-visible {
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .cms-content .list .property-line span.property-status {
+        background-color: Canvas;
+        border: 1px solid CanvasText;
+        color: CanvasText;
+    }
+}

@@ -1,0 +1,289 @@
+<?php
+
+/**
+ * @license MIT, https://opensource.org/license/mit
+ */
+
+
+namespace Tests;
+
+use Aimeos\Cms\Actions\Properties;
+use Aimeos\Cms\Models\Page;
+use Carbon\CarbonImmutable;
+use Database\Seeders\TestSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
+
+
+class PropertiesActionTest extends ThemeTestAbstract
+{
+    use CmsWithMigrations;
+    use RefreshDatabase;
+
+    protected $seeder = TestSeeder::class;
+
+
+    public function testFiltersByRequestedTypeAndCity()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $this->addProperty( $list, [
+            'path' => 'seaside-loft',
+            'title' => 'Seaside Loft',
+            'property_type' => 'apartment',
+            'city' => 'Berlin',
+            'status' => 'available',
+            'price' => 1250,
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'lake-house',
+            'title' => 'Lakeside House',
+            'property_type' => 'house',
+            'city' => 'Paris',
+            'status' => 'available',
+            'price' => 780,
+        ] );
+
+        $request = Request::create( '/properties', 'GET', ['type' => 'apartment', 'city' => 'berlin'] );
+        $request->setUserResolver( fn() => null );
+
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) [ 'value' => $list->id ],
+            ],
+        ] );
+
+        $this->assertEquals( 1, $result->items->total() );
+        $this->assertEquals( 'Seaside Loft', $result->items->first()->title );
+        $this->assertSame( 'apartment', $result->filters->type );
+        $this->assertContains( 'apartment', array_column( $result->options->property_types, 'value' ) );
+    }
+
+
+    public function testFiltersByMinimumRooms()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $this->addProperty( $list, [
+            'path' => 'three-room-property',
+            'title' => 'Three Room Property',
+            'rooms' => 3,
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'two-room-property',
+            'title' => 'Two Room Property',
+            'rooms' => 2,
+        ] );
+
+        $request = Request::create( '/properties', 'GET', ['rooms_min' => 3] );
+        $request->setUserResolver( fn() => null );
+
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) [ 'value' => $list->id ],
+            ],
+        ] );
+
+        $this->assertSame( 1, $result->items->total() );
+        $this->assertSame( 'Three Room Property', $result->items->first()->title );
+    }
+
+
+    public function testIncludesPropertiesFromNestedCategories()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $category = $this->addCategory( $list );
+        $this->addProperty( $category, [
+            'path' => 'nested-property',
+            'title' => 'Nested Property',
+            'property_type' => 'house',
+            'price' => 980,
+        ] );
+
+        $request = Request::create( '/properties', 'GET' );
+        $request->setUserResolver( fn() => null );
+
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) [ 'value' => $list->id ],
+            ],
+        ] );
+
+        $this->assertSame( 1, $result->items->total() );
+        $this->assertSame( 'Nested Property', $result->items->first()->title );
+    }
+
+
+    public function testIgnoresFiltersWhenDisabled()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $this->addProperty( $list, [
+            'path' => 'apartment',
+            'title' => 'Apartment',
+            'property_type' => 'apartment',
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'house',
+            'title' => 'House',
+            'property_type' => 'house',
+        ] );
+
+        $request = Request::create( '/properties', 'GET', ['type' => 'apartment'] );
+        $request->setUserResolver( fn() => null );
+
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'filters' => false,
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) [ 'value' => $list->id ],
+            ],
+        ] );
+
+        $this->assertSame( 2, $result->items->total() );
+    }
+
+
+    public function testFiltersByAvailability()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $this->addProperty( $list, [
+            'path' => 'available-later',
+            'title' => 'Available Later',
+            'available_from' => '2026-09-01',
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'available-sooner',
+            'title' => 'Available Sooner',
+            'available_from' => '2026-08-01',
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'availability-unspecified',
+            'title' => 'Availability Unspecified',
+            'available_from' => null,
+        ] );
+
+        $request = Request::create( '/properties', 'GET', ['available_by' => '2026-08-15'] );
+        $request->setUserResolver( fn() => null );
+        $item = (object) ['data' => (object) [
+            'limit' => 10,
+            'order' => '-created_at',
+            'parent-page' => (object) ['value' => $list->id],
+        ]];
+        $result = ( new Properties() )( $request, $list, $item );
+
+        $this->assertSame( 1, $result->items->total() );
+        $this->assertSame( 'Available Sooner', $result->items->first()->title );
+    }
+
+
+    public function testSortsByUpdatedDate()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $older = $this->addProperty( $list, [
+            'path' => 'older-update',
+            'title' => 'Older Update',
+        ] );
+        $newer = $this->addProperty( $list, [
+            'path' => 'newer-update',
+            'title' => 'Newer Update',
+        ] );
+
+        $older->timestamps = false;
+        $older->forceFill( ['updated_at' => CarbonImmutable::parse( '2026-01-01' )] )->saveQuietly();
+        $newer->timestamps = false;
+        $newer->forceFill( ['updated_at' => CarbonImmutable::parse( '2026-02-01' )] )->saveQuietly();
+
+        $request = Request::create( '/properties', 'GET', ['sort' => 'updated_desc'] );
+        $request->setUserResolver( fn() => null );
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) ['value' => $list->id],
+            ],
+        ] );
+
+        $this->assertSame( ['Newer Update', 'Older Update'], $result->items->getCollection()->pluck( 'title' )->all() );
+    }
+
+
+    protected function addCategory( Page $parent ) : Page
+    {
+        $page = Page::forceCreate( [
+            'lang' => 'en',
+            'name' => 'Residential',
+            'title' => 'Residential',
+            'path' => 'residential-' . mt_rand( 1000, 9999 ),
+            'tag' => 'category',
+            'type' => 'page',
+            'status' => 1,
+            'editor' => 'seeder',
+        ] );
+        $page->appendToNode( $parent )->save();
+
+        return $page;
+    }
+
+
+    protected function addListPage( Page $root ) : Page
+    {
+        $page = Page::forceCreate( [
+            'lang' => 'en',
+            'name' => 'Properties',
+            'title' => 'Properties',
+            'path' => 'properties-' . mt_rand( 1000, 9999 ),
+            'tag' => 'properties',
+            'type' => 'properties',
+            'status' => 1,
+            'editor' => 'seeder',
+        ] );
+        $page->appendToNode( $root )->save();
+
+        return $page;
+    }
+
+
+    protected function addProperty( Page $parent, array $data ) : Page
+    {
+        $property = array_merge( [
+            'lang' => 'en',
+            'name' => $data['title'] ?? 'Property',
+            'title' => $data['title'] ?? 'Property',
+            'type' => 'property',
+            'tag' => 'property',
+            'status' => 1,
+            'editor' => 'seeder',
+            'content' => [
+                [
+                    'id' => (string) mt_rand( 100000, 999999 ),
+                    'type' => 'property',
+                    'data' => array_diff_key( $data, ['path' => true, 'title' => true] ),
+                ],
+            ],
+        ], [
+            'path' => $data['path'],
+        ] );
+
+        $property = Page::forceCreate( $property );
+        $property->appendToNode( $parent )->save();
+
+        return $property;
+    }
+
+
+    protected function propertyData( Page $page ) : object
+    {
+        return collect( (array) $page->content )->first( fn( $el ) => ( $el->type ?? null ) === 'property' );
+    }
+}
