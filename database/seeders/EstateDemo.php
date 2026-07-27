@@ -40,7 +40,6 @@ class EstateDemo extends AbstractDemo
         'city' => ['photo-1449824913935-59a10b8d2000', 'International property market', 'Broad city avenue framed by dense commercial and residential towers'],
         'home' => ['photo-1600585154340-be6161a56a0c', 'Contemporary residence', 'Dark-clad contemporary residence with floor-to-ceiling glazing and a landscaped garden'],
         'market' => ['photo-1486406146926-c627a92ad1ab', 'Commercial property market', 'Modern commercial towers viewed from a city plaza'],
-        'news' => ['photo-1560518883-ce09059eeffa', 'Property market news', 'Model house and keys arranged on a consultation table'],
         'office-circulation' => ['photo-1497366754035-f200968a6e72', 'Office circulation', 'Polished office corridor with glazed meeting rooms and lounge areas'],
         'office-floor' => ['photo-1531973576160-7125cd663d86', 'Open-plan office floor', 'Large contemporary office floor with workstations, collaboration tables, and exposed ceiling services'],
         'office-reception' => ['photo-1587702068694-a909ef4aa346', 'Office reception', 'Double-height reception lounge with full-height glazing and street access'],
@@ -269,25 +268,11 @@ class EstateDemo extends AbstractDemo
             'name' => 'News',
             'title' => 'Estate News',
             'path' => 'news',
+            'to' => '/news/why-portfolio-diversification-matters',
             'tag' => 'blog',
             'type' => 'blog',
             'status' => 1,
-        ], [
-            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
-                'title' => 'Market notes and strategy ideas',
-                'subtitle' => 'Estate news desk',
-                'text' => 'Short reads for buyers, renters, landlords, and owners balancing quality and timeline pressure.',
-                'background' => ['id' => $this->img( 'news' ), 'type' => 'file'],
-                'background-animation' => 'zoom',
-            ]],
-            ['id' => Utils::uid(), 'type' => 'blog', 'group' => 'main', 'data' => [
-                'title' => 'Latest updates',
-                'layout' => 'default',
-                'limit' => 2,
-                'order' => '_lft',
-                'parent-page' => ['value' => $newsId, 'label' => 'News'],
-            ]],
-        ], $home );
+        ], [], $home );
 
         $this->page( [
             'lang' => 'en',
@@ -771,7 +756,9 @@ SVG;
             ], 'meta' ),
         ];
 
-        $content[] = ['id' => Utils::uid(), 'type' => 'reference', 'refid' => $elementId, 'group' => 'footer'];
+        if( empty( $data['to'] ) ) {
+            $content[] = ['id' => Utils::uid(), 'type' => 'reference', 'refid' => $elementId, 'group' => 'footer'];
+        }
 
         $page = Page::forceCreate( $data + [
             'theme' => $this->theme,

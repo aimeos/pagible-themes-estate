@@ -26,7 +26,7 @@ class PropertiesActionTest extends ThemeTestAbstract
     protected $seeder = TestSeeder::class;
 
 
-    public function testDemoGroupsPropertyItemsBelowExposes(): void
+    public function testDemoGroupsHiddenPagesAndUsesNewsRedirect(): void
     {
         require_once dirname( __DIR__ ) . '/database/seeders/EstateDemo.php';
 
@@ -37,11 +37,21 @@ class PropertiesActionTest extends ThemeTestAbstract
         $home = Page::where( 'tag', 'root' )->firstOrFail();
         $properties = Page::where( 'path', 'properties' )->firstOrFail();
         $exposes = Page::where( 'path', 'exposes' )->firstOrFail();
+        $news = Page::where( 'path', 'news' )->firstOrFail();
         $items = Page::where( 'type', 'property' )->defaultOrder()->get();
 
         $this->assertTrue( $properties->parent()->firstOrFail()->is( $home ) );
         $this->assertTrue( $exposes->parent()->firstOrFail()->is( $home ) );
         $this->assertSame( 2, $exposes->status );
+        $this->assertSame( '/news/why-portfolio-diversification-matters', $news->to );
+        $this->assertSame( [], (array) $news->content );
+        $this->assertSame(
+            [
+                'news/why-portfolio-diversification-matters',
+                'news/renovation-as-a-leverage-point',
+            ],
+            $news->children()->defaultOrder()->pluck( 'path' )->all()
+        );
         $this->assertCount( 0, $properties->children()->get() );
         $this->assertCount( 3, $items );
         $this->assertNotContains( $exposes->id, ( new Navigation( $home, null ) )->items()->pluck( 'id' ) );
