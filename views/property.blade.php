@@ -202,8 +202,8 @@
     </section>
 
     <script type="application/ld+json">{!! cmsjson(array_filter([
-        '@context' => 'https://schema.org',
-        '@type' => 'RealEstateListing',
+        '@@context' => 'https://schema.org',
+        '@@type' => 'RealEstateListing',
         'name' => cms($page, 'title'),
         'identifier' => $data->reference ?? null,
         'category' => __(ucfirst(str_replace('_', ' ', (string) $data->property_type))),
@@ -225,10 +225,10 @@
             'postalCode' => $data->zip_code ?? null,
             'addressCountry' => $data->country ?? null,
         ], fn( $value ) => $value !== null && $value !== ''))
-            ? ['@type' => 'PostalAddress'] + $propertyAddress
+            ? ['@@type' => 'PostalAddress'] + $propertyAddress
             : null,
         'floorSize' => [
-            '@type' => 'QuantitativeValue',
+            '@@type' => 'QuantitativeValue',
             'value' => $data->area,
             'unitText' => $data->area_unit,
         ],
@@ -242,17 +242,17 @@
             default => 'InStock',
         },
         'offers' => array_filter([
-            '@type' => 'Offer',
+            '@@type' => 'Offer',
             'price' => $data->price,
             'priceCurrency' => $data->currency,
             'seller' => ($seller = trim((string) config('app.name'))) !== '' && strcasecmp($seller, 'Laravel') !== 0 ? [
-                '@type' => 'Organization',
+                '@@type' => 'Organization',
                 'name' => $seller,
                 'url' => url('/'),
             ] : null,
             'businessFunction' => 'http://purl.org/goodrelations/v1#' . ($data->offer_type === 'rent' ? 'LeaseOut' : 'Sell'),
             'priceSpecification' => $data->offer_type === 'rent' && $data->price_period ? [
-                '@type' => 'UnitPriceSpecification',
+                '@@type' => 'UnitPriceSpecification',
                 'price' => $data->price,
                 'priceCurrency' => $data->currency,
                 'unitText' => $data->price_period,

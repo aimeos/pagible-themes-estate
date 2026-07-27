@@ -46,8 +46,8 @@
 
 @media (hover: hover) and (pointer: fine) {
     .cms-content .list .list-item:hover {
-        box-shadow: 0 0.75rem 2rem #1C1A160F;
-        transform: translateY(-3px);
+        box-shadow: none;
+        transform: none;
     }
 }
 
@@ -190,7 +190,7 @@
 }
 
 .cms-content .list nav .pagination a:focus-visible {
-    border-color: var(--pico-secondary);
-    box-shadow: 0 0 0 3px var(--pico-secondary-focus);
+    border-color: var(--pico-primary);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
     outline: 2px solid transparent;
 }

@@ -4,7 +4,7 @@
  */
 
 body.theme-estate > header {
-    background-color: #FBF9F4F2;
+    background-color: #FFFFFFF2;
     border-bottom: 1px solid var(--pico-muted-border-color);
 }
 
@@ -19,7 +19,7 @@ body.theme-estate > header nav .menu a.active {
 }
 
 body.theme-estate > header nav .menu a.active::after {
-    background-color: var(--pico-secondary);
+    background-color: var(--pico-primary);
     block-size: 2px;
     content: "";
     inset-block-end: 0.25rem;
@@ -67,8 +67,8 @@ body.theme-estate :is(.button, .btn).outline:hover {
 }
 
 body.theme-estate :is(.btn, .button, .contact button, .property-contact-link, .property-filter-actions button, input, select, textarea):focus-visible {
-    border-color: var(--pico-secondary);
-    box-shadow: 0 0 0 3px var(--pico-secondary-focus);
+    border-color: var(--pico-primary);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
     outline: 2px solid transparent;
 }
 
@@ -124,8 +124,8 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
 }
 
 :root[data-theme=light] {
-    --pico-font-family-sans-serif: 'Avenir Next', Avenir, Futura, 'Century Gothic', 'Trebuchet MS', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --pico-font-family-display: Didot, 'Bodoni 72', 'Bodoni MT', 'Hoefler Text', Garamond, Georgia, 'Times New Roman', serif;
+    --pico-font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --pico-font-family-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --pico-font-family-monospace: ui-monospace, monospace;
     --pico-nav-breadcrumb-divider: '—';
     --pico-block-spacing-vertical: 0;
@@ -133,63 +133,63 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-nav-element-spacing-vertical: 0.75rem;
     --pico-nav-link-spacing-vertical: 0.625rem;
     --pico-nav-link-spacing-horizontal: 0.625rem;
-    --pico-color: #1C1A16;
-    --pico-background-color: #FBF9F4;
-    --pico-text-selection-color: #B79A5E40;
-    --pico-muted-color: #6E6557;
-    --pico-muted-border-color: #1C1A1618;
-    --pico-muted-background-color: #F3EEE4;
-    --pico-contrast: #1C1A16;
-    --pico-contrast-border: #1C1A1622;
+    --pico-color: #242424;
+    --pico-background-color: #FFFFFF;
+    --pico-text-selection-color: #B5122B22;
+    --pico-muted-color: #606060;
+    --pico-muted-border-color: #24242424;
+    --pico-muted-background-color: #F5F5F3;
+    --pico-contrast: #242424;
+    --pico-contrast-border: #2424242B;
     --pico-contrast-background: #FFFFFF;
     --pico-contrast-underline: var(--pico-contrast);
     --pico-contrast-hover: #000000;
-    --pico-contrast-hover-border: #1C1A1633;
-    --pico-contrast-hover-background: #EFE8DB;
+    --pico-contrast-hover-border: #24242440;
+    --pico-contrast-hover-background: #EEEEEC;
     --pico-contrast-hover-underline: var(--pico-contrast-hover);
     --pico-contrast-focus: var(--pico-text-selection-color);
     --pico-contrast-inverse: #FFFFFF;
-    --pico-primary: #1C1A16;
-    --pico-primary-background: #1C1A160A;
+    --pico-primary: #B5122B;
+    --pico-primary-background: #B5122B0F;
     --pico-primary-border: var(--pico-primary);
-    --pico-primary-underline: var(--pico-secondary);
-    --pico-primary-hover: #8A6E3F;
-    --pico-primary-hover-background: #8A6E3F14;
+    --pico-primary-underline: var(--pico-primary);
+    --pico-primary-hover: #8F0D22;
+    --pico-primary-hover-background: #8F0D220F;
     --pico-primary-hover-border: var(--pico-primary-hover);
     --pico-primary-hover-underline: var(--pico-primary-hover);
     --pico-primary-focus: var(--pico-text-selection-color);
     --pico-primary-inverse: #FFFFFF;
-    --pico-secondary: #7A5F32;
-    --pico-secondary-background: #7A5F3214;
+    --pico-secondary: #242424;
+    --pico-secondary-background: #2424240F;
     --pico-secondary-border: var(--pico-secondary);
     --pico-secondary-underline: var(--pico-secondary);
-    --pico-secondary-hover: #5F4A26;
-    --pico-secondary-hover-background: #5F4A2614;
+    --pico-secondary-hover: #000000;
+    --pico-secondary-hover-background: #0000000F;
     --pico-secondary-hover-border: var(--pico-secondary-hover);
     --pico-secondary-hover-underline: var(--pico-secondary-hover);
     --pico-secondary-focus: var(--pico-text-selection-color);
     --pico-secondary-inverse: #FFFFFF;
-    --pico-h1-color: #1C1A16;
-    --pico-h2-color: #1C1A16;
-    --pico-h3-color: #1C1A16;
-    --pico-h4-color: #1C1A16;
-    --pico-h5-color: #3A352B;
-    --pico-h6-color: #6E6557;
-    --pico-box-shadow: 0 1px 2px #1C1A1608, 0 1px 1px #1C1A1605;
+    --pico-h1-color: #242424;
+    --pico-h2-color: #242424;
+    --pico-h3-color: #242424;
+    --pico-h4-color: #242424;
+    --pico-h5-color: #3D3D3D;
+    --pico-h6-color: #606060;
+    --pico-box-shadow: 0 1px 2px #0000000A;
     --pico-dropdown-color: var(--pico-contrast);
     --pico-dropdown-border-color: var(--pico-contrast-border);
     --pico-dropdown-background-color: #FFFFFF;
     --pico-dropdown-hover-background-color: var(--pico-muted-background-color);
-    --pico-dropdown-box-shadow: 0 0.5rem 1.5rem -0.25rem #1C1A1614, 0 0.25rem 0.5rem -0.25rem #1C1A160A;
-    --pico-modal-overlay-background-color: #1C1A1680;
+    --pico-dropdown-box-shadow: 0 0.5rem 1.5rem -0.25rem #0000001A;
+    --pico-modal-overlay-background-color: #00000080;
     --pico-code-background-color: var(--pico-contrast);
     --pico-code-color: var(--pico-contrast-inverse);
     --pico-border-radius: 0;
 }
 
 :root[data-theme=light] {
-    --pico-form-element-active-border-color: var(--pico-secondary);
-    --pico-form-element-focus-color: color-mix(in srgb, var(--pico-secondary) 25%, transparent);
+    --pico-form-element-active-border-color: var(--pico-primary);
+    --pico-form-element-focus-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
     --pico-primary-background: color-mix(in srgb, var(--pico-primary) 10%, transparent);
     --pico-primary-focus: color-mix(in srgb, var(--pico-primary) 25%, transparent);
     --pico-primary-hover: color-mix(in srgb, var(--pico-primary) 86%, var(--pico-contrast));
@@ -200,7 +200,7 @@ body.theme-estate :is(.heading, .text, .cms-text, .questions, .pricing, .testimo
     --pico-secondary-hover: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
     --pico-secondary-hover-background: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
     --pico-secondary-hover-border: color-mix(in srgb, var(--pico-secondary) 86%, var(--pico-contrast));
-    --pico-text-selection-color: color-mix(in srgb, var(--pico-secondary) 25%, transparent);
+    --pico-text-selection-color: color-mix(in srgb, var(--pico-primary) 25%, transparent);
 }
 
 @media (max-width: 767px) {
@@ -299,8 +299,8 @@ nav li :where(a,[role=link]) {
 
 body > header {
     border-bottom: 1px solid var(--pico-muted-border-color);
-    background-color: color-mix(in srgb, #FFFFFF 70%, transparent);
-    backdrop-filter: blur(20px) saturate(1.5);
+    background-color: color-mix(in srgb, #FFFFFF 94%, transparent);
+    backdrop-filter: blur(16px);
     position: sticky;
     z-index: 100;
     top: 0;
@@ -351,9 +351,9 @@ header nav details.dropdown > summary:not([role]) {
     padding: 0.7rem 0.5rem;
     color: var(--pico-color);
     font-size: calc(var(--pico-font-size) * 0.68);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.01em;
     transition: color 0.15s ease;
     text-decoration: none;
     margin: 0;
@@ -507,7 +507,7 @@ header nav .sidebar-close button {
 
 nav.breadcrumb {
     border-bottom: 1px solid var(--pico-muted-border-color);
-    background-color: #FFFFFF80;
+    background-color: var(--pico-muted-background-color);
 }
 
 nav.breadcrumb > ul {
@@ -566,11 +566,11 @@ h1, h2 {
 }
 
 h1, h2 {
-    font-weight: 400;
+    font-weight: 500;
 }
 
 h3 {
-    font-weight: 400;
+    font-weight: 500;
 }
 
 h4, h5, h6 {
@@ -626,9 +626,9 @@ img {
     line-height: inherit;
     font-family: var(--pico-font-family-sans-serif);
     font-size: calc(var(--pico-font-size) * 0.72);
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
     border: 1px solid var(--pico-contrast);
     border-radius: var(--pico-border-radius);
     color: var(--pico-contrast);

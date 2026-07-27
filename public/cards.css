@@ -30,9 +30,9 @@
 }
 
 .cards .card-item:hover {
-    box-shadow: 0 1rem 2.5rem #1C1A160F;
-    border-color: var(--pico-contrast-border);
-    transform: translateY(-3px);
+    box-shadow: none;
+    border-color: var(--pico-primary);
+    transform: none;
 }
 
 .cards .card-item picture {
@@ -55,7 +55,7 @@
     font-size: calc(var(--pico-font-size) * 1.15);
     letter-spacing: 0.01em;
     margin: 1.5rem 0 0.75rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .cards .text p {

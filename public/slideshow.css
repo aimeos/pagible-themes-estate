@@ -185,7 +185,7 @@
 }
 
 .slider-nav:focus-visible::before {
-	box-shadow: 0 0 0 3px var(--pico-secondary-focus)
+	box-shadow: 0 0 0 3px var(--pico-primary-focus)
 }
 
 .slider-nav-outside .slider-container {

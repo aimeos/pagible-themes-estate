@@ -3,11 +3,10 @@
  */
 
 .cms-content .list .list-cards .list-item {
-    background-color: var(--pico-contrast-inverse);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: calc(var(--pico-border-radius) * 2);
-    box-shadow: var(--pico-box-shadow);
-    overflow: clip;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
     padding: 0;
 }
 
@@ -20,15 +19,15 @@
 .cms-content .list .list-item picture img {
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
     width: 100%;
 }
 
 .cms-content .list .property-image-empty {
     align-items: center;
     aspect-ratio: 4 / 3;
-    background:
-        linear-gradient(135deg, var(--pico-secondary-background), transparent 65%),
-        repeating-linear-gradient(45deg, transparent, transparent 1.25rem, var(--pico-primary-background) 1.25rem, var(--pico-primary-background) 1.3rem);
+    background: var(--pico-muted-background-color);
+    border: 1px solid var(--pico-muted-border-color);
     color: var(--pico-muted-color);
     display: flex;
     flex-direction: column;
@@ -39,8 +38,11 @@
 .cms-content .list .property-image-empty-brand {
     color: var(--pico-color);
     font-family: var(--pico-font-family-display);
-    font-size: clamp(1.5rem, 4vw, 2.75rem);
+    font-size: clamp(1.25rem, 4vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
     line-height: 1;
+    text-transform: uppercase;
 }
 
 .cms-content .list .list-list .property-image-empty {
@@ -50,91 +52,63 @@
 .cms-content .list .list-cards .content {
     align-items: stretch;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0;
+    padding: 1rem 0 0;
 }
 
 .cms-content .list .list-cards h3 {
-    font-size: clamp(1.15rem, 2vw, 1.4rem);
     flex-grow: 0;
-    line-height: 1.25;
-    margin-bottom: 0.25rem;
-    margin-top: 0;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.35;
+    margin: 0 0 0.65rem;
 }
 
-.cms-content .list .list-cards .property-line-main {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.cms-content .list .list-cards .property-line .property-price {
-    flex-basis: 100%;
-    font-family: var(--pico-font-family-display);
-    font-size: calc(var(--pico-font-size) * 1.15);
-    font-variant-numeric: tabular-nums;
-    margin-bottom: 0.25rem;
-    order: -1;
-}
-
-.cms-content .list .list-cards .intro,
-.cms-content .list .list-list .intro {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-}
-
-.cms-content .list .list-cards .intro {
-    -webkit-line-clamp: 2;
-}
-
-.cms-content .list .list-list .intro {
-    -webkit-line-clamp: 3;
-}
-
-.cms-content .list .list-cards .intro,
-.cms-content .list .list-list .intro {
+.cms-content .list .property-location {
     color: var(--pico-muted-color);
-    line-height: 1.55;
-    margin-top: 0.35rem;
+    font-size: calc(var(--pico-font-size) * 0.66);
+    letter-spacing: 0.03em;
+    margin: 0 0 0.4rem;
 }
 
-.cms-content .list .list-list .list-item,
-.cms-content .list .list-list .list-item:nth-child(even) {
-    flex-direction: row;
-}
-
-.cms-content .list .list-list picture,
-.cms-content .list .list-list .list-item:nth-child(even) picture {
-    flex: 0 0 min(38%, 22rem);
-    padding-inline: 0 1rem;
-}
-
-.cms-content .list .list-list .content {
-    padding-block: 1rem;
+.cms-content .list .property-price {
+    color: var(--pico-color);
+    font-size: calc(var(--pico-font-size) * 0.95);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
 }
 
 .cms-content .list .property-line {
     line-height: 1.45;
 }
 
+.cms-content .list .property-line-main {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0;
+}
+
 .cms-content .list .property-line-main,
 .cms-content .list .property-line-availability {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.75);
-    margin: 0.25rem 0 0;
+    font-size: calc(var(--pico-font-size) * 0.7);
+    margin: 0;
+}
+
+.cms-content .list .property-line-status {
+    margin: 0.65rem 0 0;
 }
 
 .cms-content .list .property-line-availability {
     display: flex;
     gap: 0.35rem;
+    margin-top: 0.45rem;
 }
 
 .cms-content .list .property-available_from {
     font-weight: 600;
-}
-
-.cms-content .list .property-line-main {
-    color: inherit;
 }
 
 .cms-content .list .property-line span[class^='property-'],
@@ -142,21 +116,14 @@
     display: inline;
 }
 
-.cms-content .list .property-line .property-price {
-    color: var(--pico-color);
-    font-family: var(--pico-font-family-display);
-    font-variant-numeric: tabular-nums;
-    font-weight: 700;
-}
-
 .cms-content .list .property-line span.property-status {
     background-color: var(--pico-secondary-background);
-    border-radius: 999px;
+    border-radius: 0;
     color: var(--pico-secondary);
     display: inline-block;
-    font-size: calc(var(--pico-font-size) * 0.65);
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: calc(var(--pico-font-size) * 0.6);
+    font-weight: 600;
+    letter-spacing: 0.04em;
     max-width: 100%;
     overflow-wrap: anywhere;
     padding: 0.15rem 0.45rem;
@@ -181,13 +148,45 @@
     color: var(--pico-muted-color);
 }
 
+.cms-content .list .list-cards .intro,
+.cms-content .list .list-list .intro {
+    color: var(--pico-muted-color);
+    display: -webkit-box;
+    line-height: 1.55;
+    margin-top: 0.65rem;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+
+.cms-content .list .list-cards .intro {
+    display: none;
+}
+
+.cms-content .list .list-list .intro {
+    -webkit-line-clamp: 3;
+}
+
+.cms-content .list .list-list .list-item,
+.cms-content .list .list-list .list-item:nth-child(even) {
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    flex-direction: row;
+    padding-block: 1rem;
+}
+
+.cms-content .list .list-list picture,
+.cms-content .list .list-list .list-item:nth-child(even) picture {
+    flex: 0 0 min(38%, 22rem);
+    padding-inline: 0 1rem;
+}
+
+.cms-content .list .list-list .content {
+    padding: 1rem;
+}
+
 .cms-content .list .property-list-tools {
-    background:
-        linear-gradient(135deg, var(--pico-secondary-background), transparent 70%),
-        var(--pico-contrast-inverse);
+    background: var(--pico-muted-background-color);
     border: 1px solid var(--pico-muted-border-color);
-    border-radius: calc(var(--pico-border-radius) * 2);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     padding: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -203,7 +202,7 @@
 .cms-content .list .property-filter-count {
     align-items: center;
     background-color: var(--pico-primary);
-    border-radius: 999px;
+    border-radius: 0;
     color: var(--pico-primary-inverse);
     display: inline-flex;
     font-size: calc(var(--pico-font-size) * 0.65);
@@ -268,16 +267,14 @@
 .cms-content .list .property-list-summary,
 .cms-content .list .list-empty {
     color: var(--pico-muted-color);
+    font-size: calc(var(--pico-font-size) * 0.72);
 }
 
 
 .cms-content .list .list-empty {
     align-items: center;
-    background:
-        linear-gradient(135deg, var(--pico-secondary-background), transparent 70%),
-        var(--pico-contrast-inverse);
+    background: var(--pico-muted-background-color);
     border: 1px solid var(--pico-muted-border-color);
-    border-radius: calc(var(--pico-border-radius) * 2);
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
@@ -295,9 +292,20 @@
 }
 
 .cms-content .list .list-item:focus-visible {
-    box-shadow: 0 0 0 3px var(--pico-secondary-focus), 0 0.75rem 2rem #1C1A160F;
-    outline: 2px solid var(--pico-secondary);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
+    outline: 2px solid var(--pico-primary);
     outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cms-content .list .list-item:hover {
+        box-shadow: none;
+        transform: none;
+    }
+
+    .cms-content .list .list-item:hover picture img {
+        transform: scale(1.02);
+    }
 }
 
 @media (min-width: 768px) {
@@ -373,6 +381,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .cms-content .list .list-item picture img,
     .cms-content .list .list-item {
         transition: none;
     }

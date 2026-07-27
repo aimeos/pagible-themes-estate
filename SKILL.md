@@ -1,6 +1,6 @@
 ---
 name: estate
-description: Editorial property theme with image-led layouts, navy typography, teal accents, and clear property discovery and contact paths.
+description: Editorial property theme with image-led layouts, crisp typography, a restrained red accent, and clear property discovery and contact paths.
 license: MIT
 metadata:
   author: Aimeos
@@ -22,14 +22,14 @@ Estate is a premium property-marketing theme built around large photography, edi
 
 ## Visual language
 
-- Background: soft off-white `#F8F8F6`.
-- Primary text and structural color: navy `#102A43`.
-- Accent and interactive color: teal `#0F766E`.
-- Display typography: editorial serif using the configured `--pico-font-family-display`.
+- Background: white `#FFFFFF` with quiet neutral sections.
+- Primary text and structural color: charcoal `#242424`.
+- Accent and interactive color: deep red `#B5122B`.
+- Display typography: precise sans-serif using the configured `--pico-font-family-display`.
 - Body typography: clean sans-serif using the configured `--pico-font-family-sans-serif`.
-- Use the configured `--pico-border-radius`; cards, images, inputs, and buttons may use restrained rounding.
-- Use subtle gradients and patterns only for intentional image placeholders or atmospheric surfaces.
-- Keep interfaces image-led, spacious, and readable rather than ornamental.
+- Use square edges, fine neutral rules, and minimal shadow.
+- Use gradients only for legibility over photography or intentional image placeholders.
+- Keep interfaces image-led, spacious, and readable, with property facts presented as a clear hierarchy.
 
 ## Property components
 

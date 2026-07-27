@@ -22,10 +22,7 @@ class EstateDemo extends AbstractDemo
 {
     /** @var array<string, string> Meta descriptions keyed by page path */
     private const DESCRIPTIONS = [
-        'properties' => 'Current property portfolio with curated residential and commercial listings, ready to compare and inspect.',
-        'properties/commercial' => 'Commercial property opportunities selected for access, visibility, adaptable use, and long-term value.',
-        'properties/rental' => 'Flexible rental properties with transparent terms, space details, and availability.',
-        'properties/residential' => 'Residential properties selected for location quality, architecture, and long-term value.',
+        'properties' => 'Current residential, rental, and commercial properties, presented together for direct comparison.',
         'news' => 'Weekly market updates and property strategy notes for clients evaluating high-end transactions.',
         'properties/urban-penthouse-berlin' => 'Luxury penthouse with rooftop access and premium interior context in central Berlin.',
         'properties/riverfront-office-suite' => 'Converted office floorplan for mixed retail and hospitality-adjacent use.',
@@ -51,9 +48,8 @@ class EstateDemo extends AbstractDemo
     private string $logoFile;
 
 
-    protected function addProperties( Page $home ) : static
+    protected function addProperties( Page $home, string $propertiesId ) : static
     {
-        $propertiesId = Utils::uid();
         $properties = $this->page( [
             'id' => $propertiesId,
             'lang' => 'en',
@@ -62,96 +58,9 @@ class EstateDemo extends AbstractDemo
             'path' => 'properties',
             'type' => 'page',
             'tag' => 'property',
-            'status' => 1,
-        ], [
-            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
-                'title' => 'Available properties',
-                'subtitle' => 'Estate property portfolio',
-                'text' => 'Browse premium residential and commercial listings with practical details: district, area, asking conditions, and availability.',
-                'url' => '/#home-contact',
-                'button' => 'Contact advisor',
-                'files' => [['id' => $this->img( 'commercial' ), 'type' => 'file']],
-            ]],
-            ['id' => Utils::uid(), 'type' => 'estate::properties', 'group' => 'main', 'data' => [
-                'title' => 'Current properties',
-                'layout' => 'list',
-                'limit' => 3,
-                'order' => '_lft',
-                'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
-            ]],
-        ], $home );
-
-        $residentialId = Utils::uid();
-        $residential = $this->page( [
-            'id' => $residentialId,
-            'lang' => 'en',
-            'name' => 'Residential',
-            'title' => 'Residential Properties',
-            'path' => 'properties/residential',
-            'type' => 'page',
-            'tag' => 'property-category',
-            'status' => 1,
-        ], [
-            ['id' => Utils::uid(), 'type' => 'text', 'group' => 'main', 'data' => [
-                'text' => '## Residential properties\n\nHomes and apartments selected for location quality, architecture, and long-term residential value.',
-            ]],
-            ['id' => Utils::uid(), 'type' => 'estate::properties', 'group' => 'main', 'data' => [
-                'title' => 'Residential portfolio',
-                'layout' => 'cards',
-                'filters' => false,
-                'limit' => 6,
-                'order' => '_lft',
-                'parent-page' => ['value' => $residentialId, 'label' => 'Residential'],
-            ]],
-        ], $properties );
-
-        $rentalId = Utils::uid();
-        $rental = $this->page( [
-            'id' => $rentalId,
-            'lang' => 'en',
-            'name' => 'Rental',
-            'title' => 'Rental Properties',
-            'path' => 'properties/rental',
-            'type' => 'page',
-            'tag' => 'property-category',
-            'status' => 1,
-        ], [
-            ['id' => Utils::uid(), 'type' => 'text', 'group' => 'main', 'data' => [
-                'text' => '## Rental properties\n\nFlexible rental opportunities with transparent periods, space details, and availability.',
-            ]],
-            ['id' => Utils::uid(), 'type' => 'estate::properties', 'group' => 'main', 'data' => [
-                'title' => 'Rental portfolio',
-                'layout' => 'cards',
-                'filters' => false,
-                'limit' => 6,
-                'order' => '_lft',
-                'parent-page' => ['value' => $rentalId, 'label' => 'Rental'],
-            ]],
-        ], $properties );
-
-        $commercialId = Utils::uid();
-        $commercial = $this->page( [
-            'id' => $commercialId,
-            'lang' => 'en',
-            'name' => 'Commercial',
-            'title' => 'Commercial Properties',
-            'path' => 'properties/commercial',
-            'type' => 'page',
-            'tag' => 'property-category',
-            'status' => 1,
-        ], [
-            ['id' => Utils::uid(), 'type' => 'text', 'group' => 'main', 'data' => [
-                'text' => '## Commercial properties\n\nOffice and retail opportunities selected for access, visibility, and adaptable use.',
-            ]],
-            ['id' => Utils::uid(), 'type' => 'estate::properties', 'group' => 'main', 'data' => [
-                'title' => 'Commercial portfolio',
-                'layout' => 'cards',
-                'filters' => false,
-                'limit' => 6,
-                'order' => '_lft',
-                'parent-page' => ['value' => $commercialId, 'label' => 'Commercial'],
-            ]],
-        ], $properties );
+            'status' => 2,
+            'to' => '/#home-properties',
+        ], [], $home );
 
         $this->page( [
             'lang' => 'en',
@@ -200,7 +109,7 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- 3 bedrooms / 3 bathrooms\n- Private terrace and panoramic views\n- Smart home controls\n- Private parking garage",
                 ],
             ),
-        ], $residential );
+        ], $properties );
 
         $this->page( [
             'lang' => 'en',
@@ -250,7 +159,7 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- Open floor plan with co-working layout\n- Reception and loading access\n- 24/7 elevator and security\n- Built-in audio-visual systems",
                 ],
             ),
-        ], $rental );
+        ], $properties );
 
         $this->page( [
             'lang' => 'en',
@@ -298,7 +207,7 @@ class EstateDemo extends AbstractDemo
                     'features' => "## Property features\n- Street frontage and high visibility\n- Flexible tenant circulation\n- Storage annex and rear access\n- Elevator connection to mezzanine",
                 ],
             ),
-        ], $commercial );
+        ], $properties );
 
         return $this;
     }
@@ -423,8 +332,8 @@ class EstateDemo extends AbstractDemo
         if( !isset( $this->element ) )
         {
             $cards = [
-                ['title' => 'Explore', 'text' => '- [Home](/)\n- [Properties](/properties)\n- [News](/news)'],
-                ['title' => 'Properties', 'text' => '- [Residential](/properties/residential)\n- [Rental](/properties/rental)\n- [Commercial](/properties/commercial)'],
+                ['title' => 'Explore', 'text' => '- [Home](/)\n- [Current properties](/#home-properties)\n- [News](/news)'],
+                ['title' => 'Property search', 'text' => '- [For sale](/?offer=sale#home-properties)\n- [For rent](/?offer=rent#home-properties)\n- [Commercial](/?type=office#home-properties)'],
                 ['title' => 'Contact', 'text' => '- [hello@estate.example](mailto:hello@estate.example)\n- [Request a consultation](/#home-contact)'],
             ];
 
@@ -462,7 +371,7 @@ class EstateDemo extends AbstractDemo
     }
 
 
-    protected function home( string $newsId ) : Page
+    protected function home( string $newsId, string $propertiesId ) : Page
     {
         $elementId = $this->element();
         $fileId = $this->file();
@@ -486,19 +395,19 @@ class EstateDemo extends AbstractDemo
                 'title' => 'Find the property behind your next move',
                 'subtitle' => 'Estate',
                 'text' => 'Compare residential, rental, and commercial properties with clear pricing, availability, location details, and practical market context.',
-                'url' => '/properties',
-                'button' => 'Browse properties',
+                'url' => '/#home-properties',
+                'button' => 'View properties',
                 'url-alternative' => '/news',
                 'button-alternative' => 'Read property news',
                 'files' => [['id' => $fileId, 'type' => 'file']],
             ]],
-            ['id' => Utils::uid(), 'type' => 'cards', 'group' => 'main', 'data' => [
-                'title' => 'Explore properties',
-                'cards' => [
-                    ['title' => 'Residential', 'text' => "Homes and apartments selected for location quality and long-term value.\n\n[View residential properties](/properties/residential)", 'file' => ['id' => $this->img( 'buy' ), 'type' => 'file']],
-                    ['title' => 'Rental', 'text' => "Flexible rentals with transparent periods, space details, and availability.\n\n[View rental properties](/properties/rental)", 'file' => ['id' => $this->img( 'lounge' ), 'type' => 'file']],
-                    ['title' => 'Commercial', 'text' => "Office and retail opportunities selected for access, visibility, and adaptable use.\n\n[View commercial properties](/properties/commercial)", 'file' => ['id' => $this->img( 'commercial' ), 'type' => 'file']],
-                ],
+            ['id' => 'home-properties', 'type' => 'estate::properties', 'group' => 'main', 'data' => [
+                'title' => 'Current properties',
+                'layout' => 'cards',
+                'filters' => true,
+                'limit' => 6,
+                'order' => '_lft',
+                'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
             ]],
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
                 'file' => ['id' => $this->img( 'lounge' ), 'type' => 'file'],
@@ -617,16 +526,16 @@ class EstateDemo extends AbstractDemo
   <title id="title">Estate logo</title>
   <desc id="desc">Estate wordmark with a geometric building icon</desc>
   <g fill="none" fill-rule="evenodd">
-    <rect x="12" y="31" width="26" height="43" rx="2" fill="#102A43" />
-    <rect x="42" y="22" width="26" height="52" rx="2" fill="#102A43" />
-    <rect x="72" y="15" width="26" height="59" rx="2" fill="#102A43" />
-    <rect x="102" y="27" width="26" height="47" rx="2" fill="#102A43" />
-    <rect x="132" y="33" width="26" height="41" rx="2" fill="#0F766E" />
-    <rect x="168" y="18" width="3" height="56" fill="#102A43"/>
-    <rect x="176" y="18" width="3" height="56" fill="#102A43"/>
-    <path d="M10 75h210" stroke="#102A43" stroke-width="2"/>
-    <text x="210" y="61" fill="#102A43" font-family="Avenir Next, Avenir, Segoe UI, sans-serif" font-size="38" font-weight="700" letter-spacing="2.3">ESTATE</text>
-    <text x="214" y="78" fill="#0F766E" font-family="Avenir Next, Avenir, Segoe UI, sans-serif" font-size="10" letter-spacing="7">PROPERTY PORTAL</text>
+    <rect x="12" y="31" width="26" height="43" fill="#242424" />
+    <rect x="42" y="22" width="26" height="52" fill="#242424" />
+    <rect x="72" y="15" width="26" height="59" fill="#242424" />
+    <rect x="102" y="27" width="26" height="47" fill="#242424" />
+    <rect x="132" y="33" width="26" height="41" fill="#B5122B" />
+    <rect x="168" y="18" width="3" height="56" fill="#242424"/>
+    <rect x="176" y="18" width="3" height="56" fill="#242424"/>
+    <path d="M10 75h210" stroke="#242424" stroke-width="2"/>
+    <text x="210" y="61" fill="#242424" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="38" font-weight="700" letter-spacing="2.3">ESTATE</text>
+    <text x="214" y="78" fill="#B5122B" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" letter-spacing="7">PROPERTY PORTAL</text>
   </g>
 </svg>
 SVG;
@@ -716,9 +625,10 @@ SVG;
     protected function pages() : void
     {
         $newsId = (string) Str::uuid7();
-        $home = $this->home( $newsId );
+        $propertiesId = (string) Str::uuid7();
+        $home = $this->home( $newsId, $propertiesId );
 
-        $this->addProperties( $home )
+        $this->addProperties( $home, $propertiesId )
             ->addNews( $home, $newsId );
     }
 }

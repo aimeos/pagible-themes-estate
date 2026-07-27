@@ -55,8 +55,8 @@ dialog input {
 }
 
 dialog input:focus-visible {
-    border: 1px solid var(--pico-secondary);
-    box-shadow: 0 0 0 3px #8A6E3F1A;
+    border: 1px solid var(--pico-primary);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
 }
 
 dialog input::-webkit-input-placeholder {

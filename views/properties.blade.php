@@ -6,6 +6,10 @@
 
 <div class="list">
     @if(($items = $action->items ?? null) && ($filters = $action->filters ?? null) && ($options = $action->options ?? null))
+        @if($data->title ?? null)
+            <h2>{{ $data->title }}</h2>
+        @endif
+
         @if($data->filters ?? true)
             <details class="property-list-tools property-filter-disclosure"
                 @if($activeFilters = collect([
@@ -96,9 +100,6 @@
         @endif
 
         @if($items->isNotEmpty())
-            @if($data->title ?? null)
-                <h2>{{ $data->title }}</h2>
-            @endif
             <p id="property-list-summary-{{ $data->id ?? 'list' }}" class="property-list-summary" role="status" aria-live="polite">
                 {{ trans_choice('Showing :from to :to of :total property|Showing :from to :to of :total properties', $items->total(), [
                     'from' => $items->firstItem(),
@@ -131,14 +132,14 @@
 
         @if($items->isNotEmpty())
             <script type="application/ld+json">{!! cmsjson([
-                '@context' => 'https://schema.org',
-                '@type' => 'ItemList',
+                '@@context' => 'https://schema.org',
+                '@@type' => 'ItemList',
                 'name' => $data->title ?? cms($page, 'title'),
                 'itemListElement' => $items->getCollection()->values()->map( fn( $item, $idx ) => [
-                    '@type' => 'ListItem',
+                    '@@type' => 'ListItem',
                     'position' => $items->firstItem() + $idx,
                     'item' => [
-                        '@type' => 'RealEstateListing',
+                        '@@type' => 'RealEstateListing',
                         'name' => cms($item, 'title'),
                         'url' => route('cms.page', ['path' => $item->path]),
                     ],

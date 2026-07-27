@@ -1,6 +1,6 @@
 # Estate Theme
 
-Premium real-estate showcase with clean editorial spacing, large property photography, and dedicated navigation for Buy, Rent, Sell, Commercial, and News.
+Premium real-estate showcase with clean editorial spacing, large property photography, a unified homepage portfolio, and market news.
 
 This package is part of the [Pagible CMS monorepo](https://github.com/aimeos/pagible).
 
@@ -14,10 +14,10 @@ php artisan vendor:publish --tag=cms-theme
 ## Design
 
 - **Style**: Editorial property marketing with generous whitespace and image-first storytelling
-- **Palette**: Soft off-white pages (`#F8F8F6`) with navy ink (`#102A43`) and muted secondary accents (`#0F766E`)
-- **Typography**: Editorial serif display type paired with a clean sans-serif system body
-- **Navigation**: Persistent top navigation, searchable content, and dedicated contact paths
-- **Interaction**: Clear hierarchy across card grids, pricing tables, and content blocks
+- **Palette**: White pages (`#FFFFFF`), charcoal ink (`#242424`), and a restrained deep-red accent (`#B5122B`)
+- **Typography**: Crisp sans-serif display and body type
+- **Navigation**: Persistent top navigation, searchable content, and direct contact paths
+- **Interaction**: Fine rules, square controls, clear property facts, and minimal shadow
 - **CSS framework**: Pico CSS with `--pico-*` custom property overrides
 
 ## Page Types
@@ -68,11 +68,11 @@ php artisan vendor:publish --tag=cms-theme
 
 The `property` content element renders an image gallery, pricing, status, an optional availability date, listing freshness, location, key facts, optional values, typed document downloads, structured data, fallback description and social metadata with image descriptions, a print-friendly view, and the existing CMS contact form. Contact submissions include the originating property URL. Sold and rented properties invite visitors to ask about similar properties instead of requesting a viewing. Structured offers identify the configured site as seller unless it still uses Laravel's default application name.
 
-The `properties` content element supports card and list layouts, optional filtering by property type, offer type, status, city, availability date, and minimum room count, database-backed position and date sorting, pagination, and nested category pages below its configured parent. The action normalizes request state once and returns canonical filters, schema options, and the paginator. Unfiltered lists are paginated in the database; filtered lists preserve database ordering and filter property content in memory. This intentionally targets normal agency-sized portfolios; larger inventories should use a dedicated indexed property search rather than expanding the theme action.
+The `properties` content element supports card and list layouts, optional filtering by property type, offer type, status, city, availability date, and minimum room count, database-backed position and date sorting, pagination, and property pages below its configured parent. The action normalizes request state once and returns canonical filters, schema options, and the paginator. Unfiltered lists are paginated in the database; filtered lists preserve database ordering and filter property content in memory. This intentionally targets normal agency-sized portfolios; larger inventories should use a dedicated indexed property search rather than expanding the theme action.
 
 ## Seeder
 
-The package includes `Database\Seeders\EstateDemo` which builds a property-focused demo with Buy, Rent, Sell, Commercial, Locations, and News pages.
+The package includes `Database\Seeders\EstateDemo` which builds a property-focused homepage with one filterable portfolio, individual property exposés, and market news.
 
 ## Browser tests
 

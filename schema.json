@@ -352,27 +352,27 @@
             "fields": {
                 "--pico-font-family-sans-serif": {
                     "type": "string",
-                    "default": "'Avenir Next', Avenir, 'Segoe UI', Helvetica, sans-serif"
+                    "default": "'Helvetica Neue', Helvetica, Arial, sans-serif"
                 },
                 "--pico-font-family-display": {
                     "type": "string",
-                    "default": "'Iowan Old Style', Baskerville, 'Times New Roman', serif"
+                    "default": "'Helvetica Neue', Helvetica, Arial, sans-serif"
                 },
                 "--pico-color": {
                     "type": "color",
-                    "default": "#102A43"
+                    "default": "#242424"
                 },
                 "--pico-background-color": {
                     "type": "color",
-                    "default": "#F8F8F6"
+                    "default": "#FFFFFF"
                 },
                 "--pico-text-selection-color": {
                     "type": "color",
-                    "default": "#1D4ED81F"
+                    "default": "#B5122B22"
                 },
                 "--pico-contrast": {
                     "type": "color",
-                    "default": "#102A43"
+                    "default": "#242424"
                 },
                 "--pico-contrast-hover": {
                     "type": "color",
@@ -384,39 +384,39 @@
                 },
                 "--pico-primary": {
                     "type": "color",
-                    "default": "#1E293B"
+                    "default": "#B5122B"
                 },
                 "--pico-primary-background": {
                     "type": "color",
-                    "default": "#1E293B08"
+                    "default": "#B5122B0F"
                 },
                 "--pico-primary-hover": {
                     "type": "color",
-                    "default": "#334155"
+                    "default": "#8F0D22"
                 },
                 "--pico-primary-hover-background": {
                     "type": "color",
-                    "default": "#33415508"
+                    "default": "#8F0D220F"
                 },
                 "--pico-secondary": {
                     "type": "color",
-                    "default": "#0F766E"
+                    "default": "#242424"
                 },
                 "--pico-secondary-background": {
                     "type": "color",
-                    "default": "#0F766E14"
+                    "default": "#2424240F"
                 },
                 "--pico-secondary-hover": {
                     "type": "color",
-                    "default": "#115E59"
+                    "default": "#000000"
                 },
                 "--pico-secondary-hover-background": {
                     "type": "color",
-                    "default": "#115E590F"
+                    "default": "#0000000F"
                 },
                 "--pico-border-radius": {
                     "type": "string",
-                    "default": "0.5rem"
+                    "default": "0"
                 },
                 "--pico-nav-breadcrumb-divider": {
                     "type": "string",

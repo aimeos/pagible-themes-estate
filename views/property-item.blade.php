@@ -21,10 +21,27 @@
     @endif
 
     <div class="content">
+        <div id="property-meta-{{ cms($item, 'id') ?: md5((string) $item->path) }}" class="property-meta">
+            @if(($location = collect([
+                $property->district ?? null,
+                empty($property->district) ? ($property->city ?? null) : null,
+                $property->country ?? null,
+            ])->filter())->isNotEmpty())
+                <p class="property-location">
+                    @foreach($location as $value)
+                        @if(!$loop->first)
+                            <span class="property-meta-separator" aria-hidden="true">,</span>
+                        @endif
+                        <span>{{ $value }}</span>
+                    @endforeach
+                </p>
+            @endif
+        </div>
+
         <h3 id="property-title-{{ cms($item, 'id') ?: md5((string) $item->path) }}">{{ cms($item, 'title') }}</h3>
-        @if(($main = collect([
-            'status' => __(ucfirst(str_replace('_', ' ', (string) $property->status))),
-            'price' => $property->offer_type === 'rent' && $property->price_period
+
+        <p class="property-price">
+            {{ $property->offer_type === 'rent' && $property->price_period
                 ? __(':currency :value per :period', [
                     'currency' => $property->currency,
                     'value' => \Illuminate\Support\Number::format($property->price, maxPrecision: 2, locale: app()->getLocale()),
@@ -33,27 +50,38 @@
                 : __(':currency :value', [
                     'currency' => $property->currency,
                     'value' => \Illuminate\Support\Number::format($property->price, maxPrecision: 2, locale: app()->getLocale()),
-                ]),
-            'district' => $property->district ?? null,
-            'city' => empty($property->district) ? ($property->city ?? null) : null,
-            'area' => __(':value :unit', [
-                'value' => \Illuminate\Support\Number::format($property->area, maxPrecision: 2, locale: app()->getLocale()),
-                'unit' => $property->area_unit,
-            ]),
+                ]) }}
+        </p>
+
+        @if(($facts = collect([
             'rooms' => $property->rooms !== null ? __(':value :unit', [
                 'value' => \Illuminate\Support\Number::format($property->rooms, maxPrecision: 1, locale: app()->getLocale()),
                 'unit' => __('rooms'),
             ]) : null,
+            'bathrooms' => $property->bathrooms !== null ? __(':value :unit', [
+                'value' => \Illuminate\Support\Number::format($property->bathrooms, locale: app()->getLocale()),
+                'unit' => __('Bathrooms'),
+            ]) : null,
+            'area' => __(':value :unit', [
+                'value' => \Illuminate\Support\Number::format($property->living_area ?? $property->area, maxPrecision: 2, locale: app()->getLocale()),
+                'unit' => $property->area_unit,
+            ]) . ' ' . __('Living area'),
         ])->filter( fn( $value ) => $value !== null && $value !== '' ))->isNotEmpty())
-            <p id="property-meta-{{ cms($item, 'id') ?: md5((string) $item->path) }}" class="property-line property-line-main">
-                @foreach($main as $prop => $value)
+            <p class="property-line property-line-main">
+                @foreach($facts as $prop => $value)
                     @if(!$loop->first)
                         <span class="property-meta-separator" aria-hidden="true">·</span>
                     @endif
-                    <span class="property-line-item property-{{ $prop }}{{ $prop === 'status' ? ' property-status-' . $property->status : '' }}">{{ $value }}</span>
+                    <span class="property-line-item property-{{ $prop }}">{{ $value }}</span>
                 @endforeach
             </p>
         @endif
+
+        <p class="property-line property-line-status">
+            <span class="property-status property-status-{{ $property->status }}">
+                {{ __(ucfirst(str_replace('_', ' ', (string) $property->status))) }}
+            </span>
+        </p>
 
         @if($property->available_from ?? null)
             <p class="property-line property-line-availability">

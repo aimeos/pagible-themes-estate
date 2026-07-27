@@ -15,7 +15,7 @@
 }
 
 .hero .background::after {
-    background: linear-gradient(180deg, #17151199 0%, #17151166 45%, #171511B3 100%);
+    background: linear-gradient(180deg, #00000070 0%, #00000045 45%, #00000085 100%);
     content: "";
     inset: 0;
     position: absolute;
@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: clamp(5rem, 11vw, 9rem) 0 clamp(4rem, 9vw, 7rem);
+    padding: clamp(4rem, 9vw, 7rem) 0 clamp(3rem, 7vw, 5rem);
 }
 
 .hero .first {
@@ -70,12 +70,12 @@
 }
 
 .hero h1 {
-    font-size: clamp(2.85rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.75rem);
     margin-top: 0;
     margin-bottom: 1.75rem;
-    font-weight: 400;
-    line-height: 1.04;
-    letter-spacing: 0.01em;
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
     max-width: 18ch;
     text-wrap: balance;
 }
@@ -84,10 +84,10 @@
     display: inline-block;
     margin-bottom: 1.75rem;
     padding: 0;
-    color: var(--pico-secondary);
+    color: var(--pico-muted-color);
     font-size: calc(var(--pico-font-size) * 0.62);
     font-weight: 500;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
 }
 
@@ -97,7 +97,7 @@
     width: 2.5rem;
     height: 1px;
     margin: 0.9rem auto 0;
-    background-color: var(--pico-secondary);
+    background-color: var(--pico-primary);
 }
 
 .hero p {
@@ -116,11 +116,11 @@
 }
 
 .hero:has(.background img) .subtitle {
-    color: #F4E6CC;
+    color: #FFFFFF;
 }
 
 .hero:has(.background img) .subtitle::after {
-    background-color: #F4E6CC;
+    background-color: var(--pico-primary);
 }
 
 .hero:has(.background img) p {
@@ -140,13 +140,12 @@
 }
 
 .hero .second picture {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 7;
     background-color: transparent;
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: calc(var(--pico-border-radius) * 2);
-    box-shadow: var(--pico-box-shadow);
+    border: 0;
+    box-shadow: none;
     overflow: hidden;
-    width: min(100%, 54rem);
+    width: min(100%, 72rem);
     margin: 3rem auto 0;
     padding: 0;
     display: block;
@@ -195,7 +194,7 @@
 
 @media screen and (min-width: 768px) {
     .hero .container {
-        padding: 9rem 0 7rem;
+        padding: 7rem 0 5rem;
     }
 
     .hero p {
