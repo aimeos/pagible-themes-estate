@@ -49,7 +49,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'district' => 'Mitte',
             'zip_code' => '10437',
             'living_area' => 110,
-            'location' => "## Around the property\nWalk to cafés and the station.",
+            'location' => 'Walk to cafés and the station.',
             'values' => [['Floor', '7']],
             'features' => "## Property features\n- Balcony\n- Lift",
         ] );
@@ -63,7 +63,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertStringContainsString( '<section class="property-description">', $html );
         $this->assertStringContainsString( '<section class="property-location-description">', $html );
         $this->assertStringContainsString( '<h2>Location</h2>', $html );
-        $this->assertStringContainsString( '<h2>Around the property</h2>', $html );
+        $this->assertStringNotContainsString( '<h2>Around the property</h2>', $html );
         $this->assertStringContainsString( '<section class="property-details">', $html );
         $this->assertSame( 2, substr_count( $html, '<dl class="property-facts">' ) );
         $this->assertStringContainsString( '<h2>Property details</h2>', $html );
@@ -219,6 +219,53 @@ class PropertyRenderingTest extends ThemeTestAbstract
     }
 
 
+    public function testEstatePageLayoutAlternatesMutedBackground(): void
+    {
+        $css = (string) file_get_contents( dirname( __DIR__ ) . '/public/layout-page.css' );
+
+        preg_match( '/\\.type-page main \\.cms-content > :nth-child\\(even\\) \\{([^}]+)\\}/', $css, $matches );
+        $rule = $matches[1] ?? '';
+
+        $this->assertStringContainsString( 'background-color: var(--pico-muted-background-color);', $rule );
+        $this->assertStringNotContainsString( ':nth-child(3n)', $css );
+    }
+
+
+    public function testEstateFormsUseWhiteFieldBackgrounds(): void
+    {
+        $contact = (string) file_get_contents( dirname( __DIR__ ) . '/public/contact.css' );
+        $properties = (string) file_get_contents( dirname( __DIR__ ) . '/public/properties.css' );
+
+        $this->assertMatchesRegularExpression(
+            '/\\.contact input, \\.contact textarea \\{[^}]*background-color: #FFFFFF;/s',
+            $contact
+        );
+        $this->assertMatchesRegularExpression(
+            '/\\.property-filter select,[^{]+\\.property-filter-actions \\.button\\.outline \\{[^}]*background-color: #FFFFFF;/s',
+            $properties
+        );
+    }
+
+
+    public function testEstateHeroBackgroundCoversItsContainer(): void
+    {
+        $css = (string) file_get_contents( dirname( __DIR__ ) . '/public/hero.css' );
+
+        preg_match( '/\\.hero \\.background \\{([^}]+)\\}/', $css, $backgroundMatches );
+        preg_match( '/\\.hero \\.background img \\{([^}]+)\\}/', $css, $imageMatches );
+        $background = $backgroundMatches[1] ?? '';
+        $image = $imageMatches[1] ?? '';
+
+        $this->assertStringContainsString( 'height: 100%;', $background );
+        $this->assertStringContainsString( 'margin: 0;', $background );
+        $this->assertStringContainsString( 'width: 100%;', $background );
+        $this->assertStringContainsString( 'height: 100%;', $image );
+        $this->assertStringContainsString( 'object-fit: cover;', $image );
+        $this->assertStringContainsString( 'width: 100%;', $image );
+        $this->assertStringNotContainsString( ".hero picture {\n", $css );
+    }
+
+
     public function testEstateArticlePlacesHeadingOverCover(): void
     {
         $file = ( new File() )->forceFill( [
@@ -261,10 +308,14 @@ class PropertyRenderingTest extends ThemeTestAbstract
 
         preg_match( '/header nav \\.menu details\\.dropdown > ul\\.align \\{([^}]+)\\}/', $css, $matches );
         $rule = $matches[1] ?? '';
+        preg_match( '/header nav details\\.dropdown\\[open\\] > summary::before \\{([^}]+)\\}/', $css, $overlayMatches );
+        $overlayRule = $overlayMatches[1] ?? '';
 
         $this->assertStringContainsString( 'left: auto;', $rule );
         $this->assertStringContainsString( 'right: auto;', $rule );
         $this->assertStringNotContainsString( 'inset-inline-start:', $rule );
+        $this->assertStringContainsString( 'height: auto;', $overlayRule );
+        $this->assertStringContainsString( 'width: auto;', $overlayRule );
         $this->assertStringContainsString( 'ul.getBoundingClientRect()', $script );
         $this->assertStringContainsString( "ul.style.right = '0'", $script );
         $this->assertStringContainsString( "ul.style.left = '0'", $script );

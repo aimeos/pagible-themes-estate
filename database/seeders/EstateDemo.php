@@ -105,7 +105,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 10,
                     'year_built' => 2015,
-                    'location' => "## Berlin Mitte\n\nSet between Prenzlauer Berg and the historic centre, the address offers quick tram and S-Bahn connections. Independent cafés, daily shopping, parks, and cultural venues are all within easy reach.",
+                    'location' => 'Set between Prenzlauer Berg and the historic centre, the address offers quick tram and S-Bahn connections. Independent cafés, daily shopping, parks, and cultural venues are all within easy reach.',
                     'values' => [
                         ['Floor', '7'],
                         ['Parking', '2 parking spaces'],
@@ -156,7 +156,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 8,
                     'year_built' => 2018,
-                    'location' => "## Hamburg waterfront\n\nThe suite sits within Hamburg’s eastern HafenCity business district, close to the main station, riverfront restaurants, and mixed-use services. Local transit links connect the property directly with the city centre.",
+                    'location' => 'The suite sits within Hamburg’s eastern HafenCity business district, close to the main station, riverfront restaurants, and mixed-use services. Local transit links connect the property directly with the city centre.',
                     'values' => [
                         ['Floor', '2'],
                         ['Parking', '6 parking spaces'],
@@ -205,7 +205,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 5,
                     'year_built' => 2005,
-                    'location' => "## HafenCity position\n\nThe loft occupies a visible waterfront corner in HafenCity, surrounded by offices, apartments, hotels, and visitor destinations. Its broad frontage benefits from steady pedestrian movement throughout the working week and at weekends.",
+                    'location' => 'The loft occupies a visible waterfront corner in HafenCity, surrounded by offices, apartments, hotels, and visitor destinations. Its broad frontage benefits from steady pedestrian movement throughout the working week and at weekends.',
                     'values' => [
                         ['Floor', 'Ground + 1'],
                         ['Parking', '1 valet bay'],
@@ -263,14 +263,69 @@ class EstateDemo extends AbstractDemo
         ], [
             $this->article(
                 'Why portfolio diversification matters now',
-                'A concentrated position can perform well when cycles align, but long-horizon owners usually protect downside with location and tenant balance. That remains true for both residential and commercial portfolios.',
+                "A concentrated position can perform well when cycles align, but long-horizon owners usually protect downside with location and tenant balance. That remains true for both residential and commercial portfolios.\n\nUseful diversification is not a property count. It is a deliberate spread of income drivers, lease events, building needs, and local demand.",
                 $this->img( 'market' )
             ),
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
                 'file' => ['id' => $this->img( 'city' ), 'type' => 'file'],
                 'position' => 'end',
                 'ratio' => '1-2',
-                'text' => "## Practical signal\n\nBefore expanding allocation, compare rental carry, demand resilience, and tenant retention by zip code rather than headline yield alone.",
+                'text' => "## Diversify the source of demand\n\nTwo properties in different postcodes can still depend on the same employer base, tenant profile, or financing conditions. Before expanding allocation, compare rental carry, demand resilience, and tenant retention rather than headline yield alone.\n\nThe useful question is not whether the next address is different. It is whether the income behaves differently when the market changes.",
+            ]],
+            ['id' => Utils::uid(), 'type' => 'cards', 'group' => 'main', 'data' => [
+                'title' => 'Three portfolio lenses',
+                'columns' => 3,
+                'cards' => [
+                    [
+                        'title' => 'Location',
+                        'text' => 'Compare employment, infrastructure, supply pipelines, and the depth of local buyer and tenant demand.',
+                    ],
+                    [
+                        'title' => 'Use',
+                        'text' => 'Residential, office, and retail income respond to different operating cycles, regulations, and customer habits.',
+                    ],
+                    [
+                        'title' => 'Lease profile',
+                        'text' => 'Spread expiry dates, tenant concentration, indexation terms, and capital obligations instead of only adding units.',
+                    ],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'table', 'group' => 'main', 'data' => [
+                'title' => 'Read concentration before headline return',
+                'header' => 'row',
+                'table' => [
+                    ['Portfolio lens', 'Question to ask', 'Evidence to compare'],
+                    ['Demand', 'What keeps this location occupied?', 'Vacancy, enquiries, absorption, employer mix'],
+                    ['Income', 'How much revenue depends on one event?', 'Tenant share, lease expiries, indexation'],
+                    ['Asset', 'Which costs could arrive together?', 'Building age, energy plan, maintenance cycle'],
+                    ['Exit', 'Who is likely to buy next?', 'Comparable sales, lot size, financing appetite'],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'questions', 'group' => 'main', 'data' => [
+                'title' => 'Questions before the next acquisition',
+                'items' => [
+                    [
+                        'title' => 'How many properties make a portfolio diversified?',
+                        'text' => 'There is no useful universal number. A larger portfolio can remain concentrated when the assets share a city, tenant sector, lease cycle, or refinancing date. Measure the exposure behind each income stream.',
+                    ],
+                    [
+                        'title' => 'Does buying in a second city reduce risk?',
+                        'text' => 'Only when the second market has genuinely different demand drivers. Compare employment, supply, regulation, and tenant behaviour before treating distance as diversification.',
+                    ],
+                    [
+                        'title' => 'When should an existing asset be sold?',
+                        'text' => 'Review assets that dominate portfolio income, require disproportionate capital, or no longer fit the intended risk profile. A sale should improve the portfolio, not merely remove an inconvenient building.',
+                    ],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
+                'title' => 'Review the portfolio before the next purchase',
+                'subtitle' => 'Estate advisory',
+                'text' => 'Map income, lease events, location exposure, and planned capital work before comparing the next opportunity.',
+                'url' => '/#home-contact',
+                'button' => 'Request a portfolio review',
+                'url-alternative' => '/#home-properties',
+                'button-alternative' => 'Compare current properties',
             ]],
         ], $news );
 
@@ -285,11 +340,69 @@ class EstateDemo extends AbstractDemo
         ], [
             $this->article(
                 'Renovation as a leverage point',
-                'Small, high-signal upgrades often beat full rebuilds when done after lease-cycle reviews. Targeted updates improve conversion speed and reduce pricing friction.',
+                "Small, high-signal upgrades often beat full rebuilds when they follow a lease-cycle and market review. Targeted updates improve conversion speed and reduce pricing friction without committing capital to work buyers or tenants will not value.\n\nThe strongest brief starts with the obstacle: slow viewings, recurring defects, dated systems, poor circulation, or a widening gap to comparable properties.",
                 $this->img( 'renovation' )
             ),
-            ['id' => Utils::uid(), 'type' => 'text', 'group' => 'main', 'data' => [
-                'text' => 'Most owners see value when renovations are scoped to market-visible outcomes: access to daylight, quiet systems, storage, and transition readiness.',
+            ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
+                'file' => ['id' => $this->img( 'retail-fitout' ), 'type' => 'file'],
+                'position' => 'start',
+                'ratio' => '1-2',
+                'text' => "## Start with property friction\n\nViewing feedback, maintenance records, tenant requests, and comparable listings usually show where value is being lost. Translate those signals into a short brief before discussing finishes.\n\nThat keeps the work tied to daylight, acoustics, storage, circulation, energy use, and move-in readiness rather than a catalogue of upgrades.",
+            ]],
+            ['id' => Utils::uid(), 'type' => 'cards', 'group' => 'main', 'data' => [
+                'title' => 'Upgrades people notice',
+                'columns' => 3,
+                'cards' => [
+                    [
+                        'title' => 'Everyday usability',
+                        'text' => 'Improve light, storage, circulation, acoustics, and access where they interrupt how the property is used.',
+                    ],
+                    [
+                        'title' => 'Building confidence',
+                        'text' => 'Resolve visible defects and clarify the condition of heating, ventilation, electrics, windows, and the envelope.',
+                    ],
+                    [
+                        'title' => 'Market readiness',
+                        'text' => 'Choose durable, neutral work that shortens the path from viewing to occupation without erasing the property’s character.',
+                    ],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'table', 'group' => 'main', 'data' => [
+                'title' => 'Match the scope to the outcome',
+                'header' => 'row',
+                'table' => [
+                    ['Objective', 'Start with', 'Keep the scope disciplined by'],
+                    ['Faster letting', 'Viewing feedback and vacancy causes', 'Removing objections that repeat across prospects'],
+                    ['Protect income', 'Repair history and tenant requests', 'Fixing recurring failures before cosmetic work'],
+                    ['Reposition the asset', 'Comparable supply and target user', 'Defining the intended market before design begins'],
+                    ['Plan a sale', 'Survey findings and buyer expectations', 'Separating essential work from owner preference'],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'questions', 'group' => 'main', 'data' => [
+                'title' => 'Questions before approving works',
+                'items' => [
+                    [
+                        'title' => 'Which work belongs between tenancies?',
+                        'text' => 'Prioritise intrusive repairs, safety work, services, flooring, decoration, and changes that would otherwise disrupt occupation. Confirm lead times before the existing tenancy ends.',
+                    ],
+                    [
+                        'title' => 'How do you avoid over-improving?',
+                        'text' => 'Set the target tenant or buyer, compare nearby alternatives, and agree the required outcome for each cost line. Premium materials do not create a premium result when the location or layout sets a lower ceiling.',
+                    ],
+                    [
+                        'title' => 'When is a full refurbishment justified?',
+                        'text' => 'Consider it when systems are near the end of their life, the layout blocks the intended use, compliance work is substantial, or several isolated projects would duplicate cost and disruption.',
+                    ],
+                ],
+            ]],
+            ['id' => Utils::uid(), 'type' => 'hero', 'group' => 'main', 'data' => [
+                'title' => 'Turn the survey into a renovation brief',
+                'subtitle' => 'Estate advisory',
+                'text' => 'Set the market objective, essential work, budget range, and decision points before design and procurement begin.',
+                'url' => '/#home-contact',
+                'button' => 'Discuss a renovation strategy',
+                'url-alternative' => '/#home-properties',
+                'button-alternative' => 'View current properties',
             ]],
         ], $news );
 

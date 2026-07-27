@@ -9,8 +9,12 @@
 }
 
 .hero .background {
+    display: block;
+    height: 100%;
+    margin: 0;
     position: absolute;
     inset: 0;
+    width: 100%;
     z-index: -1;
 }
 
@@ -127,10 +131,6 @@
 
 .hero .btn {
     margin: 0.5rem 0.25rem;
-}
-
-.hero picture {
-    margin-top: 3rem;
 }
 
 .hero .second picture {

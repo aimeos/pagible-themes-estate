@@ -218,6 +218,15 @@
     width: 100%;
 }
 
+.cms-content .list .property-filter select,
+.cms-content .list .property-filter-actions .button.outline {
+    background-color: #FFFFFF;
+}
+
+.cms-content .list .property-filter-actions .button.outline:hover {
+    background-color: var(--pico-contrast-hover-background);
+}
+
 .cms-content .list .property-filter-actions {
     align-items: center;
     align-self: flex-end;

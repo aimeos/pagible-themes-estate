@@ -358,12 +358,12 @@ body.type-property .property-gallery .cover img {
 .property .property-location-description,
 .property .property-features {
     margin-bottom: 2.75rem;
-    max-width: 46rem;
+    max-width: 45rem;
 }
 
 .property > .property-location-description {
     margin: clamp(3rem, 6vw, 5rem) auto 0;
-    max-width: 52rem;
+    max-width: 60rem;
 }
 
 .property .property-description h2,
@@ -582,11 +582,10 @@ body.type-property .property-gallery .cover img {
 
 .property .property-contact {
     background: var(--pico-muted-background-color);
-    border: 0;
     margin: clamp(4rem, 8vw, 7rem) auto 0;
-    max-width: 62rem;
     padding: clamp(1.5rem, 5vw, 4.5rem);
     scroll-margin-top: 2rem;
+    border: 0;
 }
 
 .property .property-contact h2 {

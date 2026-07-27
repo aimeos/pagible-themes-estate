@@ -17,7 +17,7 @@
 
 .contact input, .contact textarea {
     border: 1px solid var(--pico-contrast-border);
-    background-color: var(--pico-contrast-background);
+    background-color: #FFFFFF;
     color: var(--pico-color);
     resize: vertical;
     font-size: var(--pico-font-size);

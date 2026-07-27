@@ -243,6 +243,11 @@ header nav details[open] summary::after {
     transform: rotate(0.5turn) translateX(-0.2rem);
 }
 
+header nav details.dropdown[open] > summary::before {
+    height: auto;
+    width: auto;
+}
+
 header nav .menu details.dropdown > ul.align {
     left: auto;
     max-width: min(22rem, calc(100vw - 2rem));
