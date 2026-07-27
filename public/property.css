@@ -15,7 +15,7 @@ body.type-property > nav.breadcrumb > ul {
 }
 
 body.type-property > nav.breadcrumb ul li {
-    font-size: calc(var(--pico-font-size) * 0.68);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.68));
     justify-content: flex-start;
     letter-spacing: 0;
     text-transform: none;
@@ -140,7 +140,7 @@ body.type-property .property-gallery .cover img {
     border: 1px solid var(--pico-muted-border-color);
     color: var(--pico-color);
     cursor: pointer;
-    font-size: calc(var(--pico-font-size) * 0.68);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.68));
     font-weight: 600;
     list-style: none;
     padding: 0.7rem 0.9rem;
@@ -195,7 +195,7 @@ body.type-property .property-gallery .cover img {
 
 .property-gallery .property-gallery-grid figcaption {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.68);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.68));
     margin-top: 0.4rem;
 }
 
@@ -215,7 +215,7 @@ body.type-property .property-gallery .cover img {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
     gap: 0.35rem 0.6rem;
     margin: 0 0 1.25rem;
 }
@@ -248,7 +248,7 @@ body.type-property .property-gallery .cover img {
 
 .property .property-primary-fact dt,
 .property .property-primary-fact dd {
-    font-size: calc(var(--pico-font-size) * 0.74);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.74));
     margin: 0;
 }
 
@@ -292,7 +292,7 @@ body.type-property .property-gallery .cover img {
 .property .property-reference,
 .property .property-updated {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.72);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.72));
 }
 
 .property .property-price_period {
@@ -337,7 +337,7 @@ body.type-property .property-gallery .cover img {
 
 .property .property-highlight dt,
 .property .property-highlight dd {
-    font-size: calc(var(--pico-font-size) * 0.73);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.73));
     margin: 0;
     white-space: nowrap;
 }
@@ -359,6 +359,11 @@ body.type-property .property-gallery .cover img {
 .property .property-features {
     margin-bottom: 2.75rem;
     max-width: 46rem;
+}
+
+.property > .property-location-description {
+    margin: clamp(3rem, 6vw, 5rem) auto 0;
+    max-width: 52rem;
 }
 
 .property .property-description h2,
@@ -404,7 +409,7 @@ body.type-property .property-gallery .cover img {
     background: var(--pico-muted-background-color);
     border-radius: 999px;
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.68);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.68));
     list-style: none;
     margin: 0;
     padding: 0.42rem 0.75rem;
@@ -465,7 +470,7 @@ body.type-property .property-gallery .cover img {
     border-radius: 0;
     color: var(--pico-secondary);
     display: table;
-    font-size: calc(var(--pico-font-size) * 0.62);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.62));
     font-weight: 700;
     letter-spacing: 0.08em;
     max-width: 100%;
@@ -507,10 +512,13 @@ body.type-property .property-gallery .cover img {
     margin-bottom: 2rem;
 }
 
-.property .property-facts {
+.property .property-fact-columns {
     display: grid;
     gap: 0 3rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.property .property-facts {
     margin: 0;
 }
 
@@ -525,7 +533,7 @@ body.type-property .property-gallery .cover img {
 
 .property .property-fact dt,
 .property .property-fact dd {
-    font-size: calc(var(--pico-font-size) * 0.74);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.74));
     margin: 0;
 }
 
@@ -577,14 +585,14 @@ body.type-property .property-gallery .cover img {
 
 .property .property-document-type {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.65);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.65));
     font-weight: 700;
     letter-spacing: 0.05em;
 }
 
 .property .property-document-action {
     color: var(--pico-secondary);
-    font-size: calc(var(--pico-font-size) * 0.72);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.72));
     font-weight: 700;
 }
 
@@ -699,7 +707,7 @@ body.type-property .property-gallery .cover img {
     }
 
     body.type-property .property-gallery .slider-container figcaption {
-        font-size: calc(var(--pico-font-size) * 0.75);
+        font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
         padding: 2rem 0.75rem 0.75rem;
     }
 
@@ -711,7 +719,7 @@ body.type-property .property-gallery .cover img {
         position: static;
     }
 
-    .property .property-facts {
+    .property .property-fact-columns {
         grid-template-columns: 1fr;
     }
 
@@ -811,7 +819,7 @@ body.type-property .property-gallery .cover img {
     body.type-property .property-print-meta {
         display: flex;
         flex-wrap: wrap;
-        font-size: 0.8rem;
+        font-size: 0.875rem;
         gap: 0.25rem 1rem;
         margin: 1rem 0;
         overflow-wrap: anywhere;
@@ -858,7 +866,7 @@ body.type-property .property-gallery .cover img {
     body.type-property .property-documents a::after {
         color: #555555;
         content: " " attr(href);
-        font-size: 0.75rem;
+        font-size: 0.875rem;
         overflow-wrap: anywhere;
     }
 

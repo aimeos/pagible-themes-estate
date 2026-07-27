@@ -29,7 +29,7 @@
     color: var(--pico-contrast);
     font-weight: 500;
     font-family: var(--pico-font-family-display);
-    font-size: calc(var(--pico-font-size) * 0.85);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.85));
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-align: center;
@@ -44,7 +44,7 @@
 }
 
 .table-responsive .td {
-    font-size: calc(var(--pico-font-size) * 0.75);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
     text-align: center;
     align-self: center;
 }

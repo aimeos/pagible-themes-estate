@@ -86,11 +86,11 @@
 
 .testimonial .name {
     color: var(--pico-contrast);
-    font-size: calc(var(--pico-font-size) * 0.85);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.85));
     letter-spacing: 0.03em;
 }
 
 .testimonial .role {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
 }

@@ -115,7 +115,7 @@
     color: var(--pico-contrast);
     border-radius: var(--pico-border-radius);
     font-weight: 500;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     padding: 0.25rem 1rem;
     white-space: nowrap;
 }

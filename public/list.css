@@ -60,7 +60,7 @@
 
 .cms-content .list .date {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.6);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.6));
     font-weight: 400;
 }
 
@@ -88,7 +88,7 @@
 .cms-content .list .first .date-month,
 .cms-content .list .list-cards .date-month {
     text-transform: uppercase;
-    font-size: calc(var(--pico-font-size) * 0.6);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.6));
     letter-spacing: 0.05em;
 }
 
@@ -117,7 +117,7 @@
 
 .cms-content .list .list-list .intro {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.8);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.8));
     margin: 0.25rem 0 0;
 }
 

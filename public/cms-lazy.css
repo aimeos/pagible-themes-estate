@@ -101,7 +101,7 @@ dialog.search .result-title {
 dialog.search .result-content {
     display: block;
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
 }
 
 dialog.search .result-content b {
@@ -117,7 +117,7 @@ dialog.search .load-more {
     border: 1px solid var(--pico-contrast-border);
     cursor: pointer;
     display: block;
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
     margin: 1rem auto;
     padding: 0.5rem 1.5rem;
     border-radius: var(--pico-border-radius);
@@ -143,7 +143,7 @@ dialog.search .load-more:disabled {
 .caption:not(:empty) {
     max-width: 60rem;
     margin: 0.75rem auto;
-    font-size: calc(var(--pico-font-size) * 0.65);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.65));
     color: var(--pico-muted-color);
     font-weight: 400;
 }
@@ -171,7 +171,7 @@ p code {
     background-color: var(--pico-code-background-color);
     border-radius: calc(var(--pico-border-radius) * 2);
     font-family: var(--pico-font-family-monospace);
-    font-size: calc(var(--pico-font-size) * 0.75);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
     overflow-wrap: anywhere;
     padding: 0 0.33rem;
 }
@@ -180,7 +180,7 @@ p code {
 footer.bottom {
     color: var(--pico-contrast-hover-background);
     background-color: var(--pico-contrast);
-    font-size: calc(var(--pico-font-size) * 0.65);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.65));
     font-weight: 400;
     margin: 0;
 }
@@ -238,13 +238,13 @@ footer.cms-content .cards h2 {
 
 footer.cms-content .cards .title {
     color: var(--pico-contrast-hover-background);
-    font-size: calc(var(--pico-font-size) * 0.8);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.8));
     margin-bottom: 1.5rem;
 }
 
 footer.cms-content .cards :is(.text, .cms-text) {
     color: var(--pico-contrast-inverse);
-    font-size: calc(var(--pico-font-size) * 0.8);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.8));
     font-weight: 400;
 }
 
@@ -320,7 +320,7 @@ footer.cms-content :focus-visible {
     color: var(--pico-contrast);
     font-weight: 500;
     font-family: var(--pico-font-family-display);
-    font-size: calc(var(--pico-font-size) * 0.85);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.85));
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-align: center;
@@ -331,7 +331,7 @@ footer.cms-content :focus-visible {
 }
 
 .cms-content td {
-    font-size: calc(var(--pico-font-size) * 0.75);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
     text-align: center;
 }
 

@@ -489,7 +489,6 @@ class EstateDemo extends AbstractDemo
                 'cache' => 5,
             ],
             'aux' => ['config' => $config, 'meta' => $meta, 'content' => $content],
-            'published' => true,
             'editor' => 'demo',
         ] );
 
@@ -535,7 +534,7 @@ class EstateDemo extends AbstractDemo
         if( !isset( $this->logoFile ) )
         {
             $svg = <<<'SVG'
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-labelledby="title desc">
   <title id="title">Estate logo</title>
   <desc id="desc">Estate wordmark with a geometric skyline icon</desc>
   <g fill="none" fill-rule="evenodd">
@@ -545,7 +544,14 @@ class EstateDemo extends AbstractDemo
     <rect x="37" y="25" width="8" height="27" fill="#242424"/>
     <rect x="48" y="33" width="8" height="19" fill="#D00000"/>
     <path d="M2 55h56" stroke="#242424" stroke-width="2"/>
-    <text x="72" y="44" fill="#242424" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3">ESTATE</text>
+    <g fill="#242424">
+      <path d="M72 14h22v6H79v9h13v6H79v9h15v6H72z"/>
+      <path d="M101 14h22v6h-15v9h15v21h-22v-6h15v-9h-15z"/>
+      <path d="M130 14h25v6h-9v30h-7V20h-9z"/>
+      <path d="M169 14h8l11 36h-7l-3-10h-11l-3 10h-7zm0 20h7l-3.5-12z" fill-rule="evenodd"/>
+      <path d="M193 14h25v6h-9v30h-7V20h-9z"/>
+      <path d="M225 14h22v6h-15v9h13v6h-13v9h15v6h-22z"/>
+    </g>
   </g>
 </svg>
 SVG;
@@ -570,7 +576,6 @@ SVG;
             $version = $file->versions()->forceCreate( [
                 'lang' => 'en',
                 'data' => $data,
-                'published' => true,
                 'editor' => 'demo',
             ] );
 
@@ -618,7 +623,6 @@ SVG;
                 'theme' => $this->theme,
             ],
             'aux' => ['meta' => $meta, 'content' => $content],
-            'published' => true,
             'editor' => 'demo',
         ] );
 

@@ -119,7 +119,7 @@
                 },
                 "address": {
                     "type": "string",
-                    "label": "Street address"
+                    "label": "Address"
                 },
                 "zip_code": {
                     "type": "string",

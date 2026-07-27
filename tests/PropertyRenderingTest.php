@@ -65,14 +65,18 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertStringContainsString( '<h2>Location</h2>', $html );
         $this->assertStringContainsString( '<h2>Around the property</h2>', $html );
         $this->assertStringContainsString( '<section class="property-details">', $html );
+        $this->assertSame( 2, substr_count( $html, '<dl class="property-facts">' ) );
         $this->assertStringContainsString( '<h2>Property details</h2>', $html );
         $this->assertStringContainsString( '<dt>Floor</dt>', $html );
+        $this->assertStringContainsString( '<dt>Address</dt>', $html );
+        $this->assertStringNotContainsString( '<dt>Offer type</dt>', $html );
         $this->assertStringNotContainsString( 'property-value-table', $html );
         $this->assertStringNotContainsString( 'Additional details', $html );
         $this->assertStringContainsString( '<section id="property-contact-', $html );
         $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-address' ) );
         $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-available_from' ) );
         $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-description' ) );
+        $this->assertLessThan( strpos( $html, 'property-location-description' ), strpos( $html, 'property-details' ) );
         $this->assertLessThan( strpos( $html, '<section id="property-contact-' ), strpos( $html, 'property-details' ) );
     }
 
@@ -181,11 +185,35 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertSame( 3, $currency['maxLength'] );
         $this->assertSame( '^[A-Z]{3}$', $currency['pattern'] );
         $this->assertTrue( $raw['content']['property']['fields']['currency']['uppercase'] );
+        $this->assertSame( 'Address', $raw['content']['property']['fields']['address']['label'] );
         $this->assertSame( 'markdown', $raw['content']['property']['fields']['location']['type'] );
         $this->assertContains( 'villa', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'land', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'warehouse', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'industrial', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
+    }
+
+
+    public function testEstateStylesKeepSmallTextAtAccessibleFloor(): void
+    {
+        foreach( glob( dirname( __DIR__ ) . '/public/*.css' ) ?: [] as $file )
+        {
+            $css = (string) file_get_contents( $file );
+            preg_match_all( '/font-size:\\s*([^;]+);/', $css, $matches );
+
+            foreach( $matches[1] as $size )
+            {
+                $size = trim( $size );
+
+                if( preg_match( '/^([0-9.]+)rem$/', $size, $match ) ) {
+                    $this->assertGreaterThanOrEqual( 0.875, (float) $match[1], $file . ': ' . $size );
+                }
+
+                if( preg_match( '/\\*\\s*(0\\.\\d+)/', $size, $match ) && (float) $match[1] < 0.875 ) {
+                    $this->assertStringContainsString( 'max(0.875rem,', $size, $file . ': ' . $size );
+                }
+            }
+        }
     }
 
 

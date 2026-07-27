@@ -85,7 +85,7 @@
     margin-bottom: 1.75rem;
     padding: 0;
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.62);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.62));
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -103,7 +103,7 @@
 .hero p {
     line-height: 1.7;
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.85);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.85));
     font-weight: 400;
     letter-spacing: 0.01em;
     max-width: 38rem;

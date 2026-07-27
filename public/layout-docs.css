@@ -83,7 +83,7 @@ main nav.sidebar .active {
 
 main nav.sidebar a {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
     font-weight: 400;
     padding: 0.35rem 1rem;
     transition: color 0.15s ease;

@@ -66,7 +66,7 @@
 
 .cms-content .list .property-location {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.66);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.66));
     letter-spacing: 0.03em;
     margin: 0 0 0.4rem;
 }
@@ -93,7 +93,7 @@
 .cms-content .list .property-line-main,
 .cms-content .list .property-line-availability {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
     margin: 0;
 }
 
@@ -121,7 +121,7 @@
     border-radius: 0;
     color: var(--pico-secondary);
     display: inline-block;
-    font-size: calc(var(--pico-font-size) * 0.6);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.6));
     font-weight: 600;
     letter-spacing: 0.04em;
     max-width: 100%;
@@ -205,7 +205,7 @@
     border-radius: 0;
     color: var(--pico-primary-inverse);
     display: inline-flex;
-    font-size: calc(var(--pico-font-size) * 0.65);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.65));
     justify-content: center;
     min-height: 1.5rem;
     min-width: 1.5rem;
@@ -227,7 +227,7 @@
 
 .cms-content .list .property-filter label {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.7);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.7));
     font-weight: 700;
     letter-spacing: 0.04em;
     margin: 0;
@@ -267,7 +267,7 @@
 .cms-content .list .property-list-summary,
 .cms-content .list .list-empty {
     color: var(--pico-muted-color);
-    font-size: calc(var(--pico-font-size) * 0.72);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.72));
 }
 
 

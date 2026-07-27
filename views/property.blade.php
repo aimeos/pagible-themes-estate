@@ -110,7 +110,7 @@
                 <dl class="property-primary-facts">
                     @if($data->address ?? null)
                         <div class="property-primary-fact property-address">
-                            <dt>{{ __('Street address') }}</dt>
+                            <dt>{{ __('Address') }}</dt>
                             <dd>
                                 <address>
                                     <span>{{ $data->address }}</span>
@@ -201,13 +201,6 @@
                 <div class="cms-text">@markdown($data->text ?? '')</div>
             </section>
 
-            @if($data->location ?? null)
-                <section class="property-location-description">
-                    <h2>{{ __('Location') }}</h2>
-                    <div class="cms-text">@markdown($data->location)</div>
-                </section>
-            @endif
-
             @if($data->features ?? null)
                 <section class="property-features">
                     <h2>{{ __('Key details') }}</h2>
@@ -240,7 +233,6 @@
 
     @if(($facts = collect([
         'property_type' => ['label' => __('Type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->property_type)))],
-        'offer_type' => ['label' => __('Offer type'), 'value' => __(ucfirst(str_replace('_', ' ', (string) $data->offer_type)))],
         'area' => ['label' => __('Area'), 'value' => __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit])],
         'living_area' => ['label' => __('Living area'), 'value' => $data->living_area !== null ? __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->living_area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit]) : null],
         'plot_area' => ['label' => __('Plot area'), 'value' => $data->plot_area !== null ? __(':value :unit', ['value' => \Illuminate\Support\Number::format($data->plot_area, maxPrecision: 2, locale: app()->getLocale()), 'unit' => $data->area_unit]) : null],
@@ -260,21 +252,26 @@
         <section class="property-details">
             <div class="property-details-inner">
                 <h2>{{ __('Property details') }}</h2>
-                <dl class="property-facts">
-                    @foreach($facts as $prop => $fact)
-                        <div class="property-fact property-{{ $prop }}">
-                            <dt>{{ $fact['label'] }}</dt>
-                            <dd>
-                                @if($fact['datetime'] ?? null)
-                                    <time datetime="{{ $fact['datetime'] }}">{{ $fact['value'] }}</time>
-                                @else
-                                    {{ $fact['value'] }}
-                                @endif
-                            </dd>
-                        </div>
+                <div class="property-fact-columns">
+                    @foreach($facts->split(2) as $column)
+                        <dl class="property-facts">
+                            @foreach($column as $prop => $fact)
+                                <div class="property-fact property-{{ $prop }}">
+                                    <dt>{{ $fact['label'] }}</dt>
+                                    <dd>{{ $fact['value'] }}</dd>
+                                </div>
+                            @endforeach
+                        </dl>
                     @endforeach
-                </dl>
+                </div>
             </div>
+        </section>
+    @endif
+
+    @if($data->location ?? null)
+        <section class="property-location-description">
+            <h2>{{ __('Location') }}</h2>
+            <div class="cms-text">@markdown($data->location)</div>
         </section>
     @endif
 

@@ -17,6 +17,16 @@
     .cards .card-list {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    body.theme-estate > footer.cms-content[data-section="footer"] .cards .card-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    body.theme-estate > footer.cms-content[data-section="footer"] .cards .card-list {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 .cards .card-item {
@@ -59,7 +69,7 @@
 }
 
 .cards .text p {
-    font-size: calc(var(--pico-font-size) * 0.75);
+    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
     line-height: 1.7;
     color: var(--pico-muted-color);
 }
