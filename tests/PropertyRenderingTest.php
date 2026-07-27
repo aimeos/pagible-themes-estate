@@ -17,6 +17,17 @@ use Illuminate\Support\Collection;
 
 class PropertyRenderingTest extends ThemeTestAbstract
 {
+    public function testPropertyListWithoutActionDoesNotFail(): void
+    {
+        $html = view( 'estate::properties', [
+            'data' => (object) [],
+            'page' => $this->page( 'Properties', 'properties' ),
+        ] )->render();
+
+        $this->assertStringContainsString( '<div class="list">', $html );
+    }
+
+
     public function testCardsUseSingleImageWhileDetailsUseSlideshow(): void
     {
         $card = (string) file_get_contents( dirname( __DIR__ ) . '/views/property-item.blade.php' );

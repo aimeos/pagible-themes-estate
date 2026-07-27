@@ -5,7 +5,7 @@
 @endPushOnce
 
 <div class="list">
-    @if(($items = $action->items) && ($filters = $action->filters) && ($options = $action->options))
+    @if(($items = $action->items ?? null) && ($filters = $action->filters ?? null) && ($options = $action->options ?? null))
         @if($data->filters ?? true)
             <details class="property-list-tools property-filter-disclosure"
                 @if($activeFilters = collect([
