@@ -12,7 +12,6 @@ use Aimeos\Cms\Models\Page;
 use Aimeos\Cms\Utils;
 use Aimeos\Cms\Validation;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 
 /**
@@ -790,9 +789,10 @@ SVG;
 
     protected function pages() : void
     {
-        $exposesId = (string) Str::uuid7();
-        $newsId = (string) Str::uuid7();
-        $propertiesId = (string) Str::uuid7();
+        $page = new Page();
+        $exposesId = $page->newUniqueId();
+        $newsId = $page->newUniqueId();
+        $propertiesId = $page->newUniqueId();
         $home = $this->home( $exposesId, $newsId, $propertiesId );
 
         $this->addProperties( $home, $exposesId, $propertiesId )
