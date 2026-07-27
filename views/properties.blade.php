@@ -11,15 +11,15 @@
         @endif
 
         @if($data->filters ?? true)
-            <details class="property-list-tools property-filter-disclosure"
-                @if($activeFilters = collect([
-                    $filters->type,
-                    $filters->offer,
-                    $filters->city,
-                    $filters->status,
-                    $filters->available_by,
-                    $filters->rooms_min,
-                ])->filter( fn( $value ) => $value !== null && $value !== '' )->count()) open @endif>
+            @php($activeFilters = collect([
+                $filters->type,
+                $filters->offer,
+                $filters->city,
+                $filters->status,
+                $filters->available_by,
+                $filters->rooms_min,
+            ])->filter( fn( $value ) => $value !== null && $value !== '' )->count())
+            <details class="property-list-tools property-filter-disclosure" open>
                 <summary>
                     <span>{{ __('Property filters') }}</span>
                     @if($activeFilters)

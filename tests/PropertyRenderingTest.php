@@ -415,6 +415,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertCount( 2, $schema['itemListElement'] );
         $this->assertSame( [3, 4], array_column( $schema['itemListElement'], 'position' ) );
         $this->assertSame( ['First property', 'Second property'], array_column( array_column( $schema['itemListElement'], 'item' ), 'name' ) );
+        $this->assertStringContainsString( 'class="property-list-tools property-filter-disclosure" open', $html );
         $this->assertStringContainsString( 'name="status"', $html );
         $this->assertStringNotContainsString( 'property-filter-more', $html );
         $this->assertStringContainsString( 'property-status-available', $html );

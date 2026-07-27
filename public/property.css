@@ -9,7 +9,7 @@ body.type-property > nav.breadcrumb {
 
 body.type-property > nav.breadcrumb > ul {
     justify-content: flex-start;
-    max-width: 80rem;
+    max-width: var(--estate-content-width);
     padding: 1.5rem min(4vw, 3rem) 1rem;
     text-align: start;
 }
@@ -29,7 +29,7 @@ body.type-property .cms-content > [class~="estate::property"] > .container {
 .property-gallery,
 .property {
     margin-inline: auto;
-    max-width: 72rem;
+    max-width: var(--estate-content-width);
 }
 
 .property-gallery {
@@ -178,7 +178,7 @@ body.type-property .property-gallery .cover img {
     gap: 1rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin: 1rem auto 0;
-    max-width: 72rem;
+    max-width: var(--estate-content-width);
 }
 
 .property-gallery .property-gallery-grid figure {
@@ -488,7 +488,7 @@ body.type-property .property-gallery .cover img {
 
 .property .property-details-inner {
     margin-inline: auto;
-    max-width: 72rem;
+    max-width: var(--estate-content-width);
     padding: clamp(3rem, 6vw, 5.5rem) min(4vw, 3rem);
 }
 

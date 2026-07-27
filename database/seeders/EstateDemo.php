@@ -424,24 +424,37 @@ class EstateDemo extends AbstractDemo
             ]],
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
                 'file' => ['id' => $this->img( 'advisory' ), 'type' => 'file'],
-                'position' => 'start',
-                'ratio' => '1-2',
-                'text' => "## Location-aware recommendations\n\nEstate Group uses region teams to surface what matters: floor quality, tenant profile, lease structure, and practical ownership context. You can compare options quickly without losing the nuance of each district.",
+                'position' => 'grid-start',
+                'ratio' => '1-1',
+                'text' => "## Your property deserves informed positioning\n\nStrong results begin before a listing goes live. Estate Group combines local market evidence with an international view of buyer demand, so pricing, presentation, and timing support the same objective.\n\n[Request a property consultation](/#home-contact)",
             ]],
-            ['id' => Utils::uid(), 'type' => 'blog', 'group' => 'main', 'data' => [
+            ['id' => 'home-services', 'type' => 'cards', 'group' => 'main', 'data' => [
+                'title' => 'Guidance for every property decision',
+                'columns' => 3,
+                'cards' => [
+                    [
+                        'title' => 'Buy with perspective',
+                        'file' => ['id' => $this->img( 'penthouse-living' ), 'type' => 'file'],
+                        'text' => "Compare location, condition, and long-term fit with an advisor who understands the market behind the asking price.\n\n[Explore current properties](/#home-properties)",
+                    ],
+                    [
+                        'title' => 'Sell with a clear strategy',
+                        'file' => ['id' => $this->img( 'home' ), 'type' => 'file'],
+                        'text' => "Build the right positioning, presentation, and launch plan around your property and the buyers most likely to value it.\n\n[Request a property consultation](/#home-contact)",
+                    ],
+                    [
+                        'title' => 'Navigate commercial property',
+                        'file' => ['id' => $this->img( 'office-reception' ), 'type' => 'file'],
+                        'text' => "Assess tenant profile, lease structure, access, and operational potential before committing capital or floor space.\n\n[Discuss a commercial property](/#home-contact)",
+                    ],
+                ],
+            ]],
+            ['id' => 'home-insights', 'type' => 'blog', 'group' => 'main', 'data' => [
                 'title' => 'Latest property insights',
                 'layout' => 'cards',
                 'limit' => 2,
                 'order' => '_lft',
                 'parent-page' => ['value' => $newsId, 'label' => 'News'],
-            ]],
-            ['id' => Utils::uid(), 'type' => 'questions', 'group' => 'main', 'data' => [
-                'title' => 'How can we help',
-                'items' => [
-                    ['title' => 'I am evaluating a purchase', 'text' => 'Tell us your criteria and timeframe. We shortlist the strongest opportunities and include comparable transaction context.'],
-                    ['title' => 'I want to relocate and rent', 'text' => 'Share your duration and target districts. We can prepare a short list of serious options and review slots.'],
-                    ['title' => 'I have a property to sell', 'text' => 'We review documentation, pricing, and positioning before a targeted launch and private campaign plan.'],
-                ],
             ]],
             ['id' => 'home-contact', 'type' => 'contact', 'group' => 'main', 'data' => [
                 'title' => 'Request a private consultation',

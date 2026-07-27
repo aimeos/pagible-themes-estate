@@ -195,7 +195,7 @@ footer.bottom .container {
     display: flex;
     justify-content: space-between;
     margin-inline: auto;
-    max-width: 80rem;
+    max-width: var(--estate-content-width);
     padding: 2rem min(5%, 2rem);
 }
 

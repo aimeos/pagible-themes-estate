@@ -4,6 +4,7 @@
  */
 
 :root[data-theme=light] {
+    --estate-content-width: 80rem;
     --pico-font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --pico-font-family-display: Georgia, 'Times New Roman', serif;
     --pico-font-family-monospace: ui-monospace, monospace;
@@ -139,7 +140,7 @@ body > header {
 
 body > header > nav {
     margin-inline: auto;
-    max-width: 80rem;
+    max-width: var(--estate-content-width);
     padding-inline: min(5%, 2rem);
 }
 
@@ -258,6 +259,7 @@ header nav .menu details.dropdown > ul.align > li {
 }
 
 header nav .menu details.dropdown > ul.align > li > a {
+    margin: 0;
     min-height: 0;
     padding: 0.7rem 1rem;
     white-space: normal;
@@ -348,6 +350,10 @@ header nav .sidebar-close button {
         white-space: nowrap;
     }
 
+    body > header > nav > .menu > li > details.dropdown {
+        margin: 0;
+    }
+
     body > header > nav > .menu > li > a.active::after {
         inset-inline: 0;
     }
@@ -423,7 +429,7 @@ header nav .sidebar-close button {
         width: 100%;
     }
 
-    header nav.small .menu details.dropdown > ul.align {
+    header nav.small .menu details > ul.align {
         backdrop-filter: none;
         background: none;
         border: none;
@@ -431,14 +437,23 @@ header nav .sidebar-close button {
         margin: 0;
         max-width: none;
         min-width: 0;
-        padding: 0 0 0.5rem 1rem;
+        padding-block: 0 0.5rem;
+        padding-inline: 1rem 0;
         position: relative;
         width: 100%;
     }
 
-    header nav.small .menu details.dropdown > ul.align > li > a {
+    header nav.small .menu details > ul.align > li {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    header nav.small .menu details > ul.align > li > a {
+        margin: 0;
         min-height: 2.75rem;
         padding: 0.625rem 0.75rem;
+        width: 100%;
     }
 
     header nav.small .menu details > summary::after {
@@ -467,7 +482,7 @@ nav.breadcrumb {
 
 nav.breadcrumb > ul {
     text-align: center;
-    max-width: 1280px;
+    max-width: var(--estate-content-width);
     margin: auto;
     width: 100%;
 }
@@ -502,7 +517,7 @@ nav.breadcrumb ul li a:hover {
 
 
 .container {
-    max-width: 80rem !important;
+    max-width: var(--estate-content-width) !important;
 }
 
 .cms-text {

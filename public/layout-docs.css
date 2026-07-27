@@ -3,7 +3,7 @@
  */
 
 main {
-    max-width: 1280px;
+    max-width: var(--estate-content-width);
     margin: auto;
     width: 100%;
 }

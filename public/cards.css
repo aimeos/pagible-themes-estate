@@ -10,10 +10,6 @@
 }
 
 @media screen and (min-width: 768px) {
-    .cards .container {
-        max-width: 1400px !important;
-    }
-
     .cards .card-list {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -62,4 +58,32 @@
     font-size: max(0.875rem, calc(var(--pico-font-size) * 0.75));
     line-height: 1.7;
     color: var(--pico-muted-color);
+}
+
+#home-services .card-item {
+    background-color: var(--pico-background-color);
+    padding: 0;
+}
+
+#home-services .card-item picture {
+    aspect-ratio: 4 / 3;
+    display: block;
+    overflow: hidden;
+}
+
+#home-services .card-item img {
+    background-color: transparent;
+    border-radius: 0;
+    height: 100%;
+    object-fit: cover;
+    padding: 0;
+    width: 100%;
+}
+
+#home-services .card-text {
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+#home-services .title {
+    margin-block-start: 0;
 }
