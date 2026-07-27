@@ -35,13 +35,21 @@ class EstateDemo extends AbstractDemo
      * @var array<string, array{0: string, 1: string, 2: string}>
      */
     private const PHOTOS = [
-        'hero' => ['photo-1568605114967-8130f3a36994', 'Modern city residence facade', 'Large estate facade with controlled exterior lighting and clean geometry'],
-        'buy' => ['photo-1512918728675-ed5a9ecdebfd', 'Apartment lounge', 'Neutral-toned apartment interior for premium buy marketing'],
-        'commercial' => ['photo-1486406146926-c627a92ad1ab', 'Commercial meeting table', 'Professional interior for office and commercial listings'],
-        'lounge' => ['photo-1600566753376-1f2f8b3e3d2f', 'Private lounge', 'Soft-toned lounge with curated finishes and natural textures'],
-        'city' => ['photo-1545324418-cc1a3f0c7f67', 'City skyline', 'Metropolitan skyline used for regional marketing context'],
-        'news' => ['photo-1460317442991-0ec209397118', 'Market brief', 'Property market report pages and notes on tablet'],
-        'renovation' => ['photo-1522708323590-d24dbb6b0267', 'Building renovation', 'Scaffold and finished interior transition materials'],
+        'advisory' => ['photo-1450101499163-c8848c66ca85', 'Property advisory documents', 'Advisor annotating documents during a property consultation'],
+        'city' => ['photo-1449824913935-59a10b8d2000', 'International property market', 'Broad city avenue framed by dense commercial and residential towers'],
+        'home' => ['photo-1600585154340-be6161a56a0c', 'Contemporary residence', 'Dark-clad contemporary residence with floor-to-ceiling glazing and a landscaped garden'],
+        'market' => ['photo-1486406146926-c627a92ad1ab', 'Commercial property market', 'Modern commercial towers viewed from a city plaza'],
+        'news' => ['photo-1560518883-ce09059eeffa', 'Property market news', 'Model house and keys arranged on a consultation table'],
+        'office-circulation' => ['photo-1497366754035-f200968a6e72', 'Office circulation', 'Polished office corridor with glazed meeting rooms and lounge areas'],
+        'office-floor' => ['photo-1531973576160-7125cd663d86', 'Open-plan office floor', 'Large contemporary office floor with workstations, collaboration tables, and exposed ceiling services'],
+        'office-reception' => ['photo-1587702068694-a909ef4aa346', 'Office reception', 'Double-height reception lounge with full-height glazing and street access'],
+        'penthouse-bedroom' => ['photo-1702411200201-3061d0eea802', 'Penthouse bedroom', 'Dark-toned bedroom with panoramic glazing, a suspended fireplace, and a spiral stair'],
+        'penthouse-living' => ['photo-1560448204-e02f11c3d0e2', 'Penthouse living room', 'Bright open-plan living and dining area with broad windows and terrace access'],
+        'penthouse-terrace' => ['photo-1762195804066-2fece9b24496', 'Private roof terrace', 'Furnished roof terrace with city views, planting, and outdoor seating'],
+        'renovation' => ['photo-1504307651254-35680f356dfd', 'Building renovation', 'Construction team completing structural work on an active building site'],
+        'retail-fitout' => ['photo-1777136977034-71cbc026c9b1', 'Retail fit-out', 'Minimal retail display wall with integrated shelving and a garment rail'],
+        'retail-frontage' => ['photo-1770902971692-e4b9e3cf3933', 'Retail frontage', 'Illuminated corner storefront with broad full-height display windows'],
+        'retail-loft' => ['photo-1773069459487-3d2d7bb4532e', 'Retail loft interior', 'Open brick loft with tall windows, flexible floor space, and modern finishes'],
     ];
 
     private string $element;
@@ -74,9 +82,9 @@ class EstateDemo extends AbstractDemo
             $this->property(
                 'A bright penthouse with skyline orientation, private terrace, and building security in one of Berlin’s most active districts.',
                 [
-                    $this->img( 'hero' ),
-                    $this->img( 'lounge' ),
-                    $this->img( 'renovation' ),
+                    $this->img( 'penthouse-living' ),
+                    $this->img( 'penthouse-bedroom' ),
+                    $this->img( 'penthouse-terrace' ),
                 ],
                 'sale',
                 'available',
@@ -97,6 +105,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 10,
                     'year_built' => 2015,
+                    'location' => "## Berlin Mitte\n\nSet between Prenzlauer Berg and the historic centre, the address offers quick tram and S-Bahn connections. Independent cafés, daily shopping, parks, and cultural venues are all within easy reach.",
                     'values' => [
                         ['Floor', '7'],
                         ['Parking', '2 parking spaces'],
@@ -123,9 +132,9 @@ class EstateDemo extends AbstractDemo
             $this->property(
                 'A flexible office suite with polished circulation, high-speed infrastructure, and direct access to mixed-use retail frontage.',
                 [
-                    $this->img( 'news' ),
-                    $this->img( 'commercial' ),
-                    $this->img( 'city' ),
+                    $this->img( 'office-floor' ),
+                    $this->img( 'office-circulation' ),
+                    $this->img( 'office-reception' ),
                 ],
                 'rent',
                 'available',
@@ -147,6 +156,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 8,
                     'year_built' => 2018,
+                    'location' => "## Hamburg waterfront\n\nThe suite sits within Hamburg’s eastern HafenCity business district, close to the main station, riverfront restaurants, and mixed-use services. Local transit links connect the property directly with the city centre.",
                     'values' => [
                         ['Floor', '2'],
                         ['Parking', '6 parking spaces'],
@@ -173,9 +183,9 @@ class EstateDemo extends AbstractDemo
             $this->property(
                 'An adaptable waterfront retail loft with high visibility, clear tenant routes, and broad frontage for premium tenant conversions.',
                 [
-                    $this->img( 'city' ),
-                    $this->img( 'commercial' ),
-                    $this->img( 'buy' ),
+                    $this->img( 'retail-loft' ),
+                    $this->img( 'retail-frontage' ),
+                    $this->img( 'retail-fitout' ),
                 ],
                 'sale',
                 'under_offer',
@@ -195,6 +205,7 @@ class EstateDemo extends AbstractDemo
                     'plot_area' => null,
                     'rooms' => 5,
                     'year_built' => 2005,
+                    'location' => "## HafenCity position\n\nThe loft occupies a visible waterfront corner in HafenCity, surrounded by offices, apartments, hotels, and visitor destinations. Its broad frontage benefits from steady pedestrian movement throughout the working week and at weekends.",
                     'values' => [
                         ['Floor', 'Ground + 1'],
                         ['Parking', '1 valet bay'],
@@ -252,7 +263,7 @@ class EstateDemo extends AbstractDemo
             $this->article(
                 'Why portfolio diversification matters now',
                 'A concentrated position can perform well when cycles align, but long-horizon owners usually protect downside with location and tenant balance. That remains true for both residential and commercial portfolios.',
-                $this->img( 'commercial' )
+                $this->img( 'market' )
             ),
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
                 'file' => ['id' => $this->img( 'city' ), 'type' => 'file'],
@@ -311,6 +322,7 @@ class EstateDemo extends AbstractDemo
             'plot_area' => $extra['plot_area'] ?? null,
             'rooms' => $extra['rooms'] ?? null,
             'year_built' => $extra['year_built'] ?? null,
+            'location' => $extra['location'] ?? null,
             'values' => $extra['values'] ?? [],
             'features' => $extra['features'] ?? null,
         ]];
@@ -332,9 +344,10 @@ class EstateDemo extends AbstractDemo
         if( !isset( $this->element ) )
         {
             $cards = [
-                ['title' => 'Explore', 'text' => '- [Home](/)\n- [Current properties](/#home-properties)\n- [News](/news)'],
-                ['title' => 'Property search', 'text' => '- [For sale](/?offer=sale#home-properties)\n- [For rent](/?offer=rent#home-properties)\n- [Commercial](/?type=office#home-properties)'],
-                ['title' => 'Contact', 'text' => '- [hello@estate.example](mailto:hello@estate.example)\n- [Request a consultation](/#home-contact)'],
+                ['title' => 'Explore', 'text' => "- [Home](/)\n- [Current properties](/#home-properties)\n- [Property news](/news)"],
+                ['title' => 'Property search', 'text' => "- [Properties for sale](/?offer=sale#home-properties)\n- [Properties for rent](/?offer=rent#home-properties)\n- [Commercial properties](/?type=office#home-properties)"],
+                ['title' => 'Advisory services', 'text' => "- [Request a sales valuation](/#home-contact)\n- [Discuss a commercial property](/#home-contact)\n- [Plan a relocation](/#home-contact)"],
+                ['title' => 'Contact', 'text' => "- [hello@estate.example](mailto:hello@estate.example)\n- [Request a private consultation](/#home-contact)\n- Berlin · Hamburg"],
             ];
 
             $element = Element::forceCreate( [
@@ -367,7 +380,7 @@ class EstateDemo extends AbstractDemo
 
     protected function file() : string
     {
-        return $this->img( 'hero' );
+        return $this->img( 'home' );
     }
 
 
@@ -410,7 +423,7 @@ class EstateDemo extends AbstractDemo
                 'parent-page' => ['value' => $propertiesId, 'label' => 'Properties'],
             ]],
             ['id' => Utils::uid(), 'type' => 'image-text', 'group' => 'main', 'data' => [
-                'file' => ['id' => $this->img( 'lounge' ), 'type' => 'file'],
+                'file' => ['id' => $this->img( 'advisory' ), 'type' => 'file'],
                 'position' => 'start',
                 'ratio' => '1-2',
                 'text' => "## Location-aware recommendations\n\nEstate Group uses region teams to surface what matters: floor quality, tenant profile, lease structure, and practical ownership context. You can compare options quickly without losing the nuance of each district.",
@@ -522,20 +535,17 @@ class EstateDemo extends AbstractDemo
         if( !isset( $this->logoFile ) )
         {
             $svg = <<<'SVG'
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 84" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" role="img" aria-labelledby="title desc">
   <title id="title">Estate logo</title>
-  <desc id="desc">Estate wordmark with a geometric building icon</desc>
+  <desc id="desc">Estate wordmark with a geometric skyline icon</desc>
   <g fill="none" fill-rule="evenodd">
-    <rect x="12" y="31" width="26" height="43" fill="#242424" />
-    <rect x="42" y="22" width="26" height="52" fill="#242424" />
-    <rect x="72" y="15" width="26" height="59" fill="#242424" />
-    <rect x="102" y="27" width="26" height="47" fill="#242424" />
-    <rect x="132" y="33" width="26" height="41" fill="#B5122B" />
-    <rect x="168" y="18" width="3" height="56" fill="#242424"/>
-    <rect x="176" y="18" width="3" height="56" fill="#242424"/>
-    <path d="M10 75h210" stroke="#242424" stroke-width="2"/>
-    <text x="210" y="61" fill="#242424" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="38" font-weight="700" letter-spacing="2.3">ESTATE</text>
-    <text x="214" y="78" fill="#B5122B" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" letter-spacing="7">PROPERTY PORTAL</text>
+    <rect x="4" y="29" width="8" height="23" fill="#242424"/>
+    <rect x="15" y="21" width="8" height="31" fill="#242424"/>
+    <rect x="26" y="12" width="8" height="40" fill="#242424"/>
+    <rect x="37" y="25" width="8" height="27" fill="#242424"/>
+    <rect x="48" y="33" width="8" height="19" fill="#D00000"/>
+    <path d="M2 55h56" stroke="#242424" stroke-width="2"/>
+    <text x="72" y="44" fill="#242424" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3">ESTATE</text>
   </g>
 </svg>
 SVG;

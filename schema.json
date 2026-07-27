@@ -41,6 +41,11 @@
                     "min": 1,
                     "max": 500
                 },
+                "location": {
+                    "type": "markdown",
+                    "label": "Location",
+                    "min": 1
+                },
                 "reference": {
                     "type": "string",
                     "label": "Reference"

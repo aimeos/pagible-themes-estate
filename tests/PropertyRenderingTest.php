@@ -42,21 +42,36 @@ class PropertyRenderingTest extends ThemeTestAbstract
     public function testPropertyDetailUsesEditorialOverviewAndDetailsSections(): void
     {
         $html = $this->renderProperty( [
+            'address' => 'Kopenhagener Straße 112',
+            'available_from' => '2026-09-01',
             'country' => 'Germany',
             'city' => 'Berlin',
             'district' => 'Mitte',
+            'zip_code' => '10437',
             'living_area' => 110,
+            'location' => "## Around the property\nWalk to cafés and the station.",
+            'values' => [['Floor', '7']],
             'features' => "## Property features\n- Balcony\n- Lift",
         ] );
 
         $this->assertStringContainsString( '<section class="property-gallery">', $html );
         $this->assertStringContainsString( '<div class="property-layout">', $html );
         $this->assertStringContainsString( '<div class="property-overview">', $html );
+        $this->assertStringContainsString( '<dl class="property-primary-facts">', $html );
         $this->assertStringContainsString( '<dl class="property-highlights">', $html );
         $this->assertStringContainsString( '<aside class="property-enquiry">', $html );
         $this->assertStringContainsString( '<section class="property-description">', $html );
+        $this->assertStringContainsString( '<section class="property-location-description">', $html );
+        $this->assertStringContainsString( '<h2>Location</h2>', $html );
+        $this->assertStringContainsString( '<h2>Around the property</h2>', $html );
         $this->assertStringContainsString( '<section class="property-details">', $html );
+        $this->assertStringContainsString( '<h2>Property details</h2>', $html );
+        $this->assertStringContainsString( '<dt>Floor</dt>', $html );
+        $this->assertStringNotContainsString( 'property-value-table', $html );
+        $this->assertStringNotContainsString( 'Additional details', $html );
         $this->assertStringContainsString( '<section id="property-contact-', $html );
+        $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-address' ) );
+        $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-available_from' ) );
         $this->assertLessThan( strpos( $html, 'property-details' ), strpos( $html, 'property-description' ) );
         $this->assertLessThan( strpos( $html, '<section id="property-contact-' ), strpos( $html, 'property-details' ) );
     }
@@ -166,6 +181,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertSame( 3, $currency['maxLength'] );
         $this->assertSame( '^[A-Z]{3}$', $currency['pattern'] );
         $this->assertTrue( $raw['content']['property']['fields']['currency']['uppercase'] );
+        $this->assertSame( 'markdown', $raw['content']['property']['fields']['location']['type'] );
         $this->assertContains( 'villa', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'land', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'warehouse', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
@@ -624,6 +640,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'living_area' => null,
             'plot_area' => null,
             'year_built' => null,
+            'location' => null,
             'values' => [],
             'features' => null,
             'documents' => [],

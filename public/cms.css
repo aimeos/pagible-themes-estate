@@ -29,34 +29,41 @@ body.theme-estate > header nav .menu a.active::after {
 
 @media (min-width: 992px) {
     body.theme-estate > header > nav {
-        display: block;
+        align-items: center;
+        display: flex;
         padding-inline: min(4vw, 3rem);
     }
 
     body.theme-estate > header > nav > ul:first-child {
+        flex: 1 1 auto;
         min-height: 4.5rem;
+        min-width: 0;
     }
 
     body.theme-estate > header > nav > .menu {
-        border-top: 1px solid var(--pico-muted-border-color);
-        justify-content: flex-start;
-        min-height: 3.5rem;
+        align-items: center;
+        flex: 0 0 auto;
+        justify-content: flex-end;
+        min-height: 4.5rem;
     }
 
     body.theme-estate > header > nav > .menu > li {
-        margin-inline: 0 1.5rem;
+        margin-inline: 0 1.25rem;
         padding: 0;
     }
 
     body.theme-estate > header > nav > .menu > li:first-child {
-        margin-inline: auto 0;
+        margin-inline: 0;
         order: 99;
     }
 
     body.theme-estate > header > nav > .menu a,
     body.theme-estate > header > nav > .menu summary {
-        min-height: 3.5rem;
+        hyphens: none;
+        min-height: 4.5rem;
+        overflow-wrap: normal;
         padding-inline: 0;
+        white-space: nowrap;
     }
 
     body.theme-estate > header > nav > .menu a.active::after {
@@ -65,7 +72,13 @@ body.theme-estate > header nav .menu a.active::after {
 
     body.theme-estate > header nav .brand a,
     body.theme-estate > header nav .brand img {
-        height: 2.75rem;
+        height: 2.5rem;
+    }
+
+    body.theme-estate > header nav .brand img {
+        max-width: min(11rem, 30vw);
+        object-fit: contain;
+        width: auto;
     }
 }
 

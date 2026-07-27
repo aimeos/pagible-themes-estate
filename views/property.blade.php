@@ -106,6 +106,32 @@
 
             <h1 id="property-title-{{ cms($page, 'id') }}" class="title">{{ cms($page, 'title') }}</h1>
 
+            @if(($data->address ?? null) || ($data->available_from ?? null))
+                <dl class="property-primary-facts">
+                    @if($data->address ?? null)
+                        <div class="property-primary-fact property-address">
+                            <dt>{{ __('Street address') }}</dt>
+                            <dd>
+                                <address>
+                                    <span>{{ $data->address }}</span>
+                                    @if(($locality = collect([$data->zip_code ?? null, $data->city ?? null])->filter())->isNotEmpty())
+                                        <span>{{ $locality->implode(' ') }}</span>
+                                    @endif
+                                </address>
+                            </dd>
+                        </div>
+                    @endif
+                    @if($data->available_from ?? null)
+                        <div class="property-primary-fact property-available_from">
+                            <dt>{{ __('Available from') }}</dt>
+                            <dd>
+                                <time datetime="{{ $data->available_from }}">{{ \Illuminate\Support\Carbon::parse($data->available_from)->translatedFormat('j F Y') }}</time>
+                            </dd>
+                        </div>
+                    @endif
+                </dl>
+            @endif
+
             <div class="property-summary">
                 <div class="property-price-group">
                     <p class="property-price">
@@ -175,6 +201,13 @@
                 <div class="cms-text">@markdown($data->text ?? '')</div>
             </section>
 
+            @if($data->location ?? null)
+                <section class="property-location-description">
+                    <h2>{{ __('Location') }}</h2>
+                    <div class="cms-text">@markdown($data->location)</div>
+                </section>
+            @endif
+
             @if($data->features ?? null)
                 <section class="property-features">
                     <h2>{{ __('Key details') }}</h2>
@@ -215,20 +248,18 @@
         'bedrooms' => ['label' => __('Bedrooms'), 'value' => $data->bedrooms !== null ? \Illuminate\Support\Number::format($data->bedrooms, locale: app()->getLocale()) : null],
         'bathrooms' => ['label' => __('Bathrooms'), 'value' => $data->bathrooms !== null ? \Illuminate\Support\Number::format($data->bathrooms, locale: app()->getLocale()) : null],
         'year_built' => ['label' => __('Year built'), 'value' => $data->year_built !== null ? $data->year_built : null],
-        'available_from' => [
-            'label' => __('Available from'),
-            'value' => ($data->available_from ?? null) ? \Illuminate\Support\Carbon::parse($data->available_from)->translatedFormat('j F Y') : null,
-            'datetime' => $data->available_from ?? null,
-        ],
-        'address' => ['label' => __('Street address'), 'value' => $data->address ?? null],
-        'district' => ['label' => __('District'), 'value' => $data->district ?? null],
-        'city' => ['label' => __('City'), 'value' => $data->city ?? null],
-        'zip_code' => ['label' => __('Post code'), 'value' => $data->zip_code ?? null],
-        'country' => ['label' => __('Country'), 'value' => $data->country ?? null],
-    ])->filter( fn( $fact ) => $fact['value'] !== null && $fact['value'] !== '' ))->isNotEmpty())
+    ])->filter( fn( $fact ) => $fact['value'] !== null && $fact['value'] !== '' )->merge(
+        collect($data->values ?? [])
+            ->filter( fn( $row ) => trim((string) ($row[0] ?? '')) !== '' && trim((string) ($row[1] ?? '')) !== '' )
+            ->values()
+            ->mapWithKeys( fn( $row, $idx ) => ['value_' . $idx => [
+                'label' => (string) $row[0],
+                'value' => (string) $row[1],
+            ]] )
+    ))->isNotEmpty())
         <section class="property-details">
             <div class="property-details-inner">
-                <h2>{{ __('Additional details') }}</h2>
+                <h2>{{ __('Property details') }}</h2>
                 <dl class="property-facts">
                     @foreach($facts as $prop => $fact)
                         <div class="property-fact property-{{ $prop }}">
@@ -243,25 +274,6 @@
                         </div>
                     @endforeach
                 </dl>
-
-                @if(($values = collect($data->values ?? [])->filter(
-                    fn( $row ) => trim((string) ($row[0] ?? '')) !== '' && trim((string) ($row[1] ?? '')) !== ''
-                ))->isNotEmpty())
-                    <div class="property-values">
-                        <div class="property-value-table">
-                            <table>
-                                <tbody>
-                                    @foreach($values as $row)
-                                        <tr>
-                                            <th scope="row">@text((string) $row[0])</th>
-                                            <td>@text((string) $row[1])</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                @endif
             </div>
         </section>
     @endif
