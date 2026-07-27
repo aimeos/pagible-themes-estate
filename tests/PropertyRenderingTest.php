@@ -24,7 +24,7 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'page' => $this->page( 'Properties', 'properties' ),
         ] )->render();
 
-        $this->assertStringContainsString( '<div class="list">', $html );
+        $this->assertStringContainsString( '<div class="list property-list">', $html );
     }
 
 
@@ -187,6 +187,8 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertTrue( $raw['content']['property']['fields']['currency']['uppercase'] );
         $this->assertSame( 'Address', $raw['content']['property']['fields']['address']['label'] );
         $this->assertSame( 'markdown', $raw['content']['property']['fields']['location']['type'] );
+        $this->assertSame( 'cards', $raw['content']['properties']['fields']['layout']['default'] );
+        $this->assertSame( 6, $raw['content']['properties']['fields']['limit']['default'] );
         $this->assertContains( 'villa', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'land', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
         $this->assertContains( 'warehouse', array_column( $raw['content']['property']['fields']['property_type']['options'], 'value' ) );
@@ -214,6 +216,58 @@ class PropertyRenderingTest extends ThemeTestAbstract
                 }
             }
         }
+    }
+
+
+    public function testEstateArticlePlacesHeadingOverCover(): void
+    {
+        $file = ( new File() )->forceFill( [
+            'id' => 'cover-image',
+            'name' => 'Article cover',
+            'path' => 'images/article-cover.jpg',
+            'previews' => (object) [],
+            'description' => (object) ['en' => 'City skyline'],
+        ] );
+        $page = $this->page( 'Market outlook', 'market-outlook' );
+        $html = view( 'estate::article', [
+            'data' => (object) [
+                'file' => (object) ['id' => 'cover-image', 'type' => 'file'],
+                'text' => 'Article body',
+            ],
+            'files' => collect( ['cover-image' => $file] ),
+            'page' => $page,
+        ] )->render();
+        $withoutCover = view( 'estate::article', [
+            'data' => (object) ['text' => 'Article body'],
+            'files' => collect(),
+            'page' => $page,
+        ] )->render();
+        $layoutCss = (string) file_get_contents( dirname( __DIR__ ) . '/public/layout-blog.css' );
+
+        $this->assertMatchesRegularExpression(
+            '/<div class="article-cover">.*<h1 class="title">Market outlook<\\/h1>.*<picture class="cover".*<\\/div>/s',
+            $html
+        );
+        $this->assertStringContainsString( 'max-width: 60rem;', $layoutCss );
+        $this->assertStringNotContainsString( 'class="article-cover"', $withoutCover );
+        $this->assertStringContainsString( '<h1 class="title">Market outlook</h1>', $withoutCover );
+    }
+
+
+    public function testEstateDropdownAllowsViewportAlignment(): void
+    {
+        $css = (string) file_get_contents( dirname( __DIR__ ) . '/public/cms.css' );
+        $script = (string) file_get_contents( dirname( __DIR__, 3 ) . '/theme/public/cms.js' );
+
+        preg_match( '/header nav \\.menu details\\.dropdown > ul\\.align \\{([^}]+)\\}/', $css, $matches );
+        $rule = $matches[1] ?? '';
+
+        $this->assertStringContainsString( 'left: auto;', $rule );
+        $this->assertStringContainsString( 'right: auto;', $rule );
+        $this->assertStringNotContainsString( 'inset-inline-start:', $rule );
+        $this->assertStringContainsString( 'ul.getBoundingClientRect()', $script );
+        $this->assertStringContainsString( "ul.style.right = '0'", $script );
+        $this->assertStringContainsString( "ul.style.left = '0'", $script );
     }
 
 
@@ -390,13 +444,12 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'action' => (object) [
                 'items' => $action,
                 'filters' => (object) [
-                    'sort' => (string) request('sort', '-created_at'),
+                    'city' => trim((string) request('city', '')),
                     'type' => strtolower(trim((string) request('type', ''))),
                     'offer' => strtolower(trim((string) request('offer', ''))),
-                    'status' => strtolower(trim((string) request('status', ''))),
-                    'city' => trim((string) request('city', '')),
-                    'available_by' => trim((string) request('available_by', '')),
                     'rooms_min' => request()->filled('rooms_min') ? (int) request('rooms_min') : null,
+                    'available_by' => trim((string) request('available_by', '')),
+                    'sort' => (string) request('sort', '-created_at'),
                 ],
                 'options' => (object) [
                     'property_types' => [['value' => 'apartment', 'label' => 'Apartment']],
@@ -404,7 +457,6 @@ class PropertyRenderingTest extends ThemeTestAbstract
                         ['value' => 'sale', 'label' => 'Sale'],
                         ['value' => 'rent', 'label' => 'Rent'],
                     ],
-                    'statuses' => [['value' => 'available', 'label' => 'Available']],
                 ],
             ],
             'data' => $data,
@@ -415,23 +467,28 @@ class PropertyRenderingTest extends ThemeTestAbstract
         $this->assertCount( 2, $schema['itemListElement'] );
         $this->assertSame( [3, 4], array_column( $schema['itemListElement'], 'position' ) );
         $this->assertSame( ['First property', 'Second property'], array_column( array_column( $schema['itemListElement'], 'item' ), 'name' ) );
-        $this->assertStringContainsString( 'class="property-list-tools property-filter-disclosure" open', $html );
-        $this->assertStringContainsString( 'name="status"', $html );
+        $this->assertStringContainsString( 'class="property-list-tools property-list-toolbar"', $html );
+        $this->assertStringNotContainsString( '<details', $html );
+        $this->assertStringNotContainsString( 'name="status"', $html );
         $this->assertStringNotContainsString( 'property-filter-more', $html );
         $this->assertStringContainsString( 'property-status-available', $html );
+        $this->assertLessThan( strpos( $html, 'name="type"' ), strpos( $html, 'name="city"' ) );
+        $this->assertLessThan( strpos( $html, 'name="offer"' ), strpos( $html, 'name="type"' ) );
+        $this->assertLessThan( strpos( $html, 'name="rooms_min"' ), strpos( $html, 'name="offer"' ) );
+        $this->assertLessThan( strpos( $html, 'name="available_by"' ), strpos( $html, 'name="rooms_min"' ) );
+        $this->assertLessThan( strpos( $html, 'name="sort"' ), strpos( $html, 'name="available_by"' ) );
 
         $data->filters = false;
         $withoutFilters = view( 'estate::properties', [
             'action' => (object) [
                 'items' => $action,
                 'filters' => (object) [
-                    'sort' => (string) request('sort', '-created_at'),
+                    'city' => trim((string) request('city', '')),
                     'type' => strtolower(trim((string) request('type', ''))),
                     'offer' => strtolower(trim((string) request('offer', ''))),
-                    'status' => strtolower(trim((string) request('status', ''))),
-                    'city' => trim((string) request('city', '')),
-                    'available_by' => trim((string) request('available_by', '')),
                     'rooms_min' => request()->filled('rooms_min') ? (int) request('rooms_min') : null,
+                    'available_by' => trim((string) request('available_by', '')),
+                    'sort' => (string) request('sort', '-created_at'),
                 ],
                 'options' => (object) [
                     'property_types' => [['value' => 'apartment', 'label' => 'Apartment']],
@@ -439,7 +496,6 @@ class PropertyRenderingTest extends ThemeTestAbstract
                         ['value' => 'sale', 'label' => 'Sale'],
                         ['value' => 'rent', 'label' => 'Rent'],
                     ],
-                    'statuses' => [['value' => 'available', 'label' => 'Available']],
                 ],
             ],
             'data' => $data,
@@ -462,13 +518,12 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'action' => (object) [
                 'items' => $items,
                 'filters' => (object) [
-                    'sort' => '-created_at',
+                    'city' => 'Berlin',
                     'type' => '',
                     'offer' => 'sale',
-                    'status' => '',
-                    'city' => 'Berlin',
-                    'available_by' => '',
                     'rooms_min' => null,
+                    'available_by' => '',
+                    'sort' => '-created_at',
                 ],
                 'options' => (object) [
                     'property_types' => [['value' => 'apartment', 'label' => 'Apartment']],
@@ -476,7 +531,6 @@ class PropertyRenderingTest extends ThemeTestAbstract
                         ['value' => 'sale', 'label' => 'Sale'],
                         ['value' => 'rent', 'label' => 'Rent'],
                     ],
-                    'statuses' => [['value' => 'available', 'label' => 'Available']],
                 ],
             ],
             'data' => (object) [
@@ -524,13 +578,12 @@ class PropertyRenderingTest extends ThemeTestAbstract
             'action' => (object) [
                 'items' => $action,
                 'filters' => (object) [
-                    'sort' => (string) request('sort', '-created_at'),
+                    'city' => trim((string) request('city', '')),
                     'type' => strtolower(trim((string) request('type', ''))),
                     'offer' => strtolower(trim((string) request('offer', ''))),
-                    'status' => strtolower(trim((string) request('status', ''))),
-                    'city' => trim((string) request('city', '')),
-                    'available_by' => trim((string) request('available_by', '')),
                     'rooms_min' => request()->filled('rooms_min') ? (int) request('rooms_min') : null,
+                    'available_by' => trim((string) request('available_by', '')),
+                    'sort' => (string) request('sort', '-created_at'),
                 ],
                 'options' => (object) [
                     'property_types' => [['value' => 'apartment', 'label' => 'Apartment']],
@@ -538,7 +591,6 @@ class PropertyRenderingTest extends ThemeTestAbstract
                         ['value' => 'sale', 'label' => 'Sale'],
                         ['value' => 'rent', 'label' => 'Rent'],
                     ],
-                    'statuses' => [['value' => 'available', 'label' => 'Available']],
                 ],
             ],
             'data' => (object) [

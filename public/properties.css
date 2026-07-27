@@ -2,11 +2,11 @@
  * @license MIT, https://opensource.org/license/MIT
  */
 
-.cms-content .list .list-cards .list-item {
+.cms-content .property-list .list-cards .list-item {
     background-color: transparent;
-    border: 0;
+    border: 1px solid var(--pico-muted-border-color);
     box-shadow: none;
-    overflow: visible;
+    overflow: hidden;
     padding: 0;
 }
 
@@ -49,11 +49,11 @@
     flex: 0 0 min(38%, 22rem);
 }
 
-.cms-content .list .list-cards .content {
+.cms-content .property-list .list-cards .content {
     align-items: stretch;
     flex-direction: column;
     gap: 0;
-    padding: 1rem 0 0;
+    padding: 1rem;
 }
 
 .cms-content .list .list-cards h3 {
@@ -166,11 +166,11 @@
     -webkit-line-clamp: 3;
 }
 
-.cms-content .list .list-list .list-item,
-.cms-content .list .list-list .list-item:nth-child(even) {
-    border-bottom: 1px solid var(--pico-muted-border-color);
+.cms-content .property-list .list-list .list-item,
+.cms-content .property-list .list-list .list-item:nth-child(even) {
+    border: 1px solid var(--pico-muted-border-color);
     flex-direction: row;
-    padding-block: 1rem;
+    padding: 1rem;
 }
 
 .cms-content .list .list-list picture,
@@ -188,28 +188,6 @@
     border: 1px solid var(--pico-muted-border-color);
     margin-bottom: 2rem;
     padding: clamp(1rem, 2vw, 1.5rem);
-}
-
-.cms-content .list .property-filter-disclosure > summary {
-    align-items: center;
-    color: var(--pico-color);
-    display: flex;
-    font-weight: 700;
-    justify-content: space-between;
-    list-style-position: inside;
-}
-
-.cms-content .list .property-filter-count {
-    align-items: center;
-    background-color: var(--pico-primary);
-    border-radius: 0;
-    color: var(--pico-primary-inverse);
-    display: inline-flex;
-    font-size: max(0.875rem, calc(var(--pico-font-size) * 0.65));
-    justify-content: center;
-    min-height: 1.5rem;
-    min-width: 1.5rem;
-    padding-inline: 0.4rem;
 }
 
 .cms-content .list .property-list-toolbar {
@@ -304,25 +282,7 @@
     }
 }
 
-@media (min-width: 768px) {
-    .cms-content .list .property-filter-disclosure > summary {
-        display: none;
-    }
-
-    .cms-content .list .property-filter-disclosure > .property-list-toolbar {
-        display: grid;
-    }
-}
-
 @media (max-width: 767px) {
-    .cms-content .list .property-filter-disclosure:not([open]) > .property-list-toolbar {
-        display: none;
-    }
-
-    .cms-content .list .property-filter-disclosure[open] > summary {
-        margin-bottom: 1rem;
-    }
-
     .cms-content .list .list-list .property-image-empty {
         flex-basis: auto;
         width: 100%;

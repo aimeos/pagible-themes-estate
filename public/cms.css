@@ -244,12 +244,12 @@ header nav details[open] summary::after {
 }
 
 header nav .menu details.dropdown > ul.align {
-    inset-inline-end: auto;
-    inset-inline-start: 0;
+    left: auto;
     max-width: min(22rem, calc(100vw - 2rem));
     min-width: 14rem;
     padding-block: 0.5rem;
-    width: max-content;
+    right: auto;
+    width: auto;
 }
 
 header nav .menu details.dropdown > ul.align > li {

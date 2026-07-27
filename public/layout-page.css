@@ -62,27 +62,6 @@
     padding: clamp(3.5rem, 8vw, 8rem) min(5%, 2rem);
 }
 
-#home-properties {
-    position: relative;
-    z-index: 2;
-}
-
-#home-properties > .container {
-    padding-block: 0 clamp(4rem, 8vw, 7rem);
-}
-
-#home-properties .list {
-    display: flex;
-    flex-direction: column;
-}
-
-#home-properties .property-list-tools {
-    background-color: var(--pico-background-color);
-    box-shadow: 0 1.25rem 3rem -1.5rem #00000040;
-    margin-block: clamp(-5rem, -7vw, -3.5rem) clamp(4rem, 7vw, 6rem);
-    order: -1;
-}
-
 #home-properties .list-item picture {
     aspect-ratio: 3 / 2;
 }

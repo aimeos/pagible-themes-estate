@@ -28,19 +28,16 @@ class Properties
         $enabled = (bool) ( $item->data->filters ?? true );
         $defaultSort = (string) ( $item->data->order ?? '-created_at' );
         $requestedSort = $enabled ? trim( (string) $request->query( 'sort', '' ) ) : '';
-        $perPage = min( 100, max( 1, (int) ( $item->data->limit ?? 10 ) ) );
+        $perPage = min( 100, max( 1, (int) ( $item->data->limit ?? 6 ) ) );
         $pageNo = max( 1, $request->integer( 'p' ) );
         $schema = Schema::schemas( section: 'content' )['estate::property']['fields'] ?? [];
         $options = (object) [
             'property_types' => $schema['property_type']['options'] ?? [],
             'offer_types' => $schema['offer_type']['options'] ?? [],
-            'statuses' => $schema['status']['options'] ?? [],
         ];
         $propertyTypes = collect( $options->property_types )->pluck( 'value' )
             ->map( fn( $value ) => strtolower( (string) $value ) )->all();
         $offerTypes = collect( $options->offer_types )->pluck( 'value' )
-            ->map( fn( $value ) => strtolower( (string) $value ) )->all();
-        $statuses = collect( $options->statuses )->pluck( 'value' )
             ->map( fn( $value ) => strtolower( (string) $value ) )->all();
 
         [$sort, $sortBy, $sortDir] = match( $requestedSort !== '' ? $requestedSort : $defaultSort ) {
@@ -52,33 +49,30 @@ class Properties
             default => ['-created_at', 'created_at', 'desc'],
         };
 
+        $city = $enabled ? trim( (string) $request->query( 'city', '' ) ) : '';
         $type = $enabled ? strtolower( trim( (string) $request->query( 'type', '' ) ) ) : '';
         $offer = $enabled ? strtolower( trim( (string) $request->query( 'offer', '' ) ) ) : '';
-        $status = $enabled ? strtolower( trim( (string) $request->query( 'status', '' ) ) ) : '';
-        $city = $enabled ? trim( (string) $request->query( 'city', '' ) ) : '';
+        $roomsMin = $enabled && is_numeric( $request->query( 'rooms_min' ) )
+            && (float) $request->query( 'rooms_min' ) >= 0 ? (float) $request->query( 'rooms_min' ) : null;
         $availableBy = $enabled ? trim( (string) $request->query( 'available_by', '' ) ) : '';
 
+        $city = mb_strlen( $city ) <= 255 ? $city : '';
         $type = in_array( $type, $propertyTypes, true ) ? $type : '';
         $offer = in_array( $offer, $offerTypes, true ) ? $offer : '';
-        $status = in_array( $status, $statuses, true ) ? $status : '';
-        $city = mb_strlen( $city ) <= 255 ? $city : '';
         $availableDate = preg_match( '/^\d{4}-\d{2}-\d{2}$/', $availableBy )
             ? \DateTimeImmutable::createFromFormat( '!Y-m-d', $availableBy )
             : false;
         $availableBy = $availableDate instanceof \DateTimeImmutable && $availableDate->format( 'Y-m-d' ) === $availableBy
             ? $availableBy
             : '';
-        $roomsMin = $enabled && is_numeric( $request->query( 'rooms_min' ) )
-            && (float) $request->query( 'rooms_min' ) >= 0 ? (float) $request->query( 'rooms_min' ) : null;
 
         $filters = [
-            'sort' => $sort,
+            'city' => $city,
             'type' => $type,
             'offer' => $offer,
-            'status' => $status,
-            'city' => $city,
-            'available_by' => $availableBy,
             'rooms_min' => $roomsMin,
+            'available_by' => $availableBy,
+            'sort' => $sort,
         ];
         $filtersActive = collect( $filters )->except( 'sort' )
             ->contains( fn( $value ) => $value !== null && $value !== '' );
@@ -161,28 +155,25 @@ class Properties
             if( $property === null ) {
                 return false;
             }
-            if( $filters['type'] !== '' && strtolower( (string) ( $property->property_type ?? '' ) ) !== $filters['type'] ) {
-                return false;
-            }
-            if( $filters['offer'] !== '' && strtolower( (string) ( $property->offer_type ?? '' ) ) !== $filters['offer'] ) {
-                return false;
-            }
-            if( $filters['status'] !== '' && strtolower( (string) ( $property->status ?? '' ) ) !== $filters['status'] ) {
-                return false;
-            }
             if( $filters['city'] !== '' && !str_contains(
                 strtolower( (string) ( $property->city ?? '' ) ),
                 strtolower( $filters['city'] )
             ) ) {
                 return false;
             }
-            if( $filters['available_by'] !== '' && (
-                empty( $property->available_from ) || (string) $property->available_from > $filters['available_by']
-            ) ) {
+            if( $filters['type'] !== '' && strtolower( (string) ( $property->property_type ?? '' ) ) !== $filters['type'] ) {
+                return false;
+            }
+            if( $filters['offer'] !== '' && strtolower( (string) ( $property->offer_type ?? '' ) ) !== $filters['offer'] ) {
                 return false;
             }
             if( $filters['rooms_min'] !== null && (
                 ( $property->rooms ?? null ) === null || (float) $property->rooms < $filters['rooms_min']
+            ) ) {
+                return false;
+            }
+            if( $filters['available_by'] !== '' && (
+                empty( $property->available_from ) || (string) $property->available_from > $filters['available_by']
             ) ) {
                 return false;
             }

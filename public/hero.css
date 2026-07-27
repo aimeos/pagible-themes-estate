@@ -27,20 +27,14 @@
     object-fit: cover;
 }
 
-@keyframes hero-reveal {
-    from {
-        opacity: 0.75;
-        transform: scale(1.04);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+@keyframes hero-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .hero .background.zoom img {
-        animation: hero-reveal 1.4s ease-out both;
+        animation: hero-zoom 10s ease-in-out infinite alternate;
     }
 }
 

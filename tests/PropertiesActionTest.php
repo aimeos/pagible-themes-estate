@@ -121,6 +121,38 @@ class PropertiesActionTest extends ThemeTestAbstract
     }
 
 
+    public function testIgnoresRemovedStatusFilter()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+        $this->addProperty( $list, [
+            'path' => 'available-property',
+            'title' => 'Available Property',
+            'status' => 'available',
+        ] );
+        $this->addProperty( $list, [
+            'path' => 'sold-property',
+            'title' => 'Sold Property',
+            'status' => 'sold',
+        ] );
+
+        $request = Request::create( '/properties', 'GET', ['status' => 'sold'] );
+        $request->setUserResolver( fn() => null );
+
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'limit' => 10,
+                'order' => '-created_at',
+                'parent-page' => (object) ['value' => $list->id],
+            ],
+        ] );
+
+        $this->assertSame( 2, $result->items->total() );
+        $this->assertFalse( property_exists( $result->filters, 'status' ) );
+        $this->assertFalse( property_exists( $result->options, 'statuses' ) );
+    }
+
+
     public function testIgnoresFiltersWhenDisabled()
     {
         $root = Page::where( 'tag', 'root' )->firstOrFail();
@@ -215,6 +247,33 @@ class PropertiesActionTest extends ThemeTestAbstract
         ] );
 
         $this->assertSame( ['Newer Update', 'Older Update'], $result->items->getCollection()->pluck( 'title' )->all() );
+    }
+
+
+    public function testUsesSixItemDefaultLimit()
+    {
+        $root = Page::where( 'tag', 'root' )->firstOrFail();
+        $list = $this->addListPage( $root );
+
+        foreach( range( 1, 7 ) as $idx ) {
+            $this->addProperty( $list, [
+                'path' => 'property-' . $idx,
+                'title' => 'Property ' . $idx,
+            ] );
+        }
+
+        $request = Request::create( '/properties', 'GET' );
+        $request->setUserResolver( fn() => null );
+        $result = ( new Properties() )( $request, $list, (object) [
+            'data' => (object) [
+                'order' => '-created_at',
+                'parent-page' => (object) ['value' => $list->id],
+            ],
+        ] );
+
+        $this->assertSame( 7, $result->items->total() );
+        $this->assertSame( 6, $result->items->count() );
+        $this->assertSame( 6, $result->items->perPage() );
     }
 
 

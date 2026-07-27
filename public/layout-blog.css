@@ -3,14 +3,10 @@
  */
 
 main .cms-content {
-    max-width: var(--estate-content-width);
+    max-width: 60rem;
     margin: auto;
 }
 
 main .container {
     padding: 0 min(5%, 2rem);
-}
-
-main .cms-content > :is(.article, .heading, .questions, .table, .text, .toc) > .container {
-    max-width: 60rem !important;
 }

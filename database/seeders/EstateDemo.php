@@ -240,7 +240,8 @@ class EstateDemo extends AbstractDemo
                 'title' => 'Market notes and strategy ideas',
                 'subtitle' => 'Estate news desk',
                 'text' => 'Short reads for buyers, renters, landlords, and owners balancing quality and timeline pressure.',
-                'files' => [['id' => $this->img( 'news' ), 'type' => 'file']],
+                'background' => ['id' => $this->img( 'news' ), 'type' => 'file'],
+                'background-animation' => 'zoom',
             ]],
             ['id' => Utils::uid(), 'type' => 'blog', 'group' => 'main', 'data' => [
                 'title' => 'Latest updates',
@@ -412,7 +413,8 @@ class EstateDemo extends AbstractDemo
                 'button' => 'View properties',
                 'url-alternative' => '/news',
                 'button-alternative' => 'Read property news',
-                'files' => [['id' => $fileId, 'type' => 'file']],
+                'background' => ['id' => $fileId, 'type' => 'file'],
+                'background-animation' => 'zoom',
             ]],
             ['id' => 'home-properties', 'type' => 'estate::properties', 'group' => 'main', 'data' => [
                 'title' => 'Current properties',
