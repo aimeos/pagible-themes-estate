@@ -13,7 +13,6 @@
 .image-text .end,
 .image-text .grid-start,
 .image-text .grid-end {
-    border: 1px solid var(--pico-muted-border-color);
     border-radius: calc(var(--pico-border-radius) * 2);
     box-shadow: var(--pico-box-shadow);
     overflow: hidden;
@@ -49,6 +48,7 @@
 
 .image-text .grid-start,
 .image-text .grid-end {
+    border: 1px solid var(--pico-muted-border-color);
     display: flex;
     gap: 0;
     align-items: stretch;
