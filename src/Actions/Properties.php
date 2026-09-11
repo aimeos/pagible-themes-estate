@@ -11,14 +11,12 @@ use Aimeos\Cms\Models\Page;
 use Aimeos\Cms\Permission;
 use Aimeos\Cms\Schema;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class Properties
 {
-    /** @var array<string, \stdClass|null> */
     protected array $propertyCache = [];
 
 
@@ -37,9 +35,9 @@ class Properties
             'property_types' => $schema['property_type']['options'] ?? [],
             'offer_types' => $schema['offer_type']['options'] ?? [],
         ];
-        $propertyTypes = collect( (array) $options->property_types )->pluck( 'value' )
+        $propertyTypes = collect( $options->property_types )->pluck( 'value' )
             ->map( fn( $value ) => strtolower( (string) $value ) )->all();
-        $offerTypes = collect( (array) $options->offer_types )->pluck( 'value' )
+        $offerTypes = collect( $options->offer_types )->pluck( 'value' )
             ->map( fn( $value ) => strtolower( (string) $value ) )->all();
 
         [$sort, $sortBy, $sortDir] = match( $requestedSort !== '' ? $requestedSort : $defaultSort ) {
@@ -91,7 +89,9 @@ class Properties
         else
         {
             $pages = $this->filter(
-                $builder->get( $columns ),
+                $builder->get( $columns )
+                    ->filter( fn( $pageItem ) => $this->property( $pageItem, $editor ) )
+                    ->values(),
                 $filters,
                 $editor
             );
@@ -118,19 +118,11 @@ class Properties
     }
 
 
-    /**
-     * @param LengthAwarePaginator<int, Page>|LengthAwarePaginator<int, Model> $pages
-     */
     protected function attachFiles( LengthAwarePaginator $pages, bool $editor ) : void
     {
-        /** @return list<string> */
-        $fileIds = function( Model $pageItem ) use ( $editor ) : array {
-            if( !$pageItem instanceof Page ) {
-                return [];
-            }
-
+        $fileIds = function( $pageItem ) use ( $editor ) {
             $property = $this->property( $pageItem, $editor );
-            return collect( (array) ( $property->files ?? [] ) )
+            return collect( (array) ( $property?->files ?? [] ) )
                 ->map( fn( $file ) => is_scalar( $file ) ? (string) $file : data_get( $file, 'id' ) )
                 ->filter( fn( $id ) => is_string( $id ) && $id !== '' )
                 ->all();
@@ -146,11 +138,7 @@ class Properties
             ? File::whereIn( 'cms_files.id', $ids )->get( ['cms_files.id', 'cms_files.tenant_id', 'disk', 'name', 'mime', 'path', 'previews', 'description'] )->keyBy( 'id' )
             : collect();
 
-        $pages->getCollection()->each( function( Model $pageItem ) use ( $files, $fileIds, $editor ) {
-            if( !$pageItem instanceof Page ) {
-                return;
-            }
-
+        $pages->getCollection()->each( function( $pageItem ) use ( $files, $fileIds, $editor ) {
             $used = collect( $fileIds( $pageItem ) )
                 ->mapWithKeys( fn( $id ) => [$id => $files->get( $id )] )
                 ->filter();
@@ -161,18 +149,9 @@ class Properties
     }
 
 
-    /**
-     * @param Collection<array-key, Model> $pages
-     * @param array{city: string, type: string, offer: string, rooms_min: float|null, available_by: string, sort: string} $filters
-     * @return Collection<array-key, Model>
-     */
     protected function filter( Collection $pages, array $filters, bool $editor ) : Collection
     {
-        return $pages->filter( function( Model $pageItem ) use ( $editor, $filters ) {
-            if( !$pageItem instanceof Page ) {
-                return false;
-            }
-
+        return $pages->filter( function( $pageItem ) use ( $editor, $filters ) {
             $property = $this->property( $pageItem, $editor );
 
             if( $property === null ) {
@@ -206,20 +185,16 @@ class Properties
     }
 
 
-    protected function property( Page $item, bool $editor ) : ?\stdClass
+    protected function property( $item, bool $editor ) : ?object
     {
-        $cache = $item->getKey();
-
-        if( !is_string( $cache ) || $cache === '' ) {
-            return null;
-        }
+        $cache = (string) ( $item->id ?? '' );
 
         if( array_key_exists( $cache, $this->propertyCache ) ) {
             return $this->propertyCache[$cache];
         }
 
         $content = $editor
-            ? ( $item->latest?->aux->content ?? $item->latest?->data->content ?? $item->content )
+            ? ( $item->latest?->aux?->content ?? $item->latest?->data?->content ?? $item->content )
             : $item->content;
 
         $element = collect( (array) $content )
@@ -229,9 +204,6 @@ class Properties
     }
 
 
-    /**
-     * @return Builder<Page>
-     */
     protected function query( object $item, bool $editor, string $sort, string $direction ) : Builder
     {
         $with = $editor
@@ -239,7 +211,7 @@ class Properties
             : [];
         $builder = Page::where( 'type', 'property' )->with( $with )->orderBy( $sort, $direction );
 
-        if( $pid = $item->data->{'parent-page'}->value ?? null ) {
+        if( $pid = $item->data->{'parent-page'}?->value ?? null ) {
             $builder->whereDescendantOf( $pid );
         }
         if( $editor ) {
